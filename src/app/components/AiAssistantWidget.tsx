@@ -32,7 +32,7 @@ export function AiAssistantWidget() {
     {
       id: 'welcome',
       role: 'model',
-      text: "Hello! 👋 I am **Arivom AI**, your architecture and engineering co-pilot.\n\nWe are a collective of **5 senior full-stack developers** specializing in Java 21, Spring Boot 3, React 19 / Angular, and React Native.\n\nAsk me about our **engagement models**, **2-week sprint delivery**, or how our team can build your product!",
+      text: "Hello! 👋 I am **Arivom AI**, your architecture and engineering co-pilot.\n\nWe are a **senior software engineering collective** specializing in Java 21, Spring Boot 3, React 19 / Angular, and React Native.\n\nAsk me about our **engagement models**, **2-week sprint delivery**, or how our team can build your product!",
       timestamp: new Date(),
       status: 'received',
     },
@@ -104,7 +104,7 @@ export function AiAssistantWidget() {
       {
         id: `welcome-${Date.now()}`,
         role: 'model',
-        text: 'Chat history cleared. How can our 5-developer collective help your product today?',
+        text: 'Chat history cleared. How can our engineering team help your product today?',
         timestamp: new Date(),
         status: 'received',
       },
@@ -148,7 +148,7 @@ export function AiAssistantWidget() {
                 <div className="flex items-center gap-1.5 font-bold text-sm">
                   <span>Arivom AI Co-Pilot</span>
                   <span className="rounded-md bg-orange-500/20 px-1.5 py-0.5 text-[9px] font-mono text-orange-300">
-                    5-DEV SQUAD
+                    ENGINEERING SQUAD
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-400">

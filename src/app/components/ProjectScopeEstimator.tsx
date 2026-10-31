@@ -182,26 +182,21 @@ export function ProjectScopeEstimator() {
   // Real-time calculation based on selected inputs
   const calculation = useMemo(() => {
     let sprintBase = 2
-    let teamSize = 2
-    let devProfile = "2 Senior Full-Stack Engineers"
+    let devProfile = "Senior Full-Stack Engineering Squad"
 
     // Scale impact
     if (scale === "mvp") {
       sprintBase = 2
-      teamSize = 2
-      devProfile = "2 Senior Engineers (Full-Stack + Cloud)"
+      devProfile = "Senior Full-Stack & Cloud Architecture Squad"
     } else if (scale === "fullstack") {
       sprintBase = 3
-      teamSize = 2
-      devProfile = "2 Senior Full-Stack Engineers"
+      devProfile = "Senior Full-Stack Engineering Squad"
     } else if (scale === "crossplatform") {
       sprintBase = 4
-      teamSize = 3
-      devProfile = "3 Senior Engineers (1 Web, 1 Mobile, 1 Backend)"
+      devProfile = "Cross-Platform Senior Squad (Web, Mobile & Backend)"
     } else if (scale === "enterprise") {
       sprintBase = 6
-      teamSize = 4
-      devProfile = "4 Senior Specialists (Backend, Streaming, Frontend, DevOps)"
+      devProfile = "Enterprise Senior Engineering Squad (Backend, Data & DevOps)"
     }
 
     // Platform impact
@@ -274,7 +269,6 @@ export function ProjectScopeEstimator() {
     return {
       sprints: Math.round(sprintBase),
       weeks: totalWeeks,
-      teamSize,
       devProfile,
       phases,
     }
@@ -315,7 +309,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
           <p className="mt-5 text-base leading-relaxed text-slate-600 sm:text-lg max-w-3xl mx-auto">
             Calculate realistic team capacity, sprint milestones, and
             architectural blueprints tailored to your application. Partner
-            directly with our 5 senior developers with transparent sprint
+            directly with our senior engineering team with transparent sprint
             commitments.
           </p>
         </div>
@@ -718,7 +712,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                       Dedicated Team
                     </span>
                     <strong className="mt-1 text-2xl font-black font-mono text-white block">
-                      {calculation.teamSize} Senior Devs
+                      Senior Squad
                     </strong>
                     <span className="text-[11px] font-mono text-emerald-400 block">
                       Zero Junior Handoffs
@@ -787,7 +781,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                 <p className="text-xs text-slate-600 leading-relaxed">
                   Traditional agencies charge 3x markups to pay account
                   executives and junior trainees. With Arivom, every dollar goes
-                  directly to 5 senior engineers writing your code.
+                  directly to the senior engineers writing your code.
                 </p>
               </div>
             </div>

@@ -5,7 +5,7 @@ export function AiCopilotSection() {
   const cards = [
     {
       rotation: 'lg:-rotate-6 lg:-translate-y-2',
-      question: 'How do your 5 senior developers handle scaling?',
+      question: 'How does your engineering team handle scaling?',
       user: 'Founder',
       userAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
       answer:
@@ -13,11 +13,11 @@ export function AiCopilotSection() {
     },
     {
       rotation: 'z-10 shadow-2xl scale-102 border-orange-500/40',
-      question: 'Can we hire 1 to 2 dedicated engineers or the whole squad?',
+      question: 'Can we hire dedicated engineers or milestone sprint delivery?',
       user: 'CTO',
       userAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80',
       answer:
-        'Both! We provide flexible dedicated squads (1 to 5 engineers) or 2-week sprint-based milestone delivery with full Git ownership.',
+        'Both! We provide flexible dedicated squads or 2-week sprint-based milestone delivery with full Git ownership.',
     },
     {
       rotation: 'lg:rotate-6 lg:-translate-y-2',
@@ -81,7 +81,7 @@ export function AiCopilotSection() {
             Meet Arivom AI: Your Architecture Co-Pilot
           </h2>
           <p className="section-copy mt-4">
-            Have questions about how our 5-developer collective operates, our sprint delivery cadence, or technical stack? Arivom AI is available 24/7 to guide you.
+            Have questions about how our senior engineering collective operates, our sprint delivery cadence, or technical stack? Arivom AI is available 24/7 to guide you.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">

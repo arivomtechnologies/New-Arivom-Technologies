@@ -34,7 +34,7 @@ export function StickyProcessSection() {
       num: '02',
       title: 'Get 2-Week Agile Sprints & Production Commits',
       highlighter: 'Zero Management Bloat',
-      desc: 'No account managers or junior delegations. You interface directly with the 5 senior engineers writing your code through predictable 2-week sprint cadences, automated test suites, and weekly live demos.',
+      desc: 'No account managers or junior delegations. You interface directly with the senior engineers writing your code through predictable 2-week sprint cadences, automated test suites, and weekly live demos.',
       details: [
         'Fortnightly sprint reviews with live staging deployments',
         'Direct Slack/Teams channel with senior tech leads',
@@ -71,7 +71,7 @@ export function StickyProcessSection() {
             How Arivom Engineers Deliver
           </h2>
           <p className="section-copy mt-4">
-            Understand how our 5-developer collective transforms complex product requirements into high-throughput production systems in 3 clear stages.
+            Understand how our senior engineering collective transforms complex product requirements into high-throughput production systems in 3 clear stages.
           </p>
         </div>
 

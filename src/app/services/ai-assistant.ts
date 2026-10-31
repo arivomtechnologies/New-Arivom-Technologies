@@ -8,11 +8,11 @@ export interface ChatMessage {
 
 export const ARIVOM_SYSTEM_INSTRUCTION = `
 You are the official AI Engineering Assistant for Arivom Technologies (https://arivomtechnologies.com).
-Your purpose is to assist website visitors, prospective clients, founders, and enterprises by answering questions about Arivom's 5-developer engineering collective, engagement models, technical stack, architecture capabilities, and project delivery timelines.
+Your purpose is to assist website visitors, prospective clients, founders, and enterprises by answering questions about Arivom's senior engineering collective, engagement models, technical stack, architecture capabilities, and project delivery timelines.
 
 About Arivom Technologies:
-- Nature: Boutique Software Engineering Collective of 5 Senior Developers
-- Philosophy: Zero agency bloat, zero junior handoffs. Clients work and communicate directly with the 5 senior engineers writing the code.
+- Nature: Boutique Software Engineering Collective & Product Studio
+- Philosophy: Zero agency bloat, zero junior handoffs. Clients work and communicate directly with the senior engineers writing the code.
 - Locations: Chennai and Tirunelveli, Tamil Nadu, India
 - Contact Email: arivomtechnologies@gmail.com (Arivom Technologies)
 - Phone / WhatsApp: +91 63690 12607 (WhatsApp: https://wa.me/916369012607, Direct Call: +91 63690 12607)
@@ -20,7 +20,7 @@ About Arivom Technologies:
 
 Core Engagement Models (No rigid commodity pricing; tailored to scope & team capacity):
 1. Dedicated Developer Squad:
-   - 1 to 5 dedicated full-stack engineers embedded directly into client workflows.
+   - Dedicated senior full-stack engineers embedded directly into client workflows.
    - Continuous Git commits, daily asynchronous updates, and weekly sprint demos.
 2. Sprint-Based Milestone Delivery:
    - Predictable 2-week agile sprint cycles with defined backlog deliverables.
@@ -41,7 +41,7 @@ Key Technology Stack:
 Tone & Rules:
 - Friendly, highly technical yet accessible, concise, and trustworthy.
 - Format responses cleanly with brief bullet points or bold text where appropriate.
-- When asked about pricing, cost, or hiring rates, explain that our 5-developer collective works through tailored engagement models (Dedicated Squads, Sprint-Based Delivery, or Fixed-Scope Milestones) based on technical complexity and team capacity. Invite them to book a free 30-minute discovery call with our tech leads.
+- When asked about pricing, cost, or hiring rates, explain that our senior engineering collective works through tailored engagement models (Dedicated Squads, Sprint-Based Delivery, or Fixed-Scope Milestones) based on technical complexity and team capacity. Invite them to book a free 30-minute discovery call with our tech leads.
 - Always offer to connect via WhatsApp (+91 63690 12607) or email (arivomtechnologies@gmail.com).
 `
 
@@ -107,9 +107,9 @@ export function getLocalKnowledgeResponse(query: string): string {
     q.includes('package') ||
     q.includes('inr')
   ) {
-    return `As a boutique collective of **5 senior full-stack developers**, we don't offer generic commodity packages. We structure engagements around your exact technical requirements and velocity:
+    return `As a boutique **senior engineering collective**, we don't offer generic commodity packages. We structure engagements around your exact technical requirements and velocity:
 
-• **Dedicated Developer Squad**: 1 to 5 senior engineers embedded directly into your product team.
+• **Dedicated Developer Squad**: Dedicated senior engineers embedded directly into your product team.
 • **Sprint-Based Milestone Delivery**: Predictable 2-week agile sprints with bi-weekly live demos.
 • **Fixed-Scope MVP & Platform Launch**: Turnkey architecture, UI/UX, backend, and deployment with guaranteed milestones.
 • **Architecture Advisory & Code Audits**: Modernization, scalability reviews, and Monolith-to-Microservices migration.
@@ -123,7 +123,7 @@ export function getLocalKnowledgeResponse(query: string): string {
     q.includes('what do you do') ||
     q.includes('build')
   ) {
-    return `At **Arivom Technologies**, our 5-developer squad specializes in end-to-end software engineering:
+    return `At **Arivom Technologies**, our senior engineering squad specializes in end-to-end software engineering:
 
 1. **Web Applications**: High-throughput web platforms built with React 19 / Angular Signals & Tailwind CSS.
 2. **Mobile App Development**: Cross-platform iOS & Android apps built with React Native.
@@ -191,7 +191,7 @@ Would you like to explore an architectural blueprint for a similar solution?`
 
   return `Thank you for reaching out to **Arivom Technologies**!
 
-We are a collective of **5 senior developers** building custom web platforms, React Native mobile apps, and Java 21 / Spring Boot cloud microservices with zero agency bloat.
+We are a **senior engineering collective** building custom web platforms, React Native mobile apps, and Java 21 / Spring Boot cloud microservices with zero agency bloat.
 
 • Ask about our **4 Engagement Models** (Dedicated Squad, Sprints, MVP, Advisory).
 • Chat with our engineering leads on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) or email arivomtechnologies@gmail.com.`

@@ -62,6 +62,7 @@ import { ClientDeliverablesCarousel } from "./components/ClientDeliverablesCarou
 import { AiCopilotSection } from "./components/AiCopilotSection"
 import { TechStackSolarOrbit } from "./components/TechStackSolarOrbit"
 import { ProjectScopeEstimator } from "./components/ProjectScopeEstimator"
+import { AboutCompanyView } from "./components/AboutCompanyView"
 
 const photos = {
   code: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
@@ -134,7 +135,7 @@ const projects = [
     badge: "Live Website • Verified Client",
     architecture: "React + Node + Cloudflare CDN",
     sprints: "2 Sprints (Fast-Track)",
-    team: "2 Dedicated Engineers",
+    team: "Senior Frontend & Cloud Engineers",
     valuation: "$1.8M+ Portfolio",
     description: "Luxury architectural villas and construction portal showcasing high-end commercial landmarks and residential properties with astonishing speed.",
   },
@@ -148,7 +149,7 @@ const projects = [
     badge: "Production System • Active",
     architecture: "Java 21 + Spring Boot 3 + PostgreSQL",
     sprints: "4 Sprints",
-    team: "3 Senior Engineers",
+    team: "Senior Backend & Architecture Squad",
     valuation: "10k+ Daily Jobs",
     description: "High-volume prepress and offset printing workflow tracking software eliminating departmental bottlenecks and paper job slips.",
   },
@@ -162,7 +163,7 @@ const projects = [
     badge: "HIPAA-Ready Clinic Portal",
     architecture: "Angular Signals + Spring Cloud",
     sprints: "3 Sprints",
-    team: "2 Full-Stack Engineers",
+    team: "Senior Full-Stack Engineering Squad",
     valuation: "3,200+ Patients",
     description: "Comprehensive multi-doctor clinic management platform with automated SMS reminders, medical records, and digital consultation queue.",
   },
@@ -176,7 +177,7 @@ const projects = [
     badge: "High-Traffic D2C Store",
     architecture: "React Native + Headless PostgreSQL",
     sprints: "3 Sprints",
-    team: "2 Mobile & Web Engineers",
+    team: "Senior Mobile & Full-Stack Squad",
     valuation: "Zero-Lag Checkout",
     description: "Artisanal organic honey direct-to-consumer store with Razorpay payment processing, instant WhatsApp tracking, and farm-to-bottle traceability.",
   },
@@ -376,7 +377,7 @@ function Footer() {
             Let’s build
           </h3>
           <p className="mt-4 text-sm leading-6 text-slate-400">
-            Direct access to our 5 senior developers. We reply in under 12 hours.
+            Direct access to our senior engineering team. We reply in under 12 hours.
           </p>
           <Link to="/contact" className="button button-primary mt-5">
             Discuss your idea <ArrowRight size={16} />
@@ -395,7 +396,7 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-wide flex flex-col gap-2 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 Arivom Technologies. 5-Developer Engineering Collective.</span>
+          <span>© 2026 Arivom Technologies. Senior Engineering Collective & Product Studio.</span>
           <span>Delivering scalable enterprise web, cloud & mobile software.</span>
         </div>
       </div>
@@ -569,19 +570,19 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
 function Home() {
   return (
     <>
-      {/* 1. High-Impact Hero with 5-Senior Developer Collective Identity */}
+      {/* 1. High-Impact Hero with Senior Engineering Collective Identity */}
       <section className="hero-grid overflow-hidden pb-20 pt-32 lg:pb-28 lg:pt-40">
         <div className="container-wide grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
           <div className="hero-copy">
             <div className="eyebrow">
               <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-              Boutique 5-Developer Collective • Zero Agency Bloat
+              Senior Engineering Collective • Zero Agency Bloat
             </div>
             <h1 className="hero-title mt-6">
               Custom Enterprise Software. <span className="text-gradient">Engineered to Scale</span> from Day 1.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Direct access to 5 senior full-stack developers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
+              Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
             </p>
             <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
               <Link to="/contact" className="button button-primary">
@@ -673,7 +674,7 @@ function Home() {
           <SectionHeading
             eyebrow="What We Build"
             title="Full-Stack Engineering Without Middlemen"
-            text="Strategy, system architecture, backend microservices, mobile apps, and cloud deployment from our 5 senior engineers."
+            text="Strategy, system architecture, backend microservices, mobile apps, and cloud deployment from our senior engineers."
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
@@ -1187,7 +1188,7 @@ function FAQ() {
   const items = [
     [
       "How do your engagement models and sprint milestones work?",
-      "We don't offer rigid commodity packages. We structure engagements around your exact technical requirements, sprint velocity, and team capacity (1 to 5 dedicated engineers). After a short discovery call, we provide a transparent sprint roadmap with clear deliverables and no hidden fees.",
+      "We don't offer rigid commodity packages. We structure engagements around your exact technical requirements, sprint velocity, and team capacity. After a short discovery call, we provide a transparent sprint roadmap with clear deliverables and no hidden fees.",
     ],
     [
       "Can we begin with a small discovery phase?",
@@ -1312,7 +1313,7 @@ function Technology() {
       <PageHero
         eyebrow="Our technology stack"
         title="Modern tools. Sound engineering judgment."
-        text="A boutique 5-developer collective engineering high-throughput Spring Boot microservices, fluid React / React Native applications, and automated cloud infrastructure."
+        text="A boutique senior engineering collective engineering high-throughput Spring Boot microservices, fluid React / React Native applications, and automated cloud infrastructure."
       />
 
       {/* Solar Circle Orbit System for the Complete Tech Stack */}
@@ -1382,81 +1383,7 @@ function Technology() {
 }
 
 function About() {
-  return (
-    <>
-      <PageHero
-        eyebrow="About Arivom"
-        title="Small team energy. Serious delivery."
-        text="We started Arivom to give growing businesses direct access to thoughtful design and senior engineering."
-      />
-      <section className="section-space">
-        <div className="container-wide grid items-center gap-12 lg:grid-cols-2">
-          <img
-            src={photos.team}
-            alt="Creative technology team working together"
-            className="h-[500px] w-full rounded-[28px] object-cover shadow-xl"
-          />
-          <div>
-            <SectionHeading
-              eyebrow="Our story"
-              title="Your product gets our full attention."
-              text="Arivom Technologies is an independent product design and engineering company. We combine the accountability of a dedicated freelancer with the cross-functional range of a product studio."
-            />
-            <p className="mt-5 leading-7 text-slate-600">
-              That means direct communication, fewer handoffs, practical
-              decisions, and a team that stays close to the work. We care about
-              the quality of the code—but even more about the value it creates.
-            </p>
-            <div className="mt-8 grid grid-cols-2 gap-5">
-              <div className="card p-5">
-                <p className="text-3xl font-black text-orange-600">6+</p>
-                <p className="mt-1 text-sm text-slate-500">Years of craft</p>
-              </div>
-              <div className="card p-5">
-                <p className="text-3xl font-black text-orange-600">8</p>
-                <p className="mt-1 text-sm text-slate-500">Countries served</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section className="section-space bg-white">
-        <div className="container-wide">
-          <SectionHeading center eyebrow="Our values" title="How we show up." />
-          <div className="mt-12 grid gap-5 md:grid-cols-3">
-            {[
-              [
-                Target,
-                "Outcome over output",
-                "We measure progress by user and business value—not the number of screens shipped.",
-              ],
-              [
-                MessageSquare,
-                "Clarity always",
-                "We raise risks early, explain trade-offs plainly, and keep decisions visible.",
-              ],
-              [
-                Layers3,
-                "Built to last",
-                "We make quality choices that serve today without creating tomorrow’s bottleneck.",
-              ],
-            ].map(([Icon, title, text]) => (
-              <div className="card p-7 text-center" key={title as string}>
-                <span className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
-                  <Icon />
-                </span>
-                <h3 className="mt-5 text-lg font-bold">{title as string}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-600">
-                  {text as string}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      <CTA />
-    </>
-  )
+  return <AboutCompanyView />
 }
 
 function Contact() {
@@ -1597,7 +1524,7 @@ function Contact() {
                       <option value="" disabled>
                         Select a model
                       </option>
-                      <option>Dedicated Developer Squad (1–5 Senior Engineers)</option>
+                      <option>Dedicated Senior Developer Squad</option>
                       <option>Sprint-Based Milestone Delivery (2-Week Sprints)</option>
                       <option>Fixed-Scope MVP &amp; Platform Launch</option>
                       <option>Strategic Architecture Advisory &amp; Modernization</option>

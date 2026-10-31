@@ -32,7 +32,7 @@ export function BentoGridSection() {
             Engineering Capabilities. Simplified.
           </h2>
           <p className="section-copy mt-4">
-            A boutique collective of 5 senior engineers delivering enterprise backend microservices, modern web applications, mobile apps, and cloud orchestration.
+            A boutique senior engineering collective delivering enterprise backend microservices, modern web applications, mobile apps, and cloud orchestration.
           </p>
         </div>
 

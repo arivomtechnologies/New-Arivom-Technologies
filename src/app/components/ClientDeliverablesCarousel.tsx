@@ -31,7 +31,7 @@ const deliverables: ClientProject[] = [
     badge: 'Live Website • Verified Client',
     architecture: 'React + Node + Cloudflare CDN',
     sprints: '2 Sprints (Fast-Track)',
-    team: '2 Dedicated Senior Engineers',
+    team: 'Senior Frontend & Cloud Engineers',
     description: 'Luxury architectural residential villas and commercial landmarks portal. Delivered ahead of schedule with sub-second page loads and direct inquiry routing.',
   },
   {
@@ -43,7 +43,7 @@ const deliverables: ClientProject[] = [
     badge: 'Production System • Active',
     architecture: 'Java 21 + Spring Boot 3 + PostgreSQL',
     sprints: '4 Agile Sprints',
-    team: '3 Senior Engineers',
+    team: 'Senior Backend & Architecture Squad',
     description: 'High-volume prepress and offset printing workflow tracking software eliminating departmental bottlenecks and paper job slips.',
   },
   {
@@ -55,7 +55,7 @@ const deliverables: ClientProject[] = [
     badge: 'HIPAA-Ready Clinic Portal',
     architecture: 'Angular Signals + Spring Cloud',
     sprints: '3 Sprints',
-    team: '2 Full-Stack Engineers',
+    team: 'Senior Full-Stack Engineering Squad',
     description: 'Comprehensive multi-doctor clinic management platform with automated SMS reminders, digital prescription records, and consultation queues.',
   },
   {
@@ -67,7 +67,7 @@ const deliverables: ClientProject[] = [
     badge: 'High-Traffic D2C Store',
     architecture: 'React Native + Headless PostgreSQL',
     sprints: '3 Sprints',
-    team: '2 Mobile & Web Engineers',
+    team: 'Senior Mobile & Full-Stack Squad',
     description: 'Artisanal organic honey direct-to-consumer store with Razorpay payment processing, instant WhatsApp tracking, and farm-to-bottle batch traceability.',
   },
 ]

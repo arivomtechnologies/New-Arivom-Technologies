@@ -133,7 +133,7 @@ export function PersonaAdvantagesSection() {
             Tailored Advantages For Every Stage
           </h2>
           <p className="section-copy mt-4">
-            Whether launching from zero, scaling multi-tenant SaaS, or auditing legacy infrastructure, our 5 senior developers adapt to your goals.
+            Whether launching from zero, scaling multi-tenant SaaS, or auditing legacy infrastructure, our senior engineers adapt to your goals.
           </p>
 
           {/* Persona Tabs Switcher */}
@@ -171,7 +171,7 @@ export function PersonaAdvantagesSection() {
                 <span className="ml-2 text-xs font-mono text-slate-400">arivom-engine.sh</span>
               </div>
               <span className="text-[11px] font-mono text-orange-400 font-bold bg-orange-400/10 px-2.5 py-0.5 rounded-md border border-orange-400/20">
-                5-DEV COLLECTIVE
+                SENIOR COLLECTIVE
               </span>
             </div>
 
