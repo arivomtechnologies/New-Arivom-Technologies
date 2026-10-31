@@ -180,25 +180,47 @@ const projects = [
   },
 ]
 
-function Logo() {
+function Logo({ inverted = false }: { inverted?: boolean }) {
+  const base = import.meta.env.BASE_URL || "/"
+  const cleanBase = base.endsWith("/") ? base : `${base}/`
+  const logoSrc = `${cleanBase}images/arivom-header-logo.svg`
+
   return (
     <Link
       to="/"
-      className="group flex items-center gap-3"
+      className="group flex items-center gap-2.5 sm:gap-3 select-none"
       aria-label="Arivom Technologies home"
     >
-      <span className="relative grid h-11 w-11 place-items-center overflow-hidden rounded-xl bg-[#ff6b24] text-lg font-black text-white shadow-[0_8px_20px_rgba(255,107,36,.25)]">
-        A
-        <span className="absolute -right-3 -bottom-4 h-8 w-8 rotate-45 bg-[#ff9a28]" />
-      </span>
-      <span className="leading-none">
-        <strong className="block text-[18px] tracking-[.08em] text-[#111a2e]">
+      <div
+        className={`w-9 h-9 sm:w-10 sm:h-10 shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 ${
+          inverted
+            ? "rounded-xl overflow-hidden bg-white/5 border border-white/10 p-1 shadow-sm"
+            : ""
+        }`}
+      >
+        <img
+          src={logoSrc}
+          alt="Arivom Technologies"
+          className="w-full h-full object-contain"
+          loading="eager"
+        />
+      </div>
+      <div className="flex flex-col justify-center leading-none">
+        <span
+          className={`text-[19px] sm:text-[21px] font-black tracking-tight font-sans transition-colors ${
+            inverted ? "text-white" : "text-[#0B1437]"
+          }`}
+        >
           ARIVOM
-        </strong>
-        <span className="mt-1 block text-[9px] font-semibold tracking-[.32em] text-slate-500">
+        </span>
+        <span
+          className={`text-[9px] sm:text-[9.5px] font-bold tracking-[0.33em] font-sans mt-1 uppercase transition-colors ${
+            inverted ? "text-[#FF6B00]" : "text-[#64748B]"
+          }`}
+        >
           TECHNOLOGIES
         </span>
-      </span>
+      </div>
     </Link>
   )
 }
@@ -308,7 +330,7 @@ function Footer() {
     <footer className="bg-[#111a2e] text-white">
       <div className="container-wide grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
         <div>
-          <Logo />
+          <Logo inverted />
           <p className="mt-5 max-w-sm text-sm leading-7 text-slate-400">
             A product-minded freelance technology company helping ambitious
             teams turn ideas into fast, secure, and beautifully useful digital
