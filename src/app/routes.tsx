@@ -336,12 +336,20 @@ function Footer() {
             teams turn ideas into fast, secure, and beautifully useful digital
             products.
           </p>
-          <a
-            className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-orange-400"
-            href="mailto:hello@arivomtechnologies.com"
-          >
-            <Mail size={16} /> hello@arivomtechnologies.com
-          </a>
+          <div className="mt-5 space-y-2">
+            <a
+              className="flex items-center gap-2 text-sm font-semibold text-orange-400 hover:text-orange-300 transition-colors"
+              href="mailto:arivomtechnologies@gmail.com"
+            >
+              <Mail size={16} /> arivomtechnologies@gmail.com
+            </a>
+            <a
+              className="flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors"
+              href="tel:+916369012607"
+            >
+              <Phone size={16} className="text-orange-400" /> +91 63690 12607
+            </a>
+          </div>
         </div>
         <FooterLinks
           title="Services"
@@ -1566,8 +1574,8 @@ function Contact() {
             </p>
             <div className="mt-8 space-y-4">
               <a
-                href="mailto:hello@arivomtechnologies.com"
-                className="card flex items-center gap-4 p-5"
+                href="mailto:arivomtechnologies@gmail.com"
+                className="card flex items-center gap-4 p-5 hover:border-orange-400 transition"
               >
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-orange-50 text-orange-600">
                   <Mail size={20} />
@@ -1575,12 +1583,12 @@ function Contact() {
                 <div>
                   <p className="text-xs text-slate-500">Email us</p>
                   <p className="mt-1 text-sm font-bold">
-                    hello@arivomtechnologies.com
+                    arivomtechnologies@gmail.com
                   </p>
                 </div>
               </a>
               <a
-                href="https://wa.me/918667684683?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20engineering%20inquiry."
+                href="https://wa.me/916369012607?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20engineering%20inquiry."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="card flex items-center gap-4 p-5 hover:border-emerald-400 transition"
@@ -1591,7 +1599,7 @@ function Contact() {
                 <div>
                   <p className="text-xs text-slate-500">WhatsApp / Direct Call</p>
                   <p className="mt-1 text-sm font-bold text-emerald-700">
-                    +91 866 768 4683
+                    +91 63690 12607
                   </p>
                 </div>
               </a>

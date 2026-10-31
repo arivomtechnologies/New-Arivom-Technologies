@@ -93,7 +93,7 @@ export function AiCopilotSection() {
               <Bot size={18} /> Chat with Arivom AI
             </button>
             <a
-              href="https://wa.me/918667684683?text=Hi%20Arivom%20Technologies,%20I'd%20like%20to%20discuss%20an%20engineering%20project."
+              href="https://wa.me/916369012607?text=Hi%20Arivom%20Technologies,%20I'd%20like%20to%20discuss%20an%20engineering%20project."
               target="_blank"
               rel="noopener noreferrer"
               className="button button-secondary w-full sm:w-auto"

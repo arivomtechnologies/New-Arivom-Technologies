@@ -89,7 +89,7 @@ export function AiAssistantWidget() {
       const errorMsg: ChatMessage = {
         id: `bot-err-${Date.now()}`,
         role: 'model',
-        text: 'Sorry, I encountered an issue. Please connect with our team directly on WhatsApp at [+91 866 768 4683](https://wa.me/918667684683).',
+        text: 'Sorry, I encountered an issue. Please connect with our team directly on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) or email arivomtechnologies@gmail.com.',
         timestamp: new Date(),
         status: 'error',
       }
@@ -263,7 +263,7 @@ export function AiAssistantWidget() {
           <div className="bg-slate-50 px-3 py-1.5 border-t border-slate-100 text-center text-[10px] text-slate-500 flex items-center justify-between">
             <span>Need immediate technical scoping?</span>
             <a
-              href="https://wa.me/918667684683?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20architecture%20inquiry."
+              href="https://wa.me/916369012607?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20architecture%20inquiry."
               target="_blank"
               rel="noopener noreferrer"
               className="font-bold text-emerald-600 hover:text-emerald-700 inline-flex items-center gap-1"

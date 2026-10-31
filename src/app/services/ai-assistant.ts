@@ -14,8 +14,8 @@ About Arivom Technologies:
 - Nature: Boutique Software Engineering Collective of 5 Senior Developers
 - Philosophy: Zero agency bloat, zero junior handoffs. Clients work and communicate directly with the 5 senior engineers writing the code.
 - Locations: Chennai and Tirunelveli, Tamil Nadu, India
-- Contact Email: hello@arivomtechnologies.com / arivomtechnologies@gmail.com
-- Phone / WhatsApp: +91 866 768 4683 (WhatsApp: https://wa.me/918667684683)
+- Contact Email: arivomtechnologies@gmail.com (Arivom Technologies)
+- Phone / WhatsApp: +91 63690 12607 (WhatsApp: https://wa.me/916369012607, Direct Call: +91 63690 12607)
 - Website: https://arivomtechnologies.com/
 
 Core Engagement Models (No rigid commodity pricing; tailored to scope & team capacity):
@@ -42,7 +42,7 @@ Tone & Rules:
 - Friendly, highly technical yet accessible, concise, and trustworthy.
 - Format responses cleanly with brief bullet points or bold text where appropriate.
 - When asked about pricing, cost, or hiring rates, explain that our 5-developer collective works through tailored engagement models (Dedicated Squads, Sprint-Based Delivery, or Fixed-Scope Milestones) based on technical complexity and team capacity. Invite them to book a free 30-minute discovery call with our tech leads.
-- Always offer to connect via WhatsApp (+91 866 768 4683) or email.
+- Always offer to connect via WhatsApp (+91 63690 12607) or email (arivomtechnologies@gmail.com).
 `
 
 const DEFAULT_API_KEY = typeof atob === 'function'
@@ -114,7 +114,7 @@ export function getLocalKnowledgeResponse(query: string): string {
 • **Fixed-Scope MVP & Platform Launch**: Turnkey architecture, UI/UX, backend, and deployment with guaranteed milestones.
 • **Architecture Advisory & Code Audits**: Modernization, scalability reviews, and Monolith-to-Microservices migration.
 
-💡 Connect directly with our lead engineers on WhatsApp at [+91 866 768 4683](https://wa.me/918667684683) for a tailored sprint roadmap!`
+💡 Connect directly with our lead engineers on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) for a tailored sprint roadmap!`
   }
 
   if (
@@ -171,8 +171,8 @@ Which type of project are you planning?`
   ) {
     return `We'd love to discuss your project! Reach our senior engineering team directly:
 
-• **WhatsApp / Direct Call**: [+91 866 768 4683](https://wa.me/918667684683)
-• **Email**: [hello@arivomtechnologies.com](mailto:hello@arivomtechnologies.com)
+• **WhatsApp / Direct Call**: [+91 63690 12607](https://wa.me/916369012607)
+• **Email**: [arivomtechnologies@gmail.com](mailto:arivomtechnologies@gmail.com)
 • **Locations**: Chennai & Tirunelveli, Tamil Nadu, India
 
 We typically reply within 1–2 hours during business hours!`
@@ -194,5 +194,5 @@ Would you like to explore an architectural blueprint for a similar solution?`
 We are a collective of **5 senior developers** building custom web platforms, React Native mobile apps, and Java 21 / Spring Boot cloud microservices with zero agency bloat.
 
 • Ask about our **4 Engagement Models** (Dedicated Squad, Sprints, MVP, Advisory).
-• Chat with our engineering leads on WhatsApp at [+91 866 768 4683](https://wa.me/918667684683) or email hello@arivomtechnologies.com.`
+• Chat with our engineering leads on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) or email arivomtechnologies@gmail.com.`
 }
