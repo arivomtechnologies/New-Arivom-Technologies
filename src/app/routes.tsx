@@ -704,134 +704,114 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
   )
 }
 
-function TypewriterHeroHeadline() {
-  const staticPrefix = "Custom Enterprise Software."
-  const dynamicPhrases = [
-    { gradient: "Engineered to Scale", suffix: " from Day 1." },
-    { gradient: "Java 21 & Spring Boot 3", suffix: " Architecture." },
-    { gradient: "React 19 & React Native", suffix: " Full-Stack." },
-    { gradient: "High-Throughput", suffix: " with Kafka & Cloud." },
-  ]
-
-  const [phraseIndex, setPhraseIndex] = useState(0)
-  const [displayedPrefix, setDisplayedPrefix] = useState("")
-  const [displayedGradient, setDisplayedGradient] = useState("")
-  const [displayedSuffix, setDisplayedSuffix] = useState("")
-  const [phase, setPhase] = useState<"prefix" | "gradient" | "suffix" | "pause" | "deleting">("prefix")
-
-  // Initial prefix typing on mount (letter by letter)
-  useEffect(() => {
-    let currentLen = 0
-    const interval = setInterval(() => {
-      currentLen++
-      setDisplayedPrefix(staticPrefix.slice(0, currentLen))
-      if (currentLen >= staticPrefix.length) {
-        clearInterval(interval)
-        setPhase("gradient")
-      }
-    }, 38)
-    return () => clearInterval(interval)
-  }, [])
-
-  // Dynamic phrase typing & cycling (letter by letter)
-  useEffect(() => {
-    if (phase === "prefix") return
-
-    const currentPhrase = dynamicPhrases[phraseIndex]
-    let timeout: ReturnType<typeof setTimeout>
-
-    if (phase === "gradient") {
-      if (displayedGradient.length < currentPhrase.gradient.length) {
-        timeout = setTimeout(() => {
-          setDisplayedGradient(currentPhrase.gradient.slice(0, displayedGradient.length + 1))
-        }, 36)
-      } else {
-        setPhase("suffix")
-      }
-    } else if (phase === "suffix") {
-      if (displayedSuffix.length < currentPhrase.suffix.length) {
-        timeout = setTimeout(() => {
-          setDisplayedSuffix(currentPhrase.suffix.slice(0, displayedSuffix.length + 1))
-        }, 36)
-      } else {
-        setPhase("pause")
-      }
-    } else if (phase === "pause") {
-      // Hold for 5.5s so user can read comfortably
-      timeout = setTimeout(() => {
-        setPhase("deleting")
-      }, 5500)
-    } else if (phase === "deleting") {
-      if (displayedSuffix.length > 0) {
-        timeout = setTimeout(() => {
-          setDisplayedSuffix((prev) => prev.slice(0, -1))
-        }, 22)
-      } else if (displayedGradient.length > 0) {
-        timeout = setTimeout(() => {
-          setDisplayedGradient((prev) => prev.slice(0, -1))
-        }, 22)
-      } else {
-        // Switch to next phrase
-        setPhraseIndex((prev) => (prev + 1) % dynamicPhrases.length)
-        setPhase("gradient")
-      }
-    }
-
-    return () => clearTimeout(timeout)
-  }, [phase, displayedGradient, displayedSuffix, phraseIndex])
-
-  return (
-    <h1 className="hero-title mt-6 min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]">
-      <span className="text-[#0B1437]">{displayedPrefix}</span>{" "}
-      <span className="text-gradient font-black">{displayedGradient}</span>
-      <span className="text-[#0B1437]">{displayedSuffix}</span>
-      <span className="inline-block w-[3.5px] sm:w-[4.5px] h-[0.82em] ml-1.5 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
-    </h1>
-  )
-}
-
-function HeroBannerCarousel() {
+function FullHeroBannerSlider() {
   const slides = [
     {
-      id: "architecture",
-      tabLabel: "Cloud & Kafka",
+      id: "enterprise",
+      tabNumber: "01",
+      tabTitle: "Enterprise Cloud & Kafka",
+      tabTech: "Java 21 • Spring Boot 3",
+      eyebrow: "Senior Engineering Collective • Zero Agency Bloat",
+      prefix: "Custom Enterprise Software.",
+      gradient: "Engineered to Scale",
+      suffix: " from Day 1.",
+      description:
+        "Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.",
+      primaryCta: {
+        label: "Start a Sprint Project",
+        to: "/contact",
+      },
+      secondaryCta: {
+        label: "Chat with Arivom AI",
+        isAiButton: true,
+      },
+      badges: [
+        "Direct Senior Git Access",
+        "2-Week Agile Sprints",
+        "100% Codebase Handover",
+      ],
       image: `${cleanBase}images/hero-enterprise-architecture.jpg`,
       tag: "Production Architecture",
       title: "Java 21 + Spring Boot 3 + Kafka",
       subtitle: "High-throughput event streaming & enterprise microservices",
+      hudMetric: "1.2M msg/s Throughput",
       metricValue: 99.9,
       metricDecimals: 1,
       metricSuffix: "%",
       metricLabel: "Production SLA Uptime",
-      badgePill: "1.2M msg/s Throughput",
+      verifiedText: "Verified Production Mesh",
       icon: Rocket,
     },
     {
-      id: "developer",
-      tabLabel: "Full-Stack & Mobile",
+      id: "fullstack",
+      tabNumber: "02",
+      tabTitle: "Web & Mobile Ecosystems",
+      tabTech: "React 19 • React Native",
+      eyebrow: "Full-Stack Product Studio • High Performance",
+      prefix: "Next-Gen Web & Mobile Apps.",
+      gradient: "Engineered for Conversion",
+      suffix: " & Native Speed.",
+      description:
+        "Modern server-driven web applications and polished cross-platform iOS & Android experiences that turn complex workflows into effortless digital products.",
+      primaryCta: {
+        label: "Explore Our Deliverables",
+        to: "/work",
+      },
+      secondaryCta: {
+        label: "Estimate Project Scope",
+        to: "/pricing",
+      },
+      badges: [
+        "100/100 Lighthouse Performance",
+        "60 FPS Native Gestures",
+        "Offline-First SQLite Sync",
+      ],
       image: `${cleanBase}images/hero-developer-workspace.jpg`,
       tag: "Full-Stack Ecosystem",
       title: "React 19 + Next.js & React Native",
       subtitle: "Web applications & cross-platform iOS/Android apps",
+      hudMetric: "60 FPS Fluid Gestures",
       metricValue: 100,
       metricDecimals: 0,
       metricSuffix: "/100",
       metricLabel: "Lighthouse Performance",
-      badgePill: "60 FPS Fluid Gestures",
+      verifiedText: "Sub-Second First Paint",
       icon: Code2,
     },
     {
       id: "ai",
-      tabLabel: "AI Multi-Agent",
+      tabNumber: "03",
+      tabTitle: "Autonomous AI Multi-Agent",
+      tabTech: "Gemini 2.5 • LLM Mesh",
+      eyebrow: "Intelligent Systems • Autonomous Multi-Agent Mesh",
+      prefix: "Autonomous AI Workflows.",
+      gradient: "Embedded into Your Stack",
+      suffix: " for 10x Velocity.",
+      description:
+        "Production-grade AI assistants, Gemini 2.5 multi-agent pipelines, and intelligent workflow automations that give your engineering team hours back every week.",
+      primaryCta: {
+        label: "Deploy AI Agents",
+        to: "/contact",
+      },
+      secondaryCta: {
+        label: "Chat with Arivom AI",
+        isAiButton: true,
+      },
+      badges: [
+        "Gemini 2.5 Multi-Agent Mesh",
+        "Custom Enterprise RAG",
+        "Automated Code Auditing",
+      ],
       image: `${cleanBase}images/hero-ai-automation-agents.jpg`,
       tag: "Autonomous Systems",
       title: "Gemini 2.5 + Multi-Agent Orchestration",
       subtitle: "Intelligent autonomous agent workflows embedded into production",
+      hudMetric: "Neural Multi-Agent Mesh",
       metricValue: 10,
       metricDecimals: 0,
       metricSuffix: "x",
-      metricLabel: "Operational Velocity",
-      badgePill: "Neural Multi-Agent Mesh",
+      metricLabel: "Engineering Velocity",
+      verifiedText: "Autonomous Task Execution",
       icon: Bot,
     },
   ]
@@ -839,45 +819,79 @@ function HeroBannerCarousel() {
   const [current, setCurrent] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
-  useEffect(() => {
-    if (isPaused) return
-    const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length)
-    }, 5500)
-    return () => clearInterval(timer)
-  }, [isPaused, slides.length])
+  // Typewriter state for active slide headline
+  const [displayedPrefix, setDisplayedPrefix] = useState("")
+  const [displayedGradient, setDisplayedGradient] = useState("")
+  const [displayedSuffix, setDisplayedSuffix] = useState("")
 
   const activeSlide = slides[current]
   const Icon = activeSlide.icon
 
+  // Run letter-by-letter typing whenever current slide changes
+  useEffect(() => {
+    setDisplayedPrefix("")
+    setDisplayedGradient("")
+    setDisplayedSuffix("")
+
+    const targetPrefix = activeSlide.prefix
+    const targetGradient = activeSlide.gradient
+    const targetSuffix = activeSlide.suffix
+
+    let pIdx = 0
+    let gIdx = 0
+    let sIdx = 0
+
+    // Step 1: Type prefix
+    const prefixInterval = setInterval(() => {
+      pIdx++
+      setDisplayedPrefix(targetPrefix.slice(0, pIdx))
+      if (pIdx >= targetPrefix.length) {
+        clearInterval(prefixInterval)
+
+        // Step 2: Type gradient
+        const gradInterval = setInterval(() => {
+          gIdx++
+          setDisplayedGradient(targetGradient.slice(0, gIdx))
+          if (gIdx >= targetGradient.length) {
+            clearInterval(gradInterval)
+
+            // Step 3: Type suffix
+            const suffixInterval = setInterval(() => {
+              sIdx++
+              setDisplayedSuffix(targetSuffix.slice(0, sIdx))
+              if (sIdx >= targetSuffix.length) {
+                clearInterval(suffixInterval)
+              }
+            }, 25)
+          }
+        }, 25)
+      }
+    }, 25)
+
+    return () => {
+      clearInterval(prefixInterval)
+    }
+  }, [current, activeSlide.prefix, activeSlide.gradient, activeSlide.suffix])
+
+  // Auto-advance every 7 seconds unless hovered
+  useEffect(() => {
+    if (isPaused) return
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length)
+    }, 7000)
+    return () => clearInterval(timer)
+  }, [isPaused, current, slides.length])
+
   return (
-    <div
-      className="hero-visual relative perspective-1000 group select-none"
+    <section
+      className="hero-grid overflow-hidden pb-16 pt-28 lg:pb-24 lg:pt-36 select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Ambient Backdrop Glow */}
-      <div className="hero-glow absolute -inset-8 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent blur-3xl transition-all duration-700 group-hover:from-orange-500/35" />
-
-      {/* Titanium Glass Command Console Frame */}
-      <div className="relative overflow-hidden rounded-[28px] border border-slate-700/60 bg-[#0B1437]/95 p-3.5 sm:p-4 shadow-[0_30px_90px_rgba(11,20,55,0.45)] ring-1 ring-white/10 backdrop-blur-2xl">
-        {/* Top Window Titlebar & Architecture Tabs */}
-        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 px-1">
-          {/* Traffic Lights & Live Status */}
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5">
-              <span className="h-3 w-3 rounded-full bg-[#FF5F56] shadow-xs" />
-              <span className="h-3 w-3 rounded-full bg-[#FFBD2E] shadow-xs" />
-              <span className="h-3 w-3 rounded-full bg-[#27C93F] shadow-xs" />
-            </div>
-            <div className="hidden xs:flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10.5px] font-mono text-slate-300">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>prod-mesh.arivom.live</span>
-            </div>
-          </div>
-
-          {/* Interactive Architecture Tabs */}
-          <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
+      <div className="container-wide">
+        {/* Top Command Bar & Architecture Slide Selector */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/80 p-2.5 sm:p-3 shadow-sm backdrop-blur-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1">
             {slides.map((slide, idx) => {
               const isSelected = idx === current
               return (
@@ -885,185 +899,230 @@ function HeroBannerCarousel() {
                   key={slide.id}
                   type="button"
                   onClick={() => setCurrent(idx)}
-                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                  className={`group relative flex flex-col items-start rounded-xl p-3 text-left transition-all duration-300 cursor-pointer overflow-hidden ${
                     isSelected
-                      ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm font-bold"
-                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                      ? "bg-[#0B1437] text-white shadow-md ring-1 ring-orange-500/30"
+                      : "bg-slate-50/70 text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
-                  <span>{slide.tabLabel}</span>
+                  <div className="flex items-center justify-between w-full">
+                    <span
+                      className={`text-[11px] font-mono font-bold tracking-wider uppercase ${
+                        isSelected ? "text-orange-400" : "text-slate-400"
+                      }`}
+                    >
+                      {slide.tabNumber} // ARCHITECTURE
+                    </span>
+                    {isSelected && (
+                      <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                    )}
+                  </div>
+                  <span className="mt-1 text-sm font-bold truncate w-full">
+                    {slide.tabTitle}
+                  </span>
+                  <span
+                    className={`text-[11px] truncate w-full mt-0.5 ${
+                      isSelected ? "text-slate-300" : "text-slate-500"
+                    }`}
+                  >
+                    {slide.tabTech}
+                  </span>
+
+                  {/* Active Slide Timer Line */}
+                  {isSelected && (
+                    <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/10">
+                      <div
+                        key={current}
+                        className={`h-full bg-gradient-to-r from-orange-500 to-amber-400 ${
+                          isPaused ? "w-full" : "animate-progress-fill"
+                        }`}
+                      />
+                    </div>
+                  )}
                 </button>
               )
             })}
           </div>
+
+          {/* Navigation Controls: Prev / Next / Counter */}
+          <div className="hidden md:flex items-center gap-3 px-3 shrink-0">
+            <div className="text-xs font-mono font-bold text-slate-500">
+              <span className="text-orange-600 font-extrabold text-sm">{current + 1}</span> / {slides.length}
+            </div>
+            <div className="flex items-center gap-1.5">
+              <button
+                type="button"
+                onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
+                aria-label="Previous slide"
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
+                aria-label="Next slide"
+              >
+                <ChevronRight size={16} />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Main 16:9 Cinema Viewport */}
-        <div className="relative h-[340px] w-full overflow-hidden rounded-[20px] bg-slate-950 sm:h-[450px]">
-          {slides.map((slide, index) => {
-            const isActive = index === current
-            return (
-              <div
-                key={slide.id}
-                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                  isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
-                }`}
-              >
-                <img
-                  src={slide.image}
-                  alt={slide.title}
-                  className={`h-full w-full object-cover transition-transform duration-1000 ease-out ${
-                    isActive ? "scale-100" : "scale-105"
-                  }`}
-                  loading={index === 0 ? "eager" : "lazy"}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/95 via-[#0B1437]/35 to-transparent" />
-              </div>
-            )
-          })}
+        {/* Slide Body: 2-Column Integrated Layout */}
+        <div key={activeSlide.id} className="grid items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
+          {/* Left Column: Animated Content */}
+          <div className="hero-copy min-w-0 max-w-full">
+            <div className="eyebrow inline-flex items-center gap-2 max-w-full">
+              <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse shrink-0" />
+              <span className="truncate sm:whitespace-normal">{activeSlide.eyebrow}</span>
+            </div>
 
-          {/* Top-Left Telemetry Tag */}
-          <div className="absolute top-4 left-4 z-20">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-[10.5px] font-mono font-semibold text-orange-300 backdrop-blur-md shadow-sm">
-              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-ping" />
-              {activeSlide.badgePill}
-            </span>
-          </div>
+            {/* Letter-by-Letter Animated Headline */}
+            <h1 className="hero-title mt-6 min-h-[130px] sm:min-h-[160px] lg:min-h-[185px] break-words">
+              <span className="text-[#0B1437]">{displayedPrefix}</span>{" "}
+              <span className="text-gradient font-black">{displayedGradient}</span>
+              <span className="text-[#0B1437]">{displayedSuffix}</span>
+              <span className="inline-block w-[3.5px] sm:w-[4.5px] h-[0.82em] ml-1.5 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
+            </h1>
 
-          {/* Prev / Next Arrows */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
-            <button
-              type="button"
-              onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white border border-white/10 backdrop-blur-md hover:bg-orange-500 hover:border-orange-400 transition-colors shadow-sm cursor-pointer"
-              aria-label="Previous banner"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white border border-white/10 backdrop-blur-md hover:bg-orange-500 hover:border-orange-400 transition-colors shadow-sm cursor-pointer"
-              aria-label="Next banner"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
+            {/* Subtitle */}
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 animate-fade-in-up delay-200">
+              {activeSlide.description}
+            </p>
 
-          {/* Bottom Integrated Architecture HUD Bar */}
-          <div className="absolute right-4 bottom-7 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-9">
-            <div className="flex max-w-[95%] items-center justify-between rounded-2xl border border-white/20 bg-[#0B1437]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
-              <div className="min-w-0 pr-3">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono font-bold truncate">
-                    {activeSlide.tag}
-                  </p>
-                </div>
-                <p className="mt-1 font-bold text-white text-sm sm:text-base tracking-tight truncate">
-                  {activeSlide.title}
-                </p>
-                <p className="hidden sm:block text-[11px] text-slate-300 line-clamp-1 mt-0.5">
-                  {activeSlide.subtitle}
-                </p>
-              </div>
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white shadow-md">
-                <Icon size={18} />
-              </span>
+            {/* Action Buttons */}
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row animate-fade-in-up delay-400">
+              <Link to={activeSlide.primaryCta.to} className="button button-primary">
+                {activeSlide.primaryCta.label} <ArrowRight size={18} />
+              </Link>
+
+              {activeSlide.secondaryCta.isAiButton ? (
+                <button
+                  type="button"
+                  onClick={() => openAiAssistantWithPrompt()}
+                  className="button button-secondary cursor-pointer flex items-center gap-2"
+                >
+                  <Bot size={18} className="text-orange-600" />
+                  {activeSlide.secondaryCta.label}
+                </button>
+              ) : (
+                <Link
+                  to={activeSlide.secondaryCta.to!}
+                  className="button button-secondary flex items-center gap-2"
+                >
+                  {activeSlide.secondaryCta.label}
+                  <ArrowRight size={16} />
+                </Link>
+              )}
+            </div>
+
+            {/* Trust Badges */}
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600 animate-fade-in-up delay-600">
+              {activeSlide.badges.map((item) => (
+                <span key={item} className="flex items-center gap-2">
+                  <CheckCircle2 size={17} className="text-emerald-600 shrink-0" /> {item}
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* Bottom Slide Progress Indicators */}
-          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
-            {slides.map((slide, idx) => (
-              <button
-                key={slide.id}
-                type="button"
-                onClick={() => setCurrent(idx)}
-                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === current ? "w-7 bg-orange-400" : "w-1.5 bg-white/40 hover:bg-white/70"
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
+          {/* Right Column: High-End Command Console with Bespoke 3D Imagery */}
+          <div className="hero-visual relative perspective-1000 group">
+            {/* Ambient Backdrop Glow */}
+            <div className="hero-glow absolute -inset-8 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent blur-3xl transition-all duration-700 group-hover:from-orange-500/35" />
+
+            {/* Titanium Glass Command Console Frame */}
+            <div className="relative overflow-hidden rounded-[28px] border border-slate-700/60 bg-[#0B1437]/95 p-3.5 sm:p-4 shadow-[0_30px_90px_rgba(11,20,55,0.45)] ring-1 ring-white/10 backdrop-blur-2xl">
+              {/* Console Titlebar */}
+              <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3 px-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="h-3 w-3 rounded-full bg-[#FF5F56] shadow-xs" />
+                  <span className="h-3 w-3 rounded-full bg-[#FFBD2E] shadow-xs" />
+                  <span className="h-3 w-3 rounded-full bg-[#27C93F] shadow-xs" />
+                </div>
+                <div className="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10.5px] font-mono text-slate-300">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>cluster.{activeSlide.id}.arivom.live</span>
+                </div>
+              </div>
+
+              {/* Cinema 16:9 Viewport */}
+              <div className="relative h-[330px] w-full overflow-hidden rounded-[20px] bg-slate-950 sm:h-[440px]">
+                <img
+                  src={activeSlide.image}
+                  alt={activeSlide.title}
+                  className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
+                  loading="eager"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/95 via-[#0B1437]/30 to-transparent" />
+
+                {/* Top-Left Telemetry Tag */}
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-[10.5px] font-mono font-semibold text-orange-300 backdrop-blur-md shadow-sm">
+                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-ping" />
+                    {activeSlide.hudMetric}
+                  </span>
+                </div>
+
+                {/* Bottom Integrated Architecture HUD Bar */}
+                <div className="absolute right-4 bottom-5 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-7">
+                  <div className="flex max-w-[95%] items-center justify-between rounded-2xl border border-white/20 bg-[#0B1437]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
+                    <div className="min-w-0 pr-3">
+                      <div className="flex items-center gap-2">
+                        <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono font-bold truncate">
+                          {activeSlide.tag}
+                        </p>
+                      </div>
+                      <p className="mt-1 font-bold text-white text-sm sm:text-base tracking-tight truncate">
+                        {activeSlide.title}
+                      </p>
+                      <p className="hidden sm:block text-[11px] text-slate-300 line-clamp-1 mt-0.5">
+                        {activeSlide.subtitle}
+                      </p>
+                    </div>
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white shadow-md">
+                      <Icon size={18} />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Floating SLA & Verified Metric Badge */}
+            <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 sm:p-4 shadow-2xl sm:-right-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
+              <div className="flex items-center gap-2">
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 font-mono">
+                  {activeSlide.verifiedText}
+                </span>
+              </div>
+              <p className="mt-1 text-2xl sm:text-3xl font-black text-[#0B1437] tracking-tight">
+                <AnimatedCounter
+                  key={activeSlide.id}
+                  value={activeSlide.metricValue}
+                  decimals={activeSlide.metricDecimals}
+                  suffix={activeSlide.metricSuffix}
+                />
+              </p>
+              <p className="mt-0.5 text-xs font-semibold text-slate-500">
+                {activeSlide.metricLabel}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Floating SLA & Verified Metric Badge */}
-      <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 sm:p-4 shadow-2xl sm:-right-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
-        <div className="flex items-center gap-2">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 font-mono">
-            Verified Production SLA
-          </span>
-        </div>
-        <p className="mt-1 text-2xl sm:text-3xl font-black text-[#0B1437] tracking-tight">
-          <AnimatedCounter
-            key={activeSlide.id}
-            value={activeSlide.metricValue}
-            decimals={activeSlide.metricDecimals}
-            suffix={activeSlide.metricSuffix}
-          />
-        </p>
-        <p className="mt-0.5 text-xs font-semibold text-slate-500">
-          {activeSlide.metricLabel}
-        </p>
-      </div>
-    </div>
+    </section>
   )
 }
 
 function Home() {
   return (
     <>
-      {/* 1. High-Impact Hero with Senior Engineering Collective Identity */}
-      <section className="hero-grid overflow-hidden pb-20 pt-32 lg:pb-28 lg:pt-40">
-        <div className="container-wide grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
-          <div className="hero-copy">
-            <div className="eyebrow">
-              <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
-              Senior Engineering Collective • Zero Agency Bloat
-            </div>
-
-            {/* Letter-by-Letter Animated Headline */}
-            <TypewriterHeroHeadline />
-
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 animate-fade-in-up delay-200">
-              Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
-            </p>
-
-            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row animate-fade-in-up delay-400">
-              <Link to="/contact" className="button button-primary">
-                Start a Sprint Project <ArrowRight size={18} />
-              </Link>
-              <button
-                type="button"
-                onClick={() => openAiAssistantWithPrompt()}
-                className="button button-secondary cursor-pointer flex items-center gap-2"
-              >
-                <Bot size={18} className="text-orange-600" />
-                Chat with Arivom AI
-              </button>
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600 animate-fade-in-up delay-600">
-              {[
-                "Direct Senior Git Access",
-                "2-Week Agile Sprints",
-                "100% Codebase Handover",
-              ].map((item) => (
-                <span key={item} className="flex items-center gap-2">
-                  <CheckCircle2 size={17} className="text-emerald-600" /> {item}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Interactive Multi-Slide Hero Banner */}
-          <HeroBannerCarousel />
-        </div>
-      </section>
+      {/* 1. High-Impact Unified Hero Banner Slider */}
+      <FullHeroBannerSlider />
 
       {/* 2. Client Domain Bar */}
       <section className="border-y border-slate-200/70 bg-white py-7">

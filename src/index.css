@@ -67,10 +67,12 @@
 
   .hero-title {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(2.7rem, 6vw, 5.25rem);
+    font-size: clamp(1.55rem, 5.2vw, 4.85rem);
     font-weight: 800;
-    letter-spacing: -0.055em;
-    line-height: 1.02;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .section-title {
@@ -93,13 +95,15 @@
     gap: 0.55rem;
     border: 1px solid #fed7aa;
     border-radius: 999px;
-    background: rgb(255 255 255 / 0.7);
-    padding: 0.45rem 0.8rem;
+    background: rgb(255 255 255 / 0.85);
+    padding: 0.4rem 0.8rem;
     color: #7c2d12;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 700;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    max-width: 100%;
+    white-space: normal;
   }
 
   .button {
@@ -753,6 +757,19 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress-fill {
+  animation: progressFill 7s linear forwards;
 }
 
 @keyframes typewriterBlink {
