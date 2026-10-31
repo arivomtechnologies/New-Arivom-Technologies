@@ -945,8 +945,21 @@
   animation: spin-orbit 24s linear infinite;
 }
 
+.animate-orbit-slow {
+  animation: spin-orbit 36s linear infinite;
+}
+
 .animate-orbit-reverse {
   animation: spin-orbit 18s linear infinite reverse;
+}
+
+.animate-orbit-reverse-slow {
+  animation: spin-orbit 42s linear infinite reverse;
+}
+
+.pause-hover:hover,
+.pause-hover:hover * {
+  animation-play-state: paused;
 }
 
 @keyframes pulse-glow {

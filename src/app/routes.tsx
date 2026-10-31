@@ -60,6 +60,10 @@ import { PersonaAdvantagesSection } from "./components/PersonaAdvantagesSection"
 import { BentoGridSection } from "./components/BentoGridSection"
 import { ClientDeliverablesCarousel } from "./components/ClientDeliverablesCarousel"
 import { AiCopilotSection } from "./components/AiCopilotSection"
+import {
+  KafkaSolarOrbitSection,
+  KafkaSolarOrbitCard,
+} from "./components/KafkaSolarOrbitSection"
 
 const photos = {
   code: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
@@ -1365,68 +1369,107 @@ function FAQ() {
 function Technology() {
   const groups = [
     [
-      "Frontend",
-      Code2,
-      ["React", "Next.js", "TypeScript", "Tailwind CSS", "Vue"],
-    ],
-    [
-      "Backend",
+      "Backend & Microservices",
       Blocks,
-      ["Node.js", "Python", "PostgreSQL", "REST & GraphQL", "Firebase"],
-    ],
-    [
-      "Mobile",
-      Smartphone,
-      ["React Native", "Flutter", "iOS", "Android", "PWA"],
-    ],
-    [
-      "Cloud",
-      Cloud,
-      ["AWS", "Vercel", "Docker", "GitHub Actions", "Cloudflare"],
-    ],
-    [
-      "Design",
-      Palette,
       [
-        "Figma",
-        "Design systems",
-        "Prototyping",
-        "User research",
-        "Accessibility",
+        "Java 21",
+        "Spring Boot 3",
+        "Spring Cloud Gateway",
+        "REST & gRPC",
+        "Virtual Threads",
       ],
     ],
     [
-      "AI & Data",
-      Sparkles,
-      ["OpenAI", "RAG", "Automation", "Analytics", "Data pipelines"],
+      "Frontend Architecture",
+      Code2,
+      [
+        "React 19",
+        "Angular Signals",
+        "TypeScript",
+        "Tailwind CSS v4",
+        "Next.js",
+      ],
+    ],
+    [
+      "Mobile Engineering",
+      Smartphone,
+      [
+        "React Native",
+        "iOS Native Bridge",
+        "Android Kotlin",
+        "Offline-First SQLite",
+      ],
+    ],
+    [
+      "Cloud & DevOps",
+      Cloud,
+      [
+        "Kubernetes (K8s)",
+        "Docker OCI",
+        "AWS & GCP",
+        "GitHub Actions",
+        "Cloudflare Edge",
+      ],
+    ],
+    [
+      "Databases & Persistence",
+      Database,
+      [
+        "PostgreSQL 16",
+        "MongoDB",
+        "Redis Caching",
+        "HikariCP Pooling",
+        "Debezium CDC",
+      ],
     ],
   ] as const
+
   return (
     <>
       <PageHero
-        eyebrow="Our technology"
+        eyebrow="Our technology stack"
         title="Modern tools. Sound engineering judgment."
-        text="We choose proven, maintainable technology around your product—not the trend of the week."
+        text="Decoupled event-driven streaming, high-throughput Spring Boot microservices, and reactive React / React Native platforms engineered without junior handoffs."
       />
-      <section className="section-space">
-        <div className="container-wide grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {groups.map(([name, Icon, items]) => (
-            <div className="card p-7" key={name}>
-              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
-                <Icon size={23} />
-              </span>
-              <h2 className="mt-6 text-xl font-bold text-[#111a2e]">{name}</h2>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {items.map((item) => (
-                  <span className="pill !px-3 !py-2" key={item}>
-                    {item}
+
+      {/* Centerpiece 1: Interactive Kafka & Event Streaming Solar Orbit Architecture Section */}
+      <KafkaSolarOrbitSection />
+
+      {/* Centerpiece 2: Categorized Tech Stack Grid featuring the standalone Kafka Solar Circle Card */}
+      <section className="section-space bg-slate-50/60 border-b border-slate-200/60">
+        <div className="container-wide">
+          <SectionHeading
+            eyebrow="Full-Stack Specialization"
+            title="Senior Engineering Across Every Layer"
+            text="Every tool in our stack is chosen for predictable low latency, strict type safety, and zero-downtime deployment."
+          />
+
+          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* 1. Standalone Kafka & Event Streaming Solar Orbit Card */}
+            <KafkaSolarOrbitCard className="md:col-span-2 lg:col-span-1" />
+
+            {/* 2. Categorized Tech Stack Cards */}
+            {groups.map(([name, Icon, items]) => (
+              <div className="card p-7 flex flex-col justify-between" key={name}>
+                <div>
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+                    <Icon size={23} />
                   </span>
-                ))}
+                  <h2 className="mt-6 text-xl font-bold text-[#111a2e]">{name}</h2>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {items.map((item) => (
+                      <span className="pill !px-3 !py-2" key={item}>
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
+
       <section className="section-space bg-[#111a2e] text-white">
         <div className="container-wide grid items-center gap-12 lg:grid-cols-2">
           <div>
@@ -1439,9 +1482,9 @@ function Technology() {
           <div className="grid gap-4 sm:grid-cols-2">
             {[
               [ShieldCheck, "Secure by default"],
-              [Zap, "Performance budgets"],
-              [Globe2, "Accessible experiences"],
-              [BarChart3, "Measurable systems"],
+              [Zap, "Performance budgets (< 5ms)"],
+              [Globe2, "Zero data loss semantics"],
+              [BarChart3, "100K+ TPS event streaming"],
             ].map(([Icon, label]) => (
               <div
                 className="rounded-2xl border border-white/10 bg-white/5 p-5"
