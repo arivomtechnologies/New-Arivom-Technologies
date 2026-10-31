@@ -704,6 +704,280 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
   )
 }
 
+function TypewriterHeroHeadline() {
+  const staticPrefix = "Custom Enterprise Software."
+  const dynamicPhrases = [
+    { gradient: "Engineered to Scale", suffix: " from Day 1." },
+    { gradient: "Java 21 & Spring Boot 3", suffix: " Architecture." },
+    { gradient: "React 19 & React Native", suffix: " Full-Stack." },
+    { gradient: "High-Throughput", suffix: " with Kafka & Cloud." },
+  ]
+
+  const [phraseIndex, setPhraseIndex] = useState(0)
+  const [displayedPrefix, setDisplayedPrefix] = useState("")
+  const [displayedGradient, setDisplayedGradient] = useState("")
+  const [displayedSuffix, setDisplayedSuffix] = useState("")
+  const [phase, setPhase] = useState<"prefix" | "gradient" | "suffix" | "pause" | "deleting">("prefix")
+
+  // Initial prefix typing on mount (letter by letter)
+  useEffect(() => {
+    let currentLen = 0
+    const interval = setInterval(() => {
+      currentLen++
+      setDisplayedPrefix(staticPrefix.slice(0, currentLen))
+      if (currentLen >= staticPrefix.length) {
+        clearInterval(interval)
+        setPhase("gradient")
+      }
+    }, 38)
+    return () => clearInterval(interval)
+  }, [])
+
+  // Dynamic phrase typing & cycling (letter by letter)
+  useEffect(() => {
+    if (phase === "prefix") return
+
+    const currentPhrase = dynamicPhrases[phraseIndex]
+    let timeout: ReturnType<typeof setTimeout>
+
+    if (phase === "gradient") {
+      if (displayedGradient.length < currentPhrase.gradient.length) {
+        timeout = setTimeout(() => {
+          setDisplayedGradient(currentPhrase.gradient.slice(0, displayedGradient.length + 1))
+        }, 36)
+      } else {
+        setPhase("suffix")
+      }
+    } else if (phase === "suffix") {
+      if (displayedSuffix.length < currentPhrase.suffix.length) {
+        timeout = setTimeout(() => {
+          setDisplayedSuffix(currentPhrase.suffix.slice(0, displayedSuffix.length + 1))
+        }, 36)
+      } else {
+        setPhase("pause")
+      }
+    } else if (phase === "pause") {
+      // Hold for 5.5s so user can read comfortably
+      timeout = setTimeout(() => {
+        setPhase("deleting")
+      }, 5500)
+    } else if (phase === "deleting") {
+      if (displayedSuffix.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedSuffix((prev) => prev.slice(0, -1))
+        }, 22)
+      } else if (displayedGradient.length > 0) {
+        timeout = setTimeout(() => {
+          setDisplayedGradient((prev) => prev.slice(0, -1))
+        }, 22)
+      } else {
+        // Switch to next phrase
+        setPhraseIndex((prev) => (prev + 1) % dynamicPhrases.length)
+        setPhase("gradient")
+      }
+    }
+
+    return () => clearTimeout(timeout)
+  }, [phase, displayedGradient, displayedSuffix, phraseIndex])
+
+  return (
+    <h1 className="hero-title mt-6 min-h-[140px] sm:min-h-[160px] lg:min-h-[190px]">
+      <span className="text-[#0B1437]">{displayedPrefix}</span>{" "}
+      <span className="text-gradient font-black">{displayedGradient}</span>
+      <span className="text-[#0B1437]">{displayedSuffix}</span>
+      <span className="inline-block w-[3.5px] sm:w-[4.5px] h-[0.82em] ml-1.5 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
+    </h1>
+  )
+}
+
+function HeroBannerCarousel() {
+  const slides = [
+    {
+      id: "fintech",
+      image: `${cleanBase}images/hero-banner-fintech.jpg`,
+      tag: "Production Architecture",
+      title: "Spring Boot 3 + Kafka Engine",
+      subtitle: "Event-driven distributed systems & banking-grade security",
+      metricValue: 99.9,
+      metricDecimals: 1,
+      metricSuffix: "%",
+      metricLabel: "Production SLA Uptime",
+      icon: Rocket,
+    },
+    {
+      id: "web",
+      image: `${cleanBase}images/hero-banner-web.jpg`,
+      tag: "Full-Stack Web Engineering",
+      title: "React 19 + Next.js App Router",
+      subtitle: "Sub-second server actions & modular component systems",
+      metricValue: 100,
+      metricDecimals: 0,
+      metricSuffix: "/100",
+      metricLabel: "Lighthouse Performance",
+      icon: Code2,
+    },
+    {
+      id: "mobile",
+      image: `${cleanBase}images/hero-banner-mobile.jpg`,
+      tag: "Cross-Platform Mobile Apps",
+      title: "React Native iOS & Android",
+      subtitle: "Fluid 120Hz native gestures & offline-first SQLite sync",
+      metricValue: 60,
+      metricDecimals: 0,
+      metricSuffix: " FPS",
+      metricLabel: "Smooth Native Experience",
+      icon: Smartphone,
+    },
+    {
+      id: "cloud",
+      image: `${cleanBase}images/hero-banner-cloud.jpg`,
+      tag: "Zero-Downtime Infrastructure",
+      title: "Kubernetes & CI/CD Pipelines",
+      subtitle: "Automated blue-green deployments with zero latency spikes",
+      metricValue: 99.99,
+      metricDecimals: 2,
+      metricSuffix: "%",
+      metricLabel: "Cloud Cluster Reliability",
+      icon: Cloud,
+    },
+    {
+      id: "ai",
+      image: `${cleanBase}images/service-ai-saas.jpg`,
+      tag: "Autonomous AI Workflows",
+      title: "Gemini 2.5 + Multi-Agent Engine",
+      subtitle: "Intelligent autonomous agents integrated into your stack",
+      metricValue: 10,
+      metricDecimals: 0,
+      metricSuffix: "x",
+      metricLabel: "Engineering Velocity",
+      icon: Bot,
+    },
+  ]
+
+  const [current, setCurrent] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    if (isPaused) return
+    const timer = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % slides.length)
+    }, 5500)
+    return () => clearInterval(timer)
+  }, [isPaused, slides.length])
+
+  const activeSlide = slides[current]
+  const Icon = activeSlide.icon
+
+  return (
+    <div
+      className="hero-visual relative perspective-1000 group select-none"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="hero-glow absolute -inset-8 rounded-full bg-orange-300/25 blur-3xl transition-all duration-700 group-hover:bg-orange-400/30" />
+
+      <div className="hero-image-shell relative overflow-hidden rounded-[28px] border border-orange-100/90 bg-white p-3 shadow-[0_30px_80px_rgba(29,35,52,.15)] ring-1 ring-black/5">
+        <div className="relative h-[360px] w-full overflow-hidden rounded-[20px] bg-slate-900 sm:h-[470px]">
+          {slides.map((slide, index) => {
+            const isActive = index === current
+            return (
+              <div
+                key={slide.id}
+                className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                  isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
+                }`}
+              >
+                <img
+                  src={slide.image}
+                  alt={slide.title}
+                  className={`h-full w-full object-cover transition-transform duration-1000 ease-out ${
+                    isActive ? "scale-100" : "scale-105"
+                  }`}
+                  loading={index === 0 ? "eager" : "lazy"}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/90 via-[#0B1437]/25 to-transparent" />
+              </div>
+            )
+          })}
+
+          {/* Navigation Controls */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-orange-500 transition-colors shadow-sm cursor-pointer"
+              aria-label="Previous banner"
+            >
+              <ChevronLeft size={16} />
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-orange-500 transition-colors shadow-sm cursor-pointer"
+              aria-label="Next banner"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+
+          {/* Active Banner Info Badge */}
+          <div className="absolute right-4 bottom-8 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-10">
+            <div className="flex max-w-[94%] items-center justify-between rounded-2xl border border-white/20 bg-[#111a2e]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
+              <div className="min-w-0 pr-3">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono font-bold truncate">
+                    {activeSlide.tag}
+                  </p>
+                </div>
+                <p className="mt-1 font-bold text-white text-sm sm:text-base tracking-tight truncate">
+                  {activeSlide.title}
+                </p>
+                <p className="hidden sm:block text-[11px] text-slate-300 line-clamp-1 mt-0.5">
+                  {activeSlide.subtitle}
+                </p>
+              </div>
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white shadow-md">
+                <Icon size={18} />
+              </span>
+            </div>
+          </div>
+
+          {/* Indicators */}
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
+            {slides.map((slide, idx) => (
+              <button
+                key={slide.id}
+                type="button"
+                onClick={() => setCurrent(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === current ? "w-6 bg-orange-400" : "w-1.5 bg-white/40 hover:bg-white/70"
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Floating Metric Badge */}
+      <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-100 bg-white p-3.5 sm:p-4 shadow-xl sm:-right-8 transition-all duration-500 hover:scale-105">
+        <p className="text-2xl sm:text-3xl font-extrabold text-[#111a2e] tracking-tight">
+          <AnimatedCounter
+            key={activeSlide.id}
+            value={activeSlide.metricValue}
+            decimals={activeSlide.metricDecimals}
+            suffix={activeSlide.metricSuffix}
+          />
+        </p>
+        <p className="mt-1 text-xs font-semibold text-slate-500">
+          {activeSlide.metricLabel}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 function Home() {
   return (
     <>
@@ -715,13 +989,15 @@ function Home() {
               <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
               Senior Engineering Collective • Zero Agency Bloat
             </div>
-            <h1 className="hero-title mt-6">
-              Custom Enterprise Software. <span className="text-gradient">Engineered to Scale</span> from Day 1.
-            </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+
+            {/* Letter-by-Letter Animated Headline */}
+            <TypewriterHeroHeadline />
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 animate-fade-in-up delay-200">
               Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
             </p>
-            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
+
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row animate-fade-in-up delay-400">
               <Link to="/contact" className="button button-primary">
                 Start a Sprint Project <ArrowRight size={18} />
               </Link>
@@ -734,7 +1010,8 @@ function Home() {
                 Chat with Arivom AI
               </button>
             </div>
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600">
+
+            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600 animate-fade-in-up delay-600">
               {[
                 "Direct Senior Git Access",
                 "2-Week Agile Sprints",
@@ -746,33 +1023,9 @@ function Home() {
               ))}
             </div>
           </div>
-          <div className="hero-visual relative perspective-1000">
-            <div className="hero-glow absolute -inset-8 rounded-full bg-orange-300/20 blur-3xl" />
-            <div className="hero-image-shell relative rounded-[28px] border border-orange-100 bg-white p-3 shadow-[0_30px_80px_rgba(29,35,52,.15)]">
-              <img
-                src={photos.code}
-                alt="Software engineering workspace"
-                className="h-[360px] w-full rounded-[20px] object-cover sm:h-[470px]"
-              />
-              <div className="absolute right-0 bottom-10 left-8 flex max-w-[85%] items-center justify-between rounded-2xl border border-white/50 bg-[#111a2e]/90 p-4 text-white backdrop-blur sm:left-10">
-                <div>
-                  <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono">
-                    Production Architecture
-                  </p>
-                  <p className="mt-1 font-bold text-white">Spring Boot 3 + Kafka Engine</p>
-                </div>
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-orange-500 text-white">
-                  <Rocket size={18} />
-                </span>
-              </div>
-            </div>
-            <div className="floating-badge absolute -right-2 -bottom-5 rounded-2xl border border-slate-100 bg-white p-4 shadow-xl sm:-right-8">
-              <p className="text-2xl font-extrabold text-[#111a2e]">
-                <AnimatedCounter value={99.9} decimals={1} suffix="%" />
-              </p>
-              <p className="mt-1 text-xs text-slate-500">Production SLA Uptime</p>
-            </div>
-          </div>
+
+          {/* Interactive Multi-Slide Hero Banner */}
+          <HeroBannerCarousel />
         </div>
       </section>
 
