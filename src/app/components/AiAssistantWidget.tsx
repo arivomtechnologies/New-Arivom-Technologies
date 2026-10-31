@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
   Bot,
+  GripVertical,
   MessageSquare,
   Send,
   Sparkles,
@@ -39,6 +40,214 @@ export function AiAssistantWidget() {
   ])
 
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  // 1. Moveable Floating Launcher State & Ref
+  const launcherRef = useRef<HTMLDivElement>(null)
+  const [launcherPos, setLauncherPos] = useState<{ x: number; y: number } | null>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('arivom_ai_launcher_pos')
+        if (saved) {
+          const parsed = JSON.parse(saved)
+          if (typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+            return parsed
+          }
+        }
+      } catch {}
+    }
+    return null
+  })
+  const [isDraggingLauncher, setIsDraggingLauncher] = useState(false)
+  const launcherDragRef = useRef<{
+    startX: number
+    startY: number
+    originX: number
+    originY: number
+    hasMoved: boolean
+  } | null>(null)
+
+  // 2. Moveable Modal Drawer State & Ref
+  const modalRef = useRef<HTMLDivElement>(null)
+  const [modalPos, setModalPos] = useState<{ x: number; y: number } | null>(null)
+  const [isDraggingModal, setIsDraggingModal] = useState(false)
+  const modalDragRef = useRef<{
+    startX: number
+    startY: number
+    originX: number
+    originY: number
+    hasMoved: boolean
+  } | null>(null)
+
+  // Clamping helpers
+  const clampLauncher = (x: number, y: number) => {
+    const pad = 12
+    const w = launcherRef.current?.offsetWidth || 220
+    const h = launcherRef.current?.offsetHeight || 56
+    const maxX = Math.max(pad, window.innerWidth - w - pad)
+    const maxY = Math.max(pad, window.innerHeight - h - pad)
+    return {
+      x: Math.min(Math.max(pad, x), maxX),
+      y: Math.min(Math.max(pad, y), maxY),
+    }
+  }
+
+  const clampModal = (x: number, y: number) => {
+    const pad = 8
+    const w = modalRef.current?.offsetWidth || 380
+    const h = modalRef.current?.offsetHeight || 580
+    const maxX = Math.max(pad, window.innerWidth - w - pad)
+    const maxY = Math.max(pad, window.innerHeight - h - pad)
+    return {
+      x: Math.min(Math.max(pad, x), maxX),
+      y: Math.min(Math.max(pad, y), maxY),
+    }
+  }
+
+  // Handle window resize so widgets never get pushed off-screen
+  useEffect(() => {
+    const handleResize = () => {
+      if (launcherPos) {
+        const clamped = clampLauncher(launcherPos.x, launcherPos.y)
+        if (clamped.x !== launcherPos.x || clamped.y !== launcherPos.y) {
+          setLauncherPos(clamped)
+        }
+      }
+      if (modalPos) {
+        const clamped = clampModal(modalPos.x, modalPos.y)
+        if (clamped.x !== modalPos.x || clamped.y !== modalPos.y) {
+          setModalPos(clamped)
+        }
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [launcherPos, modalPos])
+
+  // Launcher Pointer Handlers
+  const handleLauncherPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return
+    const rect = launcherRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    launcherDragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: rect.left,
+      originY: rect.top,
+      hasMoved: false,
+    }
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId)
+    } catch {}
+    setIsDraggingLauncher(true)
+  }
+
+  const handleLauncherPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!launcherDragRef.current) return
+    const deltaX = e.clientX - launcherDragRef.current.startX
+    const deltaY = e.clientY - launcherDragRef.current.startY
+
+    if (!launcherDragRef.current.hasMoved && Math.hypot(deltaX, deltaY) > 4) {
+      launcherDragRef.current.hasMoved = true
+    }
+
+    if (launcherDragRef.current.hasMoved) {
+      const next = clampLauncher(
+        launcherDragRef.current.originX + deltaX,
+        launcherDragRef.current.originY + deltaY
+      )
+      setLauncherPos(next)
+    }
+  }
+
+  const handleLauncherPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!launcherDragRef.current) return
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {}
+
+    const moved = launcherDragRef.current.hasMoved
+    launcherDragRef.current = null
+    setIsDraggingLauncher(false)
+
+    if (moved) {
+      if (launcherPos) {
+        try {
+          localStorage.setItem('arivom_ai_launcher_pos', JSON.stringify(launcherPos))
+        } catch {}
+      }
+    } else {
+      setIsOpen(true)
+    }
+  }
+
+  const handleLauncherPointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!launcherDragRef.current) return
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {}
+    launcherDragRef.current = null
+    setIsDraggingLauncher(false)
+  }
+
+  // Modal Header Pointer Handlers
+  const handleModalHeaderPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return
+    if ((e.target as HTMLElement).closest('button')) return
+
+    const rect = modalRef.current?.getBoundingClientRect()
+    if (!rect) return
+
+    modalDragRef.current = {
+      startX: e.clientX,
+      startY: e.clientY,
+      originX: rect.left,
+      originY: rect.top,
+      hasMoved: false,
+    }
+
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId)
+    } catch {}
+    setIsDraggingModal(true)
+  }
+
+  const handleModalHeaderPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!modalDragRef.current) return
+    const deltaX = e.clientX - modalDragRef.current.startX
+    const deltaY = e.clientY - modalDragRef.current.startY
+
+    if (!modalDragRef.current.hasMoved && Math.hypot(deltaX, deltaY) > 4) {
+      modalDragRef.current.hasMoved = true
+    }
+
+    if (modalDragRef.current.hasMoved) {
+      const next = clampModal(
+        modalDragRef.current.originX + deltaX,
+        modalDragRef.current.originY + deltaY
+      )
+      setModalPos(next)
+    }
+  }
+
+  const handleModalHeaderPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!modalDragRef.current) return
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {}
+    modalDragRef.current = null
+    setIsDraggingModal(false)
+  }
+
+  const handleModalHeaderPointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!modalDragRef.current) return
+    try {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    } catch {}
+    modalDragRef.current = null
+    setIsDraggingModal(false)
+  }
 
   useEffect(() => {
     const handleOpen = (e: Event) => {
@@ -113,32 +322,95 @@ export function AiAssistantWidget() {
 
   return (
     <>
-      {/* Floating Launcher Button */}
-      <div className="fixed bottom-6 right-6 z-50">
-        {!isOpen ? (
-          <button
-            type="button"
-            onClick={() => setIsOpen(true)}
-            aria-label="Open AI Assistant"
-            className="group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 p-3.5 sm:px-5 sm:py-3.5 text-white shadow-xl shadow-orange-500/30 transition-all duration-300 hover:scale-105 hover:shadow-orange-500/40 cursor-pointer active:scale-95"
+      {/* Floating Launcher Button (Moveable anywhere on screen) */}
+      {!isOpen && (
+        <div
+          ref={launcherRef}
+          onPointerDown={handleLauncherPointerDown}
+          onPointerMove={handleLauncherPointerMove}
+          onPointerUp={handleLauncherPointerUp}
+          onPointerCancel={handleLauncherPointerCancel}
+          style={{
+            position: 'fixed',
+            left: launcherPos ? `${launcherPos.x}px` : undefined,
+            top: launcherPos ? `${launcherPos.y}px` : undefined,
+            right: launcherPos ? undefined : '1.5rem',
+            bottom: launcherPos ? undefined : '1.5rem',
+            touchAction: 'none',
+            zIndex: 9999,
+          }}
+          className={`select-none ${isDraggingLauncher ? 'cursor-grabbing' : 'cursor-grab'}`}
+        >
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label="Open AI Assistant (Drag to reposition)"
+            title="Drag to move anywhere • Click to open"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                setIsOpen(true)
+              }
+            }}
+            className={`group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 p-3 sm:px-4.5 sm:py-3.5 text-white shadow-xl shadow-orange-500/35 active:scale-95 transition-all select-none touch-none ${
+              isDraggingLauncher
+                ? 'scale-105 shadow-2xl shadow-orange-500/50 ring-4 ring-orange-400/40 !transition-none'
+                : 'hover:scale-105 hover:shadow-orange-500/45'
+            }`}
           >
-            <span className="relative flex h-5 w-5 items-center justify-center">
+            {/* Grip Handle Indicator */}
+            <span className="text-white/60 group-hover:text-white transition-colors flex items-center shrink-0">
+              <GripVertical size={16} />
+            </span>
+
+            {/* Robot Icon with Online Pulsing Indicator */}
+            <span className="relative flex h-5 w-5 items-center justify-center shrink-0">
               <Bot size={20} className="transition-transform group-hover:rotate-12" />
               <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white animate-pulse" />
             </span>
-            <span className="hidden sm:inline font-bold text-xs tracking-wider uppercase font-mono">
+
+            {/* Label */}
+            <span className="hidden sm:inline font-bold text-xs tracking-wider uppercase font-mono whitespace-nowrap pr-1">
               Arivom AI Co-Pilot
             </span>
-          </button>
-        ) : null}
-      </div>
+          </div>
+        </div>
+      )}
 
-      {/* Slide-in Modal Drawer */}
+      {/* Slide-in Modal Drawer (Moveable via Header) */}
       {isOpen && (
-        <div className="fixed bottom-4 right-4 z-50 flex h-[580px] w-[calc(100vw-2rem)] max-w-[420px] flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white/95 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200">
+        <div
+          ref={modalRef}
+          style={{
+            position: 'fixed',
+            left: modalPos
+              ? `${modalPos.x}px`
+              : launcherPos && launcherPos.x < window.innerWidth / 2
+              ? `${Math.max(16, launcherPos.x)}px`
+              : undefined,
+            top: modalPos ? `${modalPos.y}px` : undefined,
+            right: modalPos
+              ? undefined
+              : launcherPos && launcherPos.x < window.innerWidth / 2
+              ? undefined
+              : '1rem',
+            bottom: modalPos ? undefined : '1rem',
+            zIndex: 9999,
+          }}
+          className={`flex h-[580px] w-[calc(100vw-2rem)] max-w-[420px] flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white/95 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200 ${
+            isDraggingModal ? 'ring-2 ring-orange-400/50 select-none' : ''
+          }`}
+        >
           
-          {/* Header */}
-          <div className="flex items-center justify-between border-b border-slate-100 bg-[#111a2e] px-5 py-4 text-white">
+          {/* Header - Drag Handle */}
+          <div
+            onPointerDown={handleModalHeaderPointerDown}
+            onPointerMove={handleModalHeaderPointerMove}
+            onPointerUp={handleModalHeaderPointerUp}
+            onPointerCancel={handleModalHeaderPointerCancel}
+            title="Drag header to move chat window"
+            className="flex items-center justify-between border-b border-slate-100 bg-[#111a2e] px-5 py-4 text-white cursor-grab active:cursor-grabbing select-none touch-none"
+          >
             <div className="flex items-center gap-3">
               <div className="relative grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 text-white shadow-md">
                 <Sparkles size={18} />
@@ -160,17 +432,23 @@ export function AiAssistantWidget() {
             <div className="flex items-center gap-1">
               <button
                 type="button"
-                onClick={clearChat}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  clearChat()
+                }}
                 title="Clear chat history"
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition cursor-pointer"
               >
                 <Trash2 size={16} />
               </button>
               <button
                 type="button"
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setIsOpen(false)
+                }}
                 title="Close chat"
-                className="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition"
+                className="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition cursor-pointer"
               >
                 <X size={18} />
               </button>
