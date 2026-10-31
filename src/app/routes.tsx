@@ -793,63 +793,45 @@ function TypewriterHeroHeadline() {
 function HeroBannerCarousel() {
   const slides = [
     {
-      id: "fintech",
-      image: `${cleanBase}images/hero-banner-fintech.jpg`,
+      id: "architecture",
+      tabLabel: "Cloud & Kafka",
+      image: `${cleanBase}images/hero-enterprise-architecture.jpg`,
       tag: "Production Architecture",
-      title: "Spring Boot 3 + Kafka Engine",
-      subtitle: "Event-driven distributed systems & banking-grade security",
+      title: "Java 21 + Spring Boot 3 + Kafka",
+      subtitle: "High-throughput event streaming & enterprise microservices",
       metricValue: 99.9,
       metricDecimals: 1,
       metricSuffix: "%",
       metricLabel: "Production SLA Uptime",
+      badgePill: "1.2M msg/s Throughput",
       icon: Rocket,
     },
     {
-      id: "web",
-      image: `${cleanBase}images/hero-banner-web.jpg`,
-      tag: "Full-Stack Web Engineering",
-      title: "React 19 + Next.js App Router",
-      subtitle: "Sub-second server actions & modular component systems",
+      id: "developer",
+      tabLabel: "Full-Stack & Mobile",
+      image: `${cleanBase}images/hero-developer-workspace.jpg`,
+      tag: "Full-Stack Ecosystem",
+      title: "React 19 + Next.js & React Native",
+      subtitle: "Web applications & cross-platform iOS/Android apps",
       metricValue: 100,
       metricDecimals: 0,
       metricSuffix: "/100",
       metricLabel: "Lighthouse Performance",
+      badgePill: "60 FPS Fluid Gestures",
       icon: Code2,
     },
     {
-      id: "mobile",
-      image: `${cleanBase}images/hero-banner-mobile.jpg`,
-      tag: "Cross-Platform Mobile Apps",
-      title: "React Native iOS & Android",
-      subtitle: "Fluid 120Hz native gestures & offline-first SQLite sync",
-      metricValue: 60,
-      metricDecimals: 0,
-      metricSuffix: " FPS",
-      metricLabel: "Smooth Native Experience",
-      icon: Smartphone,
-    },
-    {
-      id: "cloud",
-      image: `${cleanBase}images/hero-banner-cloud.jpg`,
-      tag: "Zero-Downtime Infrastructure",
-      title: "Kubernetes & CI/CD Pipelines",
-      subtitle: "Automated blue-green deployments with zero latency spikes",
-      metricValue: 99.99,
-      metricDecimals: 2,
-      metricSuffix: "%",
-      metricLabel: "Cloud Cluster Reliability",
-      icon: Cloud,
-    },
-    {
       id: "ai",
-      image: `${cleanBase}images/service-ai-saas.jpg`,
-      tag: "Autonomous AI Workflows",
-      title: "Gemini 2.5 + Multi-Agent Engine",
-      subtitle: "Intelligent autonomous agents integrated into your stack",
+      tabLabel: "AI Multi-Agent",
+      image: `${cleanBase}images/hero-ai-automation-agents.jpg`,
+      tag: "Autonomous Systems",
+      title: "Gemini 2.5 + Multi-Agent Orchestration",
+      subtitle: "Intelligent autonomous agent workflows embedded into production",
       metricValue: 10,
       metricDecimals: 0,
       metricSuffix: "x",
-      metricLabel: "Engineering Velocity",
+      metricLabel: "Operational Velocity",
+      badgePill: "Neural Multi-Agent Mesh",
       icon: Bot,
     },
   ]
@@ -874,10 +856,50 @@ function HeroBannerCarousel() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="hero-glow absolute -inset-8 rounded-full bg-orange-300/25 blur-3xl transition-all duration-700 group-hover:bg-orange-400/30" />
+      {/* Ambient Backdrop Glow */}
+      <div className="hero-glow absolute -inset-8 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent blur-3xl transition-all duration-700 group-hover:from-orange-500/35" />
 
-      <div className="hero-image-shell relative overflow-hidden rounded-[28px] border border-orange-100/90 bg-white p-3 shadow-[0_30px_80px_rgba(29,35,52,.15)] ring-1 ring-black/5">
-        <div className="relative h-[360px] w-full overflow-hidden rounded-[20px] bg-slate-900 sm:h-[470px]">
+      {/* Titanium Glass Command Console Frame */}
+      <div className="relative overflow-hidden rounded-[28px] border border-slate-700/60 bg-[#0B1437]/95 p-3.5 sm:p-4 shadow-[0_30px_90px_rgba(11,20,55,0.45)] ring-1 ring-white/10 backdrop-blur-2xl">
+        {/* Top Window Titlebar & Architecture Tabs */}
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-3 px-1">
+          {/* Traffic Lights & Live Status */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-1.5">
+              <span className="h-3 w-3 rounded-full bg-[#FF5F56] shadow-xs" />
+              <span className="h-3 w-3 rounded-full bg-[#FFBD2E] shadow-xs" />
+              <span className="h-3 w-3 rounded-full bg-[#27C93F] shadow-xs" />
+            </div>
+            <div className="hidden xs:flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10.5px] font-mono text-slate-300">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span>prod-mesh.arivom.live</span>
+            </div>
+          </div>
+
+          {/* Interactive Architecture Tabs */}
+          <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
+            {slides.map((slide, idx) => {
+              const isSelected = idx === current
+              return (
+                <button
+                  key={slide.id}
+                  type="button"
+                  onClick={() => setCurrent(idx)}
+                  className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                    isSelected
+                      ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white shadow-sm font-bold"
+                      : "text-slate-400 hover:text-white hover:bg-white/5"
+                  }`}
+                >
+                  <span>{slide.tabLabel}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Main 16:9 Cinema Viewport */}
+        <div className="relative h-[340px] w-full overflow-hidden rounded-[20px] bg-slate-950 sm:h-[450px]">
           {slides.map((slide, index) => {
             const isActive = index === current
             return (
@@ -895,17 +917,25 @@ function HeroBannerCarousel() {
                   }`}
                   loading={index === 0 ? "eager" : "lazy"}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/90 via-[#0B1437]/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/95 via-[#0B1437]/35 to-transparent" />
               </div>
             )
           })}
 
-          {/* Navigation Controls */}
-          <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+          {/* Top-Left Telemetry Tag */}
+          <div className="absolute top-4 left-4 z-20">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-[10.5px] font-mono font-semibold text-orange-300 backdrop-blur-md shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-ping" />
+              {activeSlide.badgePill}
+            </span>
+          </div>
+
+          {/* Prev / Next Arrows */}
+          <div className="absolute top-4 right-4 z-20 flex items-center gap-1.5">
             <button
               type="button"
               onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-orange-500 transition-colors shadow-sm cursor-pointer"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white border border-white/10 backdrop-blur-md hover:bg-orange-500 hover:border-orange-400 transition-colors shadow-sm cursor-pointer"
               aria-label="Previous banner"
             >
               <ChevronLeft size={16} />
@@ -913,16 +943,16 @@ function HeroBannerCarousel() {
             <button
               type="button"
               onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md hover:bg-orange-500 transition-colors shadow-sm cursor-pointer"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-black/50 text-white border border-white/10 backdrop-blur-md hover:bg-orange-500 hover:border-orange-400 transition-colors shadow-sm cursor-pointer"
               aria-label="Next banner"
             >
               <ChevronRight size={16} />
             </button>
           </div>
 
-          {/* Active Banner Info Badge */}
-          <div className="absolute right-4 bottom-8 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-10">
-            <div className="flex max-w-[94%] items-center justify-between rounded-2xl border border-white/20 bg-[#111a2e]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
+          {/* Bottom Integrated Architecture HUD Bar */}
+          <div className="absolute right-4 bottom-7 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-9">
+            <div className="flex max-w-[95%] items-center justify-between rounded-2xl border border-white/20 bg-[#0B1437]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
               <div className="min-w-0 pr-3">
                 <div className="flex items-center gap-2">
                   <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -943,15 +973,15 @@ function HeroBannerCarousel() {
             </div>
           </div>
 
-          {/* Indicators */}
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
+          {/* Bottom Slide Progress Indicators */}
+          <div className="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
             {slides.map((slide, idx) => (
               <button
                 key={slide.id}
                 type="button"
                 onClick={() => setCurrent(idx)}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                  idx === current ? "w-6 bg-orange-400" : "w-1.5 bg-white/40 hover:bg-white/70"
+                  idx === current ? "w-7 bg-orange-400" : "w-1.5 bg-white/40 hover:bg-white/70"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -960,9 +990,15 @@ function HeroBannerCarousel() {
         </div>
       </div>
 
-      {/* Floating Metric Badge */}
-      <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-100 bg-white p-3.5 sm:p-4 shadow-xl sm:-right-8 transition-all duration-500 hover:scale-105">
-        <p className="text-2xl sm:text-3xl font-extrabold text-[#111a2e] tracking-tight">
+      {/* Floating SLA & Verified Metric Badge */}
+      <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 sm:p-4 shadow-2xl sm:-right-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
+        <div className="flex items-center gap-2">
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+          <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 font-mono">
+            Verified Production SLA
+          </span>
+        </div>
+        <p className="mt-1 text-2xl sm:text-3xl font-black text-[#0B1437] tracking-tight">
           <AnimatedCounter
             key={activeSlide.id}
             value={activeSlide.metricValue}
@@ -970,7 +1006,7 @@ function HeroBannerCarousel() {
             suffix={activeSlide.metricSuffix}
           />
         </p>
-        <p className="mt-1 text-xs font-semibold text-slate-500">
+        <p className="mt-0.5 text-xs font-semibold text-slate-500">
           {activeSlide.metricLabel}
         </p>
       </div>
