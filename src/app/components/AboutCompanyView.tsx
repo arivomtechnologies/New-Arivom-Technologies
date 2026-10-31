@@ -93,6 +93,24 @@ export function AboutCompanyView() {
 
   const testimonials = [
     {
+      client: 'KB Homes',
+      category: 'Architects & Builders',
+      quote:
+        'Arivom Technologies built an architectural showcase portal that perfectly embodies the precision and luxury of our projects. High-ticket construction inquiries jumped significantly.',
+      stars: 5,
+      avatar: 'K',
+      bg: 'bg-[#111a2e] text-amber-400 border border-amber-500/30',
+    },
+    {
+      client: 'First Goal FC',
+      category: 'SportsTech & Tournament App',
+      quote:
+        'The mobile app and tournament engine built by Arivom handle thousands of academy players seamlessly. Live scores, goal push alerts, and bracket updates run flawlessly.',
+      stars: 5,
+      avatar: 'F',
+      bg: 'bg-emerald-600',
+    },
+    {
       client: 'La Castle Homes',
       category: 'Real Estate & Architecture',
       quote:
@@ -109,15 +127,6 @@ export function AboutCompanyView() {
       stars: 5,
       avatar: 'P',
       bg: 'bg-orange-600',
-    },
-    {
-      client: 'Sri Ramana Dental Clinic',
-      category: 'HealthTech & Clinic Management',
-      quote:
-        'Excellent technical expertise and patient-centric design. Delivered a reliable multi-doctor appointment portal with automated reminders on time and within budget.',
-      stars: 5,
-      avatar: 'S',
-      bg: 'bg-emerald-600',
     },
   ]
 
@@ -365,7 +374,7 @@ export function AboutCompanyView() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {testimonials.map((t) => (
               <div
                 key={t.client}

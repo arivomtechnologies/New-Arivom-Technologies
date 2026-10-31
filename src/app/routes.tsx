@@ -64,6 +64,9 @@ import { TechStackSolarOrbit } from "./components/TechStackSolarOrbit"
 import { ProjectScopeEstimator } from "./components/ProjectScopeEstimator"
 import { AboutCompanyView } from "./components/AboutCompanyView"
 
+const base = import.meta.env.BASE_URL || "/"
+const cleanBase = base.endsWith("/") ? base : `${base}/`
+
 const photos = {
   code: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
   team: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1400&q=85",
@@ -125,6 +128,35 @@ const services = [
 ]
 
 const projects = [
+  {
+    title: "KB Homes — Architects & Builders",
+    category: "Real Estate & Architecture",
+    result: "+380% qualified construction consultations",
+    url: "#",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
+    logo: `${cleanBase}images/kb-homes-logo.png`,
+    color: "from-amber-600/20 to-orange-100",
+    badge: "Client Platform • Architects & Builders",
+    architecture: "React 19 + TypeScript + Cloudflare Edge",
+    sprints: "2 Agile Sprints",
+    team: "Senior Frontend & Architecture Squad",
+    valuation: "Luxury Villa & Commercial Builder",
+    description: "Bespoke digital portal for KB Homes architects and builders featuring high-resolution architectural project portfolio, 3D elevation showcases, interactive floorplan viewer, and direct WhatsApp project inquiry routing.",
+  },
+  {
+    title: "First Goal FC — Tournament & Academy App",
+    category: "SportsTech & Mobile Application",
+    result: "12,000+ match events & live tournament scoring",
+    url: "#",
+    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=85",
+    color: "from-emerald-600/20 to-green-100",
+    badge: "Mobile App • iOS & Android",
+    architecture: "React Native + Spring Boot 3 + WebSockets",
+    sprints: "4 Agile Sprints",
+    team: "Senior Mobile & Real-Time Backend Squad",
+    valuation: "Live Tournament Engine",
+    description: "Cross-platform mobile application and tournament manager for First Goal FC football academy. Features live match center, instant push notifications for goals and penalties, automated bracket scheduling, and academy player rosters.",
+  },
   {
     title: "La Castle Homes",
     category: "Real Estate & Architecture",
@@ -1068,7 +1100,7 @@ function ServiceDetail() {
 
 function Work() {
   const [filter, setFilter] = useState("All")
-  const categories = ["All", ...projects.map((project) => project.category)]
+  const categories = ["All", ...Array.from(new Set(projects.map((project) => project.category)))]
   const visibleProjects =
     filter === "All"
       ? projects
@@ -1078,7 +1110,7 @@ function Work() {
       <PageHero
         eyebrow="Portfolio & trust"
         title="Work that makes the metric move."
-        text="A selection of digital products designed to improve revenue, efficiency, and customer experience."
+        text="A selection of digital products and production platforms designed and engineered by our senior squad."
       />
       <section className="section-space">
         <div className="container-wide">
@@ -1103,50 +1135,86 @@ function Work() {
                 className="card project-row grid overflow-hidden lg:grid-cols-2"
               >
                 <div
-                  className={`overflow-hidden ${index % 2 ? "lg:order-2" : ""}`}
+                  className={`overflow-hidden relative ${index % 2 ? "lg:order-2" : ""}`}
                 >
                   <img
                     src={project.image}
                     alt={`${project.title} project`}
-                    className="h-full min-h-[360px] w-full object-cover"
+                    className="h-full min-h-[360px] w-full object-cover transition-transform duration-700 hover:scale-105"
                   />
+                  {"logo" in project && project.logo && (
+                    <div className="absolute top-4 left-4 rounded-xl bg-black/90 backdrop-blur-md px-3.5 py-2 border border-white/20 shadow-xl flex items-center">
+                      <img
+                        src={project.logo}
+                        alt="Brand Logo"
+                        className="h-6 w-auto object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col justify-center p-8 lg:p-12">
-                  <p className="text-xs font-bold uppercase tracking-[.18em] text-orange-600">
-                    {project.category}
-                  </p>
-                  <h2 className="mt-4 text-3xl font-extrabold text-[#111a2e]">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[.18em] text-orange-600">
+                      {project.category}
+                    </span>
+                    <span className="rounded-full bg-orange-100/70 border border-orange-200/60 px-2.5 py-0.5 text-[10px] font-mono font-bold text-orange-800">
+                      {project.badge}
+                    </span>
+                  </div>
+                  <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold text-[#111a2e]">
                     {project.title}
                   </h2>
-                  <p className="mt-4 text-base leading-7 text-slate-600">
-                    We simplified a complex customer journey, rebuilt the core
-                    product experience, and equipped the team with a scalable
-                    design and engineering system.
+                  <p className="mt-3 text-sm sm:text-base leading-7 text-slate-600">
+                    {project.description}
                   </p>
-                  <div className="mt-7 grid grid-cols-2 gap-4">
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    <span className="rounded-full bg-slate-100 border border-slate-200/80 px-3 py-1 text-xs font-mono font-bold text-slate-800">
+                      ⚡ {project.architecture}
+                    </span>
+                    <span className="rounded-full bg-slate-100 border border-slate-200/80 px-3 py-1 text-xs font-mono text-slate-700">
+                      ⏱ {project.sprints}
+                    </span>
+                    <span className="rounded-full bg-slate-100 border border-slate-200/80 px-3 py-1 text-xs font-mono text-slate-700">
+                      👥 {project.team}
+                    </span>
+                  </div>
+                  <div className="mt-6 pt-5 border-t border-slate-100 grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-2xl font-black text-[#111a2e]">
+                      <p className="text-xl sm:text-2xl font-black font-mono text-orange-600">
                         {project.result.split(" ")[0]}
                       </p>
-                      <p className="mt-1 text-xs text-slate-500">
-                        Measured impact
+                      <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                        Measured Impact ({project.result.substring(project.result.indexOf(" ") + 1)})
                       </p>
                     </div>
                     <div>
-                      <p className="text-2xl font-black text-[#111a2e]">
-                        12 weeks
+                      <p className="text-xl sm:text-2xl font-black font-mono text-[#111a2e]">
+                        {project.sprints}
                       </p>
-                      <p className="mt-1 text-xs text-slate-500">
-                        To production
+                      <p className="mt-0.5 text-xs text-slate-500 font-medium">
+                        To Production
                       </p>
                     </div>
                   </div>
-                  <Link
-                    to="/contact"
-                    className="animated-link mt-8 inline-flex items-center gap-2 font-bold text-orange-600"
-                  >
-                    Build something like this <ArrowRight size={17} />
-                  </Link>
+                  <div className="mt-6 flex flex-wrap items-center gap-4">
+                    <Link
+                      to="/contact"
+                      className="animated-link inline-flex items-center gap-2 font-bold text-orange-600 text-sm"
+                    >
+                      Build something like this <ArrowRight size={17} />
+                    </Link>
+                    {project.url && project.url !== '#' && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-800 font-mono"
+                      >
+                        <span>Visit Live Site</span>
+                        <ExternalLink size={13} />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </article>
             ))}

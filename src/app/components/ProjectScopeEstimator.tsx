@@ -17,6 +17,7 @@ import {
   Sparkles,
   Stethoscope,
   Terminal,
+  Trophy,
   Zap,
 } from "lucide-react"
 
@@ -46,21 +47,39 @@ interface ArchetypePreset {
 const ARCHETYPES: ArchetypePreset[] = [
   {
     id: "realestate",
-    name: "Architectural Villa Portal",
-    clientExample: "La Castle Homes (Live Client)",
-    industry: "Luxury Real Estate",
+    name: "Architects & Builders Portal",
+    clientExample: "KB Homes & La Castle Homes (Live Clients)",
+    industry: "Luxury Architecture & Real Estate",
     icon: Building2,
     scale: "fullstack",
     platform: "web",
     backend: "spring-monolith",
     database: "postgres",
-    features: ["Virtual Tours", "Lead CRM", "Headless CMS", "Cloudflare CDN"],
+    features: ["Virtual 3D Elevation", "Floorplans", "WhatsApp Lead Dispatch", "Cloudflare CDN"],
     color: "from-amber-500/15 to-orange-500/10",
     borderColor: "hover:border-amber-400",
     badgeBg: "bg-amber-100",
     badgeText: "text-amber-800",
     description:
-      "Ultra-fast interactive property catalog with high-res media CDN, dynamic floorplans, and automated client lead dispatch.",
+      "Ultra-fast interactive property catalog with high-res media CDN, dynamic floorplans, structural elevation models, and automated client lead dispatch.",
+  },
+  {
+    id: "sportstech",
+    name: "Tournament & Sports Academy App",
+    clientExample: "First Goal FC (Live Client)",
+    industry: "SportsTech & Athletics",
+    icon: Trophy,
+    scale: "crossplatform",
+    platform: "mobile",
+    backend: "spring-microservices",
+    database: "polyglot",
+    features: ["Live Match Scoring", "Push Notifications", "Tournament Brackets", "Player Rosters"],
+    color: "from-emerald-500/15 to-green-500/10",
+    borderColor: "hover:border-emerald-400",
+    badgeBg: "bg-emerald-100",
+    badgeText: "text-emerald-800",
+    description:
+      "Cross-platform iOS and Android mobile app with live WebSocket match scores, tournament bracket scheduling, player attendance, and instant goal notifications.",
   },
   {
     id: "industrial",

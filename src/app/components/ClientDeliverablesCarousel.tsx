@@ -19,9 +19,38 @@ interface ClientProject {
   sprints: string
   team: string
   description: string
+  logo?: string
 }
 
+const base = import.meta.env.BASE_URL || '/'
+const cleanBase = base.endsWith('/') ? base : `${base}/`
+
 const deliverables: ClientProject[] = [
+  {
+    title: 'KB Homes',
+    category: 'Architecture & Luxury Construction',
+    result: '+380% qualified construction inquiries',
+    url: '#',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85',
+    logo: `${cleanBase}images/kb-homes-logo.png`,
+    badge: 'Production Portal • Architects & Builders',
+    architecture: 'React 19 + TypeScript + Cloudflare Edge',
+    sprints: '2 Agile Sprints',
+    team: 'Senior Frontend & Architecture Squad',
+    description: 'Bespoke digital portal for KB Homes architects and builders featuring high-resolution architectural project portfolio, 3D elevation showcases, interactive floorplan viewer, and direct WhatsApp project inquiry routing.',
+  },
+  {
+    title: 'First Goal FC',
+    category: 'SportsTech & Tournament Management',
+    result: '12,000+ match events & live scoring',
+    url: '#',
+    image: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=85',
+    badge: 'Mobile App • iOS & Android',
+    architecture: 'React Native + Spring Boot 3 + WebSockets',
+    sprints: '4 Agile Sprints',
+    team: 'Senior Mobile & Real-Time Backend Squad',
+    description: 'Cross-platform mobile application and tournament manager for First Goal FC football academy. Features live match center, instant push notifications for goals and penalties, automated bracket scheduling, and academy player rosters.',
+  },
   {
     title: 'La Castle Homes',
     category: 'Real Estate & Architecture',
@@ -138,10 +167,19 @@ export function ClientDeliverablesCarousel() {
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
 
             {/* Frosted Badges Overlaid on Photo */}
-            <div className="absolute top-5 left-5 flex flex-wrap gap-2">
+            <div className="absolute top-5 left-5 flex flex-wrap items-center gap-2">
               <span className="glass-pill px-3 py-1 rounded-full text-[11px] font-mono font-bold text-slate-900 shadow-sm">
                 ▲ {current.badge}
               </span>
+              {current.logo && (
+                <div className="rounded-full bg-black/90 backdrop-blur-md px-3 py-1 border border-white/20 shadow-md flex items-center">
+                  <img
+                    src={current.logo}
+                    alt={`${current.title} Logo`}
+                    className="h-4 w-auto object-contain"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="absolute bottom-5 left-5 right-5 glass-pill-dark p-4 rounded-2xl">

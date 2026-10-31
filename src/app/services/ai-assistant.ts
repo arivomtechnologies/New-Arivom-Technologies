@@ -178,13 +178,32 @@ Which type of project are you planning?`
 We typically reply within 1–2 hours during business hours!`
   }
 
-  if (q.includes('client') || q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('case study')) {
-    return `Here are some of our recent live production deliverables:
+  if (q.includes('football') || q.includes('first goal') || q.includes('tournament') || q.includes('academy') || q.includes('sport')) {
+    return `We engineered the official **First Goal FC Football Academy & Tournament App**!
 
+• **Cross-Platform Mobile**: React Native iOS & Android app for coaches, players, and parents.
+• **Live Match Engine**: Sub-second WebSocket live scores, goal/penalty events, and real-time commentary.
+• **Tournament Brackets**: Automated fixture scheduling, knockout brackets, and points tables.
+• **Academy Portal**: Player attendance, performance metrics, and automated parent push notifications.`
+  }
+
+  if (q.includes('kb home') || q.includes('builder') || q.includes('architect')) {
+    return `We engineered the digital platform for **KB Homes — Architects & Builders**!
+
+• **High-Impact Showcase**: Immersive architectural project portfolio featuring luxury residential villas and commercial builds.
+• **Interactive Elements**: 3D elevation renders, structural plan viewers, and material estimation calculations.
+• **High Conversion**: Instant WhatsApp inquiry dispatch routing qualified high-ticket consultations directly to architects.`
+  }
+
+  if (q.includes('client') || q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('case study')) {
+    return `Here are some of our verified live production deliverables:
+
+• **KB Homes**: Architects & Builders digital portfolio with 3D elevations and direct WhatsApp lead routing (+380% qualified consultations).
+• **First Goal FC**: Cross-platform Football Academy & Tournament mobile app with real-time live match scoring (12,000+ match events).
 • **La Castle Homes**: Luxury architectural villa & commercial portal (lacastlehomes.com).
-• **Phoenix Print Solution**: Industrial print automation & production tracking.
+• **Phoenix Print Solution**: Industrial print automation & production tracking (10,000+ daily jobs automated).
 • **Sri Ramana Dental Clinic**: HIPAA-compliant patient management & clinic system.
-• **BeeWell Organic Honey**: High-performance direct-to-consumer e-commerce.
+• **BeeWell Organic Honey**: High-performance direct-to-consumer e-commerce (2.8x conversion lift).
 
 Would you like to explore an architectural blueprint for a similar solution?`
   }
