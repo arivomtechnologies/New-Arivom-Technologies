@@ -83,7 +83,8 @@ const services = [
     slug: "web-development",
     summary:
       "High-performance websites and web apps engineered for conversion, scale, and speed.",
-    tags: ["React", "Next.js", "APIs"],
+    tags: ["React 19", "Next.js", "APIs"],
+    image: `${cleanBase}images/zigzag-web-application.jpg`,
   },
   {
     icon: Smartphone,
@@ -91,23 +92,8 @@ const services = [
     slug: "mobile-apps",
     summary:
       "Polished iOS and Android experiences that make complex workflows feel effortless.",
-    tags: ["React Native", "Flutter", "PWA"],
-  },
-  {
-    icon: Palette,
-    title: "UI/UX Design",
-    slug: "ui-ux-design",
-    summary:
-      "Research-led product design systems that are useful, memorable, and ready to build.",
-    tags: ["Figma", "Research", "Systems"],
-  },
-  {
-    icon: Cloud,
-    title: "Cloud & DevOps",
-    slug: "cloud-devops",
-    summary:
-      "Secure cloud foundations, automated delivery pipelines, and reliable infrastructure.",
-    tags: ["AWS", "Docker", "CI/CD"],
+    tags: ["React Native", "iOS", "Android"],
+    image: `${cleanBase}images/zigzag-mobile-application.jpg`,
   },
   {
     icon: Bot,
@@ -115,15 +101,35 @@ const services = [
     slug: "ai-automation",
     summary:
       "Practical AI assistants and workflow automation that give your team hours back.",
-    tags: ["LLMs", "Agents", "Automation"],
+    tags: ["Gemini AI", "Agents", "Workflows"],
+    image: `${cleanBase}images/service-ai-saas.jpg`,
+  },
+  {
+    icon: Cloud,
+    title: "Cloud & DevOps",
+    slug: "cloud-devops",
+    summary:
+      "Secure cloud foundations, automated delivery pipelines, and reliable infrastructure.",
+    tags: ["Kubernetes", "Docker", "CI/CD"],
+    image: `${cleanBase}images/zigzag-cloud-deployment.jpg`,
+  },
+  {
+    icon: Palette,
+    title: "UI/UX & Product Design",
+    slug: "ui-ux-design",
+    summary:
+      "Research-led product design systems that are useful, memorable, and ready to build.",
+    tags: ["Figma", "Design System", "Prototypes"],
+    image: `${cleanBase}images/arivom-services-dashboard.jpg`,
   },
   {
     icon: CircleDollarSign,
-    title: "FinTech Solutions",
+    title: "FinTech & Enterprise",
     slug: "fintech-solutions",
     summary:
-      "Secure payment, lending, and financial platforms built for trust and compliance.",
-    tags: ["Payments", "PCI-DSS", "Analytics"],
+      "Secure payment, lending, and financial microservices built for trust and compliance.",
+    tags: ["Java 21", "Spring Boot", "Kafka"],
+    image: `${cleanBase}images/service-enterprise-erp.jpg`,
   },
 ]
 
@@ -262,6 +268,8 @@ function Logo({ inverted = false }: { inverted?: boolean }) {
 
 function Header() {
   const [open, setOpen] = useState(false)
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(true)
+  const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
   const location = useLocation()
   useEffect(() => setOpen(false), [location.pathname])
 
@@ -270,10 +278,14 @@ function Header() {
     {
       to: "/services",
       label: "Services",
-      children: services.slice(0, 4).map((service) => ({
-        to: `/services/${service.slug}`,
-        label: service.title,
-      })),
+      children: [
+        { to: "/services/web-development", label: "Web development" },
+        { to: "/services/mobile-apps", label: "Mobile apps" },
+        { to: "/services/ui-ux-design", label: "UI/UX design" },
+        { to: "/services/ai-automation", label: "AI automation" },
+        { to: "/services/cloud-devops", label: "Cloud & DevOps" },
+        { to: "/services/fintech-solutions", label: "FinTech & Enterprise" },
+      ],
     },
     { to: "/work", label: "Work" },
     { to: "/pricing", label: "Scope Estimator" },
@@ -308,6 +320,7 @@ function Header() {
                   <ChevronDown className="nav-chevron" size={14} />
                 )}
               </NavLink>
+
               {item.children && (
                 <div className="dropdown-panel">
                   <div className="dropdown-inner">
@@ -344,16 +357,108 @@ function Header() {
           <span />
         </button>
       </nav>
+
+      {/* Mobile Drawer with Services Submenu */}
       <div className={`mobile-drawer ${open ? "mobile-drawer-open" : ""}`}>
         <div className="mobile-drawer-inner">
-          {links.map((item) => (
-            <NavLink key={item.to} to={item.to} className="mobile-nav-item">
-              {item.label} <ArrowRight size={15} />
-            </NavLink>
-          ))}
-          <Link to="/contact" className="button button-primary mt-3 w-full">
-            Start a project <ArrowRight size={16} />
-          </Link>
+          <div className="space-y-1 pb-2">
+            {links.map((item) => {
+              if (!item.children) {
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      `mobile-nav-item flex items-center justify-between ${
+                        isActive ? "text-orange-600 font-bold bg-orange-50/70" : ""
+                      }`
+                    }
+                    end={item.to === "/"}
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight size={15} />
+                  </NavLink>
+                )
+              }
+
+              const isServices = item.label === "Services"
+              const isOpen = isServices ? mobileServicesOpen : mobileCompanyOpen
+              const toggleOpen = () => {
+                if (isServices) setMobileServicesOpen(!mobileServicesOpen)
+                else setMobileCompanyOpen(!mobileCompanyOpen)
+              }
+
+              return (
+                <div
+                  key={item.to}
+                  className="rounded-xl border border-slate-200/60 bg-slate-50/60 p-1.5 my-1"
+                >
+                  <div className="flex items-center justify-between">
+                    <NavLink
+                      to={item.to}
+                      onClick={() => setOpen(false)}
+                      className={({ isActive }) =>
+                        `flex-1 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
+                          isActive
+                            ? "text-orange-600 font-bold"
+                            : "text-slate-800 hover:text-orange-600"
+                        }`
+                      }
+                      end={item.to === "/"}
+                    >
+                      {item.label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      onClick={toggleOpen}
+                      className="p-2 text-slate-500 hover:text-slate-800 transition-colors"
+                      aria-label={`Toggle ${item.label} submenu`}
+                    >
+                      <ChevronDown
+                        size={16}
+                        className={`transition-transform duration-200 ${
+                          isOpen ? "rotate-180 text-orange-600" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  {isOpen && (
+                    <div className="mt-1 space-y-0.5 border-t border-slate-200/60 pt-1.5 pl-2">
+                      {item.children.map((child) => (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          onClick={() => setOpen(false)}
+                          className={({ isActive }) =>
+                            `flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
+                              isActive
+                                ? "text-orange-600 bg-orange-50/80 font-bold"
+                                : "text-slate-600 hover:bg-white hover:text-orange-600"
+                            }`
+                          }
+                        >
+                          <span>{child.label}</span>
+                          <ArrowRight size={13} className="text-slate-400" />
+                        </NavLink>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="pt-2 border-t border-slate-100">
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="button button-primary w-full justify-center !py-3 shadow-md"
+            >
+              Start a project <ArrowRight size={16} />
+            </Link>
+          </div>
         </div>
       </div>
     </header>
