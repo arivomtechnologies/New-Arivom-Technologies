@@ -1,30 +1,46 @@
 import { FormEvent, useEffect, useRef, useState } from "react"
 import {
+  Activity,
   ArrowRight,
   ArrowUp,
   BarChart3,
   Blocks,
   Bot,
   Check,
+  CheckCircle,
   CheckCircle2,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   CircleDollarSign,
   Cloud,
   Code2,
+  Cpu,
+  Database,
   ExternalLink,
+  Flame,
   Globe2,
   Layers3,
   LoaderCircle,
+  Lock,
   Mail,
   MessageSquare,
   MonitorSmartphone,
   Palette,
+  Phone,
+  Play,
   Rocket,
   Quote,
+  Server,
+  Shield,
   ShieldCheck,
   Smartphone,
   Sparkles,
   Target,
+  Terminal,
+  TrendingUp,
+  Users,
+  Workflow,
   Zap,
 } from "lucide-react"
 import {
@@ -35,6 +51,15 @@ import {
   createBrowserRouter,
   useLocation,
 } from "react-router"
+import {
+  AiAssistantWidget,
+  openAiAssistantWithPrompt,
+} from "./components/AiAssistantWidget"
+import { StickyProcessSection } from "./components/StickyProcessSection"
+import { PersonaAdvantagesSection } from "./components/PersonaAdvantagesSection"
+import { BentoGridSection } from "./components/BentoGridSection"
+import { ClientDeliverablesCarousel } from "./components/ClientDeliverablesCarousel"
+import { AiCopilotSection } from "./components/AiCopilotSection"
 
 const photos = {
   code: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
@@ -98,25 +123,60 @@ const services = [
 
 const projects = [
   {
-    title: "NexaPay",
-    category: "FinTech",
-    result: "2.4M+ secure monthly transactions",
-    image: photos.code,
-    color: "from-orange-500/20 to-amber-200/40",
+    title: "La Castle Homes",
+    category: "Real Estate & Architecture",
+    result: "+420% qualified buyer inquiries",
+    url: "https://lacastlehomes.com/",
+    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1400&q=85",
+    color: "from-blue-500/20 to-sky-100",
+    badge: "Live Website • Verified Client",
+    architecture: "React + Node + Cloudflare CDN",
+    sprints: "2 Sprints (Fast-Track)",
+    team: "2 Dedicated Engineers",
+    valuation: "$1.8M+ Portfolio",
+    description: "Luxury architectural villas and construction portal showcasing high-end commercial landmarks and residential properties with astonishing speed.",
   },
   {
-    title: "CareFlow",
-    category: "HealthTech",
-    result: "38% faster patient onboarding",
-    image: photos.collaboration,
+    title: "Phoenix Print Solution",
+    category: "Industrial IoT & Print Automation",
+    result: "10,000+ daily orders automated",
+    url: "https://phoenixprintsolution.com/",
+    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=85",
+    color: "from-orange-500/20 to-amber-100",
+    badge: "Production System • Active",
+    architecture: "Java 21 + Spring Boot 3 + PostgreSQL",
+    sprints: "4 Sprints",
+    team: "3 Senior Engineers",
+    valuation: "10k+ Daily Jobs",
+    description: "High-volume prepress and offset printing workflow tracking software eliminating departmental bottlenecks and paper job slips.",
+  },
+  {
+    title: "Sri Ramana Dental Clinic",
+    category: "HealthTech & Patient Management",
+    result: "3,200+ digital appointments booked",
+    url: "#",
+    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=85",
     color: "from-emerald-500/20 to-teal-100",
+    badge: "HIPAA-Ready Clinic Portal",
+    architecture: "Angular Signals + Spring Cloud",
+    sprints: "3 Sprints",
+    team: "2 Full-Stack Engineers",
+    valuation: "3,200+ Patients",
+    description: "Comprehensive multi-doctor clinic management platform with automated SMS reminders, medical records, and digital consultation queue.",
   },
   {
-    title: "Northstar Commerce",
-    category: "E-commerce",
-    result: "64% lift in mobile conversion",
-    image: photos.office,
-    color: "from-blue-500/20 to-indigo-100",
+    title: "BeeWell Organic Honey",
+    category: "Direct-to-Consumer E-Commerce",
+    result: "2.8x conversion lift & 0 dropped carts",
+    url: "#",
+    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=1400&q=85",
+    color: "from-amber-500/20 to-yellow-100",
+    badge: "High-Traffic D2C Store",
+    architecture: "React Native + Headless PostgreSQL",
+    sprints: "3 Sprints",
+    team: "2 Mobile & Web Engineers",
+    valuation: "Zero-Lag Checkout",
+    description: "Artisanal organic honey direct-to-consumer store with Razorpay payment processing, instant WhatsApp tracking, and farm-to-bottle traceability.",
   },
 ]
 
@@ -159,7 +219,7 @@ function Header() {
       })),
     },
     { to: "/work", label: "Work" },
-    { to: "/pricing", label: "Pricing" },
+    { to: "/pricing", label: "Engagement Models" },
     { to: "/technology", label: "Tech Stack" },
     {
       to: "/about",
@@ -275,7 +335,7 @@ function Footer() {
           links={[
             ["/about", "About us"],
             ["/work", "Our work"],
-            ["/pricing", "Pricing"],
+            ["/pricing", "Engagement models"],
             ["/contact", "Contact"],
           ]}
         />
@@ -284,17 +344,27 @@ function Footer() {
             Let’s build
           </h3>
           <p className="mt-4 text-sm leading-6 text-slate-400">
-            Tell us what you’re working on. We reply within one business day.
+            Direct access to our 5 senior developers. We reply in under 12 hours.
           </p>
           <Link to="/contact" className="button button-primary mt-5">
             Discuss your idea <ArrowRight size={16} />
           </Link>
         </div>
       </div>
+
+      {/* Huge Typographic Watermark as seen in the Dribbble design */}
+      <div className="relative overflow-hidden pointer-events-none select-none py-6 border-t border-white/5">
+        <div className="container-wide">
+          <span className="block text-[clamp(4.5rem,15vw,11.5rem)] font-black tracking-tighter text-white/[0.04] leading-none uppercase font-mono">
+            ARIVOM
+          </span>
+        </div>
+      </div>
+
       <div className="border-t border-white/10">
         <div className="container-wide flex flex-col gap-2 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2025 Arivom Technologies. All rights reserved.</span>
-          <span>Built with care in India, serving clients worldwide.</span>
+          <span>© 2026 Arivom Technologies. 5-Developer Engineering Collective.</span>
+          <span>Delivering scalable enterprise web, cloud & mobile software.</span>
         </div>
       </div>
     </footer>
@@ -336,6 +406,7 @@ function Root() {
       </main>
       <Footer />
       <BackToTop />
+      <AiAssistantWidget />
       <ScrollRestoration />
     </>
   )
@@ -466,32 +537,38 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
 function Home() {
   return (
     <>
+      {/* 1. High-Impact Hero with 5-Senior Developer Collective Identity */}
       <section className="hero-grid overflow-hidden pb-20 pt-32 lg:pb-28 lg:pt-40">
-        <div className="container-wide grid items-center gap-14 lg:grid-cols-[1.05fr_.95fr]">
+        <div className="container-wide grid items-center gap-14 lg:grid-cols-[1.1fr_.9fr]">
           <div className="hero-copy">
-            <Eyebrow>Product engineering for ambitious teams</Eyebrow>
+            <div className="eyebrow">
+              <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse" />
+              Boutique 5-Developer Collective • Zero Agency Bloat
+            </div>
             <h1 className="hero-title mt-6">
-              Ideas into <span className="text-gradient">digital products</span>{" "}
-              that move business.
+              Custom Enterprise Software. <span className="text-gradient">Engineered to Scale</span> from Day 1.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-              Arivom is a freelance technology company designing and engineering
-              reliable websites, apps, platforms, and AI automations for growing
-              businesses.
+              Direct access to 5 senior full-stack developers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
               <Link to="/contact" className="button button-primary">
-                Start your project <ArrowRight size={18} />
+                Start a Sprint Project <ArrowRight size={18} />
               </Link>
-              <Link to="/work" className="button button-secondary">
-                Explore our work
-              </Link>
+              <button
+                type="button"
+                onClick={() => openAiAssistantWithPrompt()}
+                className="button button-secondary cursor-pointer flex items-center gap-2"
+              >
+                <Bot size={18} className="text-orange-600" />
+                Chat with Arivom AI
+              </button>
             </div>
             <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600">
               {[
-                "100% transparent",
-                "On-time delivery",
-                "Post-launch support",
+                "Direct Senior Git Access",
+                "2-Week Agile Sprints",
+                "100% Codebase Handover",
               ].map((item) => (
                 <span key={item} className="flex items-center gap-2">
                   <CheckCircle2 size={17} className="text-emerald-600" /> {item}
@@ -499,7 +576,7 @@ function Home() {
               ))}
             </div>
           </div>
-          <div className="hero-visual relative">
+          <div className="hero-visual relative perspective-1000">
             <div className="hero-glow absolute -inset-8 rounded-full bg-orange-300/20 blur-3xl" />
             <div className="hero-image-shell relative rounded-[28px] border border-orange-100 bg-white p-3 shadow-[0_30px_80px_rgba(29,35,52,.15)]">
               <img
@@ -509,30 +586,31 @@ function Home() {
               />
               <div className="absolute right-0 bottom-10 left-8 flex max-w-[85%] items-center justify-between rounded-2xl border border-white/50 bg-[#111a2e]/90 p-4 text-white backdrop-blur sm:left-10">
                 <div>
-                  <p className="text-[10px] uppercase tracking-[.2em] text-orange-300">
-                    Recent launch
+                  <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono">
+                    Production Architecture
                   </p>
-                  <p className="mt-1 font-bold">FinTech payment platform</p>
+                  <p className="mt-1 font-bold text-white">Spring Boot 3 + Kafka Engine</p>
                 </div>
-                <span className="grid h-10 w-10 place-items-center rounded-xl bg-orange-500">
+                <span className="grid h-10 w-10 place-items-center rounded-xl bg-orange-500 text-white">
                   <Rocket size={18} />
                 </span>
               </div>
             </div>
             <div className="floating-badge absolute -right-2 -bottom-5 rounded-2xl border border-slate-100 bg-white p-4 shadow-xl sm:-right-8">
               <p className="text-2xl font-extrabold text-[#111a2e]">
-                <AnimatedCounter value={4.9} decimals={1} suffix="/5" />
+                <AnimatedCounter value={99.9} decimals={1} suffix="%" />
               </p>
-              <p className="mt-1 text-xs text-slate-500">Client satisfaction</p>
+              <p className="mt-1 text-xs text-slate-500">Production SLA Uptime</p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* 2. Client Domain Bar */}
       <section className="border-y border-slate-200/70 bg-white py-7">
         <div className="container-wide flex flex-wrap items-center justify-center gap-x-12 gap-y-5 text-xs font-bold uppercase tracking-[.2em] text-slate-400">
-          <span>Trusted engineering partner for</span>
-          {["Startups", "SaaS", "FinTech", "E-commerce", "Healthcare"].map(
+          <span>Trusted Engineering Collective For</span>
+          {["FinTech & Payments", "HealthTech & Clinics", "Real Estate Portals", "IoT Industrial", "D2C Brands"].map(
             (item) => (
               <span key={item} className="text-slate-700">
                 {item}
@@ -542,12 +620,28 @@ function Home() {
         </div>
       </section>
 
-      <section className="section-space">
+      {/* 3. Sticky-Scroll 3-Step Process (From Dribbble Video) */}
+      <StickyProcessSection />
+
+      {/* 4. Interactive Bento Feature Grid (From Dribbble Video) */}
+      <BentoGridSection />
+
+      {/* 5. Persona Advantages Tab Switcher (From Dribbble Video) */}
+      <PersonaAdvantagesSection />
+
+      {/* 6. Horizontal Client Deliverables Carousel (From Dribbble Video) */}
+      <ClientDeliverablesCarousel />
+
+      {/* 7. AI Co-Pilot 3D Fan Showcase (From Dribbble Video) */}
+      <AiCopilotSection />
+
+      {/* 8. Core Service Matrix */}
+      <section className="section-space bg-white border-b border-slate-200/70">
         <div className="container-wide">
           <SectionHeading
-            eyebrow="What we build"
-            title="Full-cycle expertise, without the agency overhead."
-            text="Strategy, design, engineering, and launch support from one focused team."
+            eyebrow="What We Build"
+            title="Full-Stack Engineering Without Middlemen"
+            text="Strategy, system architecture, backend microservices, mobile apps, and cloud deployment from our 5 senior engineers."
           />
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service) => (
@@ -557,27 +651,6 @@ function Home() {
         </div>
       </section>
 
-      <section className="section-space bg-[#111a2e] text-white">
-        <div className="container-wide">
-          <SectionHeading
-            eyebrow="Selected work"
-            title="Built for measurable outcomes."
-            text="Every screen and system is connected to a clear business goal."
-          />
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {projects.map((project) => (
-              <ProjectCard project={project} key={project.title} />
-            ))}
-          </div>
-          <div className="mt-10 text-center">
-            <Link to="/work" className="button button-light">
-              View all case studies <ArrowRight size={17} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <Process />
       <Testimonials />
       <CTA />
     </>
@@ -1074,91 +1147,107 @@ function Work() {
 }
 
 function Pricing() {
-  const plans = [
+  const models = [
     {
-      name: "Launch",
-      price: "₹75K+",
-      blurb: "For a focused website or validated MVP.",
-      features: [
-        "Discovery workshop",
-        "Up to 8 key screens",
-        "Responsive development",
-        "Launch support",
-      ],
-    },
-    {
-      name: "Build",
-      price: "₹2.5L+",
-      blurb: "For a custom application or product release.",
+      name: "Dedicated Developer Squad",
+      badge: "Team Extension",
+      timeline: "Monthly Capacity • 1 to 5 Senior Devs",
+      blurb: "1 to 5 senior full-stack developers integrated directly into your private repository, CI/CD, and daily standups.",
       featured: true,
       features: [
-        "Product strategy",
-        "Custom UI/UX system",
-        "Full-stack engineering",
-        "QA & cloud deployment",
-        "30-day support",
+        "1 to 5 dedicated senior full-stack engineers",
+        "Direct GitHub repo commits & PR reviews",
+        "Daily async standups & weekly live demos",
+        "Full test automation (Unit + Integration)",
+        "Zero junior handoffs & zero agency bloat",
       ],
     },
     {
-      name: "Scale",
-      price: "Custom",
-      blurb: "For ongoing product and engineering needs.",
+      name: "Sprint-Based Milestone Delivery",
+      badge: "Agile Velocity",
+      timeline: "2-Week Agile Sprints",
+      blurb: "Predictable, milestone-driven sprints with defined backlog deliverables, live staging demos, and clean code handovers.",
       features: [
-        "Dedicated monthly capacity",
-        "Priority roadmap",
-        "Cloud & performance",
-        "Weekly releases",
-        "Flexible team shape",
+        "Clearly defined sprint backlog & scope",
+        "Bi-weekly live staging deployments",
+        "CI/CD pipelines & Docker containerization",
+        "100% private source code ownership",
+        "30-day post-sprint warranty coverage",
+      ],
+    },
+    {
+      name: "Fixed-Scope MVP Launch",
+      badge: "Turnkey Launch",
+      timeline: "4 – 8 Weeks End-to-End",
+      blurb: "End-to-end platform creation from database schema and backend APIs to polished web and mobile frontends.",
+      features: [
+        "Complete architecture blueprint & DB schema",
+        "Web (React/Angular) + Mobile (React Native)",
+        "Production Spring Boot 3 enterprise backend",
+        "Cloud deployment (AWS/GCP/Docker) with SSL",
+        "60-day comprehensive post-launch warranty",
+      ],
+    },
+    {
+      name: "Strategic Architecture Advisory",
+      badge: "Modernization",
+      timeline: "1 – 3 Weeks Deep-Dive Audit",
+      blurb: "Deep-dive systems evaluation, codebase audit, bottleneck diagnosis, and Monolith-to-Microservices transition plans.",
+      features: [
+        "Comprehensive codebase, security & query audit",
+        "Monolith to Microservices migration blueprint",
+        "Database query profiling & connection pooling",
+        "Kafka & asynchronous event streaming patterns",
+        "Executive & engineering roadmap report",
       ],
     },
   ]
   return (
     <>
       <PageHero
-        eyebrow="Simple engagement models"
-        title="Clear investment. Flexible scope."
-        text="Start with a defined project or add senior product capacity to your team. No opaque retainers."
+        eyebrow="Flexible engagement models"
+        title="Senior engineering capacity. Transparent milestones."
+        text="Partner directly with our 5 senior developers. Choose between dedicated engineering squads, predictable 2-week sprints, or turnkey MVP launches."
       />
       <section className="section-space">
-        <div className="container-wide grid gap-6 lg:grid-cols-3">
-          {plans.map((plan) => (
+        <div className="container-wide grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch">
+          {models.map((plan) => (
             <div
               key={plan.name}
-              className={`pricing-card rounded-3xl border p-8 ${
+              className={`pricing-card rounded-3xl border p-7 flex flex-col justify-between transition-all duration-300 ${
                 plan.featured
-                  ? "border-orange-500 bg-[#111a2e] text-white shadow-2xl lg:-translate-y-4"
+                  ? "border-orange-500 bg-[#111a2e] text-white shadow-2xl lg:-translate-y-3"
                   : "border-slate-200 bg-white"
               }`}
             >
-              {plan.featured && (
-                <span className="rounded-full bg-orange-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[.14em]">
-                  Most popular
-                </span>
-              )}
-              <h2 className="mt-5 text-2xl font-bold">{plan.name}</h2>
-              <p
-                className={`mt-3 text-sm ${
-                  plan.featured ? "text-slate-300" : "text-slate-600"
-                }`}
-              >
-                {plan.blurb}
-              </p>
-              <p className="mt-8 text-4xl font-black">{plan.price}</p>
-              <p
-                className={`mt-1 text-xs ${
-                  plan.featured ? "text-slate-400" : "text-slate-500"
-                }`}
-              >
-                project starting price
-              </p>
-              <div className="my-7 h-px bg-current opacity-10" />
-              <div className="space-y-4">
-                {plan.features.map((item) => (
-                  <p className="flex items-center gap-3 text-sm" key={item}>
-                    <CheckCircle2 size={18} className="text-emerald-500" />{" "}
-                    {item}
-                  </p>
-                ))}
+              <div>
+                <div className="flex items-center justify-between mb-3">
+                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                    plan.featured ? "bg-orange-500 text-white" : "bg-orange-50 text-orange-600 border border-orange-200"
+                  }`}>
+                    {plan.badge}
+                  </span>
+                </div>
+                <h2 className="text-xl font-bold leading-snug">{plan.name}</h2>
+                <p className="mt-1 font-mono text-xs text-orange-500 font-bold">
+                  {plan.timeline}
+                </p>
+                <p
+                  className={`mt-3 text-xs leading-relaxed ${
+                    plan.featured ? "text-slate-300" : "text-slate-600"
+                  }`}
+                >
+                  {plan.blurb}
+                </p>
+                <div className="my-6 h-px bg-current opacity-10" />
+                <div className="space-y-3">
+                  {plan.features.map((item) => (
+                    <p className="flex items-start gap-2.5 text-xs" key={item}>
+                      <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />{" "}
+                      <span>{item}</span>
+                    </p>
+                  ))}
+                </div>
               </div>
               <Link
                 to="/contact"
@@ -1166,7 +1255,7 @@ function Pricing() {
                   plan.featured ? "button-primary" : "button-secondary"
                 }`}
               >
-                Choose {plan.name} <ArrowRight size={16} />
+                Inquire Model <ArrowRight size={16} />
               </Link>
             </div>
           ))}
@@ -1191,20 +1280,20 @@ function FAQ() {
   const [open, setOpen] = useState(0)
   const items = [
     [
-      "How accurate are the starting prices?",
-      "They are realistic minimums for common scopes. After a short discovery call, we provide a fixed proposal with milestones, assumptions, and no hidden costs.",
+      "How do your engagement models and sprint milestones work?",
+      "We don't offer rigid commodity packages. We structure engagements around your exact technical requirements, sprint velocity, and team capacity (1 to 5 dedicated engineers). After a short discovery call, we provide a transparent sprint roadmap with clear deliverables and no hidden fees.",
     ],
     [
       "Can we begin with a small discovery phase?",
-      "Yes. A one-to-two week discovery sprint is often the best way to clarify scope, validate feasibility, and create an implementation roadmap.",
+      "Yes! A one-to-two week architecture discovery sprint is often the best way to clarify scope, validate system feasibility, and create an actionable implementation blueprint.",
     ],
     [
-      "Do you work with existing products?",
-      "Absolutely. We can audit, redesign, modernize, or extend an existing product while working safely within your current stack.",
+      "Do you work with existing products and codebases?",
+      "Absolutely. We frequently audit, redesign, modernize, or extend existing products while working safely within your current tech stack (e.g., monolith to microservices migrations).",
     ],
     [
       "What happens after launch?",
-      "Every launch includes stabilization support. We also offer flexible monthly support for product improvements, monitoring, and ongoing engineering.",
+      "Every launch includes 30 to 60 days of complimentary stabilization support and warranty. We also offer dedicated monthly squad capacity for product improvements, monitoring, and new features.",
     ],
   ]
   return (
@@ -1468,14 +1557,30 @@ function Contact() {
                   </p>
                 </div>
               </a>
+              <a
+                href="https://wa.me/918667684683?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20engineering%20inquiry."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card flex items-center gap-4 p-5 hover:border-emerald-400 transition"
+              >
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <Phone size={20} />
+                </span>
+                <div>
+                  <p className="text-xs text-slate-500">WhatsApp / Direct Call</p>
+                  <p className="mt-1 text-sm font-bold text-emerald-700">
+                    +91 866 768 4683
+                  </p>
+                </div>
+              </a>
               <div className="card flex items-center gap-4 p-5">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-orange-50 text-orange-600">
                   <Globe2 size={20} />
                 </span>
                 <div>
-                  <p className="text-xs text-slate-500">Availability</p>
+                  <p className="text-xs text-slate-500">Locations & Availability</p>
                   <p className="mt-1 text-sm font-bold">
-                    Worldwide · Remote-first
+                    Chennai &amp; Tirunelveli • Remote Worldwide
                   </p>
                 </div>
               </div>
@@ -1531,19 +1636,19 @@ function Contact() {
                     placeholder="Your company"
                   />
                   <label className="form-label">
-                    Estimated budget
+                    Engagement model
                     <select
                       className="form-input mt-2"
-                      name="budget"
+                      name="engagementModel"
                       defaultValue=""
                     >
                       <option value="" disabled>
-                        Select a range
+                        Select a model
                       </option>
-                      <option>₹75K – ₹2L</option>
-                      <option>₹2L – ₹5L</option>
-                      <option>₹5L – ₹10L</option>
-                      <option>₹10L+</option>
+                      <option>Dedicated Developer Squad (1–5 Senior Engineers)</option>
+                      <option>Sprint-Based Milestone Delivery (2-Week Sprints)</option>
+                      <option>Fixed-Scope MVP &amp; Platform Launch</option>
+                      <option>Strategic Architecture Advisory &amp; Modernization</option>
                     </select>
                   </label>
                 </div>

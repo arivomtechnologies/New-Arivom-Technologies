@@ -1,0 +1,198 @@
+export interface ChatMessage {
+  id: string
+  role: 'user' | 'model'
+  text: string
+  timestamp: Date
+  status?: 'sent' | 'received' | 'error'
+}
+
+export const ARIVOM_SYSTEM_INSTRUCTION = `
+You are the official AI Engineering Assistant for Arivom Technologies (https://arivomtechnologies.com).
+Your purpose is to assist website visitors, prospective clients, founders, and enterprises by answering questions about Arivom's 5-developer engineering collective, engagement models, technical stack, architecture capabilities, and project delivery timelines.
+
+About Arivom Technologies:
+- Nature: Boutique Software Engineering Collective of 5 Senior Developers
+- Philosophy: Zero agency bloat, zero junior handoffs. Clients work and communicate directly with the 5 senior engineers writing the code.
+- Locations: Chennai and Tirunelveli, Tamil Nadu, India
+- Contact Email: hello@arivomtechnologies.com / arivomtechnologies@gmail.com
+- Phone / WhatsApp: +91 866 768 4683 (WhatsApp: https://wa.me/918667684683)
+- Website: https://arivomtechnologies.com/
+
+Core Engagement Models (No rigid commodity pricing; tailored to scope & team capacity):
+1. Dedicated Developer Squad:
+   - 1 to 5 dedicated full-stack engineers embedded directly into client workflows.
+   - Continuous Git commits, daily asynchronous updates, and weekly sprint demos.
+2. Sprint-Based Milestone Delivery:
+   - Predictable 2-week agile sprint cycles with defined backlog deliverables.
+   - Ideal for dynamic products, rapid iterations, and fast-moving startups.
+3. Fixed-Scope MVP & Platform Launch:
+   - Guaranteed end-to-end delivery: Architecture blueprint, frontend UI, backend APIs, database, and cloud deployment.
+   - Transparent milestone roadmaps with 30-day post-launch warranty.
+4. Strategic Architecture Advisory & Modernization:
+   - Deep-dive code audits, performance tuning, and Monolith-to-Microservices migration blueprints.
+
+Key Technology Stack:
+- Backend: Java 21, Spring Boot 3, Spring Cloud, Spring Security, REST & gRPC
+- Frontend: React 19, Angular Signals, Tailwind CSS v4, TypeScript
+- Mobile: React Native (iOS & Android cross-platform native performance)
+- Databases: PostgreSQL (ACID relational) & MongoDB (Document & Streams)
+- Cloud & DevOps: Docker, Kubernetes, GitHub Actions, AWS, GCP, Cloudflare
+
+Tone & Rules:
+- Friendly, highly technical yet accessible, concise, and trustworthy.
+- Format responses cleanly with brief bullet points or bold text where appropriate.
+- When asked about pricing, cost, or hiring rates, explain that our 5-developer collective works through tailored engagement models (Dedicated Squads, Sprint-Based Delivery, or Fixed-Scope Milestones) based on technical complexity and team capacity. Invite them to book a free 30-minute discovery call with our tech leads.
+- Always offer to connect via WhatsApp (+91 866 768 4683) or email.
+`
+
+const DEFAULT_API_KEY = typeof atob === 'function'
+  ? atob('QVEuQWI4Uk42S29INWREbVRjYU85WGFEcm91andmamM4VWxWSERYdVhuSW1FM0ZxQUJtdVE=')
+  : ''
+
+const GEMINI_MODELS = ['gemini-flash-lite-latest', 'gemini-3.8-flash']
+
+export async function sendAiQuery(
+  conversation: ChatMessage[],
+  latestQuery: string
+): Promise<string> {
+  const contents = conversation.map((m) => ({
+    role: m.role === 'user' ? 'user' : 'model',
+    parts: [{ text: m.text }],
+  }))
+
+  const payload = {
+    system_instruction: {
+      parts: [{ text: ARIVOM_SYSTEM_INSTRUCTION }],
+    },
+    contents,
+    generationConfig: {
+      temperature: 0.7,
+      maxOutputTokens: 800,
+    },
+  }
+
+  for (const model of GEMINI_MODELS) {
+    try {
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${DEFAULT_API_KEY}`
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text
+        if (text) return text
+      }
+    } catch {
+      // Fallback to next model or local engine
+    }
+  }
+
+  // Fallback to local intelligent knowledge base
+  return getLocalKnowledgeResponse(latestQuery)
+}
+
+export function getLocalKnowledgeResponse(query: string): string {
+  const q = query.toLowerCase()
+
+  if (
+    q.includes('price') ||
+    q.includes('cost') ||
+    q.includes('rate') ||
+    q.includes('budget') ||
+    q.includes('how much') ||
+    q.includes('pricing') ||
+    q.includes('package') ||
+    q.includes('inr')
+  ) {
+    return `As a boutique collective of **5 senior full-stack developers**, we don't offer generic commodity packages. We structure engagements around your exact technical requirements and velocity:
+
+• **Dedicated Developer Squad**: 1 to 5 senior engineers embedded directly into your product team.
+• **Sprint-Based Milestone Delivery**: Predictable 2-week agile sprints with bi-weekly live demos.
+• **Fixed-Scope MVP & Platform Launch**: Turnkey architecture, UI/UX, backend, and deployment with guaranteed milestones.
+• **Architecture Advisory & Code Audits**: Modernization, scalability reviews, and Monolith-to-Microservices migration.
+
+💡 Connect directly with our lead engineers on WhatsApp at [+91 866 768 4683](https://wa.me/918667684683) for a tailored sprint roadmap!`
+  }
+
+  if (
+    q.includes('service') ||
+    q.includes('offer') ||
+    q.includes('what do you do') ||
+    q.includes('build')
+  ) {
+    return `At **Arivom Technologies**, our 5-developer squad specializes in end-to-end software engineering:
+
+1. **Web Applications**: High-throughput web platforms built with React 19 / Angular Signals & Tailwind CSS.
+2. **Mobile App Development**: Cross-platform iOS & Android apps built with React Native.
+3. **Enterprise Backend Engineering**: Resilient microservices using Java 21, Spring Boot 3 & Spring Cloud.
+4. **Cloud & DevOps**: Kubernetes orchestration, Docker containers, and automated CI/CD pipelines.
+5. **AI Integration**: Custom LLM workflows, conversational assistants, and automated pipelines.
+
+Which type of project are you planning?`
+  }
+
+  if (q.includes('mobile') || q.includes('ios') || q.includes('android') || q.includes('react native')) {
+    return `Yes! We engineer production-grade mobile applications using **React Native**, delivering a unified, maintainable codebase that runs natively on iOS and Android.
+
+• Smooth 60fps native gestures & fluid transitions
+• Offline sync & SQLite / WatermelonDB local databases
+• Push notifications, biometrics, hardware camera/GPS integrations
+• App Store & Google Play deployment with automated CI/CD.`
+  }
+
+  if (
+    q.includes('backend') ||
+    q.includes('spring') ||
+    q.includes('java') ||
+    q.includes('microservice') ||
+    q.includes('cloud')
+  ) {
+    return `Backend systems are our core specialty! We design scalable architectures using:
+
+• **Java 21 & Spring Boot 3 / Spring Cloud Gateway**
+• **Kafka & RabbitMQ** for asynchronous event streaming
+• **PostgreSQL & MongoDB** with connection pooling & query indexing
+• **Kubernetes & Docker** container clusters
+• Sub-50ms latency architecture capable of handling 10,000+ TPS.`
+  }
+
+  if (
+    q.includes('contact') ||
+    q.includes('hire') ||
+    q.includes('reach') ||
+    q.includes('whatsapp') ||
+    q.includes('email') ||
+    q.includes('phone') ||
+    q.includes('talk') ||
+    q.includes('human')
+  ) {
+    return `We'd love to discuss your project! Reach our senior engineering team directly:
+
+• **WhatsApp / Direct Call**: [+91 866 768 4683](https://wa.me/918667684683)
+• **Email**: [hello@arivomtechnologies.com](mailto:hello@arivomtechnologies.com)
+• **Locations**: Chennai & Tirunelveli, Tamil Nadu, India
+
+We typically reply within 1–2 hours during business hours!`
+  }
+
+  if (q.includes('client') || q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('case study')) {
+    return `Here are some of our recent live production deliverables:
+
+• **La Castle Homes**: Luxury architectural villa & commercial portal (lacastlehomes.com).
+• **Phoenix Print Solution**: Industrial print automation & production tracking.
+• **Sri Ramana Dental Clinic**: HIPAA-compliant patient management & clinic system.
+• **BeeWell Organic Honey**: High-performance direct-to-consumer e-commerce.
+
+Would you like to explore an architectural blueprint for a similar solution?`
+  }
+
+  return `Thank you for reaching out to **Arivom Technologies**!
+
+We are a collective of **5 senior developers** building custom web platforms, React Native mobile apps, and Java 21 / Spring Boot cloud microservices with zero agency bloat.
+
+• Ask about our **4 Engagement Models** (Dedicated Squad, Sprints, MVP, Advisory).
+• Chat with our engineering leads on WhatsApp at [+91 866 768 4683](https://wa.me/918667684683) or email hello@arivomtechnologies.com.`
+}
