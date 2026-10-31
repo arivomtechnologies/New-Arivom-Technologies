@@ -64,6 +64,7 @@ import {
   KafkaSolarOrbitSection,
   KafkaSolarOrbitCard,
 } from "./components/KafkaSolarOrbitSection"
+import { ProjectScopeEstimator } from "./components/ProjectScopeEstimator"
 
 const photos = {
   code: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1400&q=85",
@@ -245,7 +246,7 @@ function Header() {
       })),
     },
     { to: "/work", label: "Work" },
-    { to: "/pricing", label: "Engagement Models" },
+    { to: "/pricing", label: "Scope Estimator" },
     { to: "/technology", label: "Tech Stack" },
     {
       to: "/about",
@@ -369,7 +370,7 @@ function Footer() {
           links={[
             ["/about", "About us"],
             ["/work", "Our work"],
-            ["/pricing", "Engagement models"],
+            ["/pricing", "Scope Estimator"],
             ["/contact", "Contact"],
           ]}
         />
@@ -1181,133 +1182,7 @@ function Work() {
 }
 
 function Pricing() {
-  const models = [
-    {
-      name: "Dedicated Developer Squad",
-      badge: "Team Extension",
-      timeline: "Monthly Capacity • 1 to 5 Senior Devs",
-      blurb: "1 to 5 senior full-stack developers integrated directly into your private repository, CI/CD, and daily standups.",
-      featured: true,
-      features: [
-        "1 to 5 dedicated senior full-stack engineers",
-        "Direct GitHub repo commits & PR reviews",
-        "Daily async standups & weekly live demos",
-        "Full test automation (Unit + Integration)",
-        "Zero junior handoffs & zero agency bloat",
-      ],
-    },
-    {
-      name: "Sprint-Based Milestone Delivery",
-      badge: "Agile Velocity",
-      timeline: "2-Week Agile Sprints",
-      blurb: "Predictable, milestone-driven sprints with defined backlog deliverables, live staging demos, and clean code handovers.",
-      features: [
-        "Clearly defined sprint backlog & scope",
-        "Bi-weekly live staging deployments",
-        "CI/CD pipelines & Docker containerization",
-        "100% private source code ownership",
-        "30-day post-sprint warranty coverage",
-      ],
-    },
-    {
-      name: "Fixed-Scope MVP Launch",
-      badge: "Turnkey Launch",
-      timeline: "4 – 8 Weeks End-to-End",
-      blurb: "End-to-end platform creation from database schema and backend APIs to polished web and mobile frontends.",
-      features: [
-        "Complete architecture blueprint & DB schema",
-        "Web (React/Angular) + Mobile (React Native)",
-        "Production Spring Boot 3 enterprise backend",
-        "Cloud deployment (AWS/GCP/Docker) with SSL",
-        "60-day comprehensive post-launch warranty",
-      ],
-    },
-    {
-      name: "Strategic Architecture Advisory",
-      badge: "Modernization",
-      timeline: "1 – 3 Weeks Deep-Dive Audit",
-      blurb: "Deep-dive systems evaluation, codebase audit, bottleneck diagnosis, and Monolith-to-Microservices transition plans.",
-      features: [
-        "Comprehensive codebase, security & query audit",
-        "Monolith to Microservices migration blueprint",
-        "Database query profiling & connection pooling",
-        "Kafka & asynchronous event streaming patterns",
-        "Executive & engineering roadmap report",
-      ],
-    },
-  ]
-  return (
-    <>
-      <PageHero
-        eyebrow="Flexible engagement models"
-        title="Senior engineering capacity. Transparent milestones."
-        text="Partner directly with our 5 senior developers. Choose between dedicated engineering squads, predictable 2-week sprints, or turnkey MVP launches."
-      />
-      <section className="section-space">
-        <div className="container-wide grid gap-6 md:grid-cols-2 lg:grid-cols-4 items-stretch">
-          {models.map((plan) => (
-            <div
-              key={plan.name}
-              className={`pricing-card rounded-3xl border p-7 flex flex-col justify-between transition-all duration-300 ${
-                plan.featured
-                  ? "border-orange-500 bg-[#111a2e] text-white shadow-2xl lg:-translate-y-3"
-                  : "border-slate-200 bg-white"
-              }`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
-                    plan.featured ? "bg-orange-500 text-white" : "bg-orange-50 text-orange-600 border border-orange-200"
-                  }`}>
-                    {plan.badge}
-                  </span>
-                </div>
-                <h2 className="text-xl font-bold leading-snug">{plan.name}</h2>
-                <p className="mt-1 font-mono text-xs text-orange-500 font-bold">
-                  {plan.timeline}
-                </p>
-                <p
-                  className={`mt-3 text-xs leading-relaxed ${
-                    plan.featured ? "text-slate-300" : "text-slate-600"
-                  }`}
-                >
-                  {plan.blurb}
-                </p>
-                <div className="my-6 h-px bg-current opacity-10" />
-                <div className="space-y-3">
-                  {plan.features.map((item) => (
-                    <p className="flex items-start gap-2.5 text-xs" key={item}>
-                      <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />{" "}
-                      <span>{item}</span>
-                    </p>
-                  ))}
-                </div>
-              </div>
-              <Link
-                to="/contact"
-                className={`button mt-8 w-full ${
-                  plan.featured ? "button-primary" : "button-secondary"
-                }`}
-              >
-                Inquire Model <ArrowRight size={16} />
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
-      <section className="section-space bg-white">
-        <div className="container-wide">
-          <SectionHeading
-            center
-            eyebrow="Common questions"
-            title="What to know before we start."
-          />
-          <FAQ />
-        </div>
-      </section>
-      <CTA />
-    </>
-  )
+  return <ProjectScopeEstimator />
 }
 
 function FAQ() {
@@ -1853,6 +1728,7 @@ export const router = createBrowserRouter(
         { path: "services/:slug", Component: ServiceDetail },
         { path: "work", Component: Work },
         { path: "pricing", Component: Pricing },
+        { path: "estimator", Component: Pricing },
         { path: "technology", Component: Technology },
         { path: "about", Component: About },
         { path: "contact", Component: Contact },
