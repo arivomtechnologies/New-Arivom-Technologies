@@ -301,7 +301,7 @@ function Footer() {
   )
 }
 
-function FooterLinks({ title, links }: { title: string links: string[][] }) {
+function FooterLinks({ title, links }: { title: string; links: string[][] }) {
   return (
     <div>
       <h3 className="text-sm font-bold uppercase tracking-[.18em] text-white">
@@ -1664,20 +1664,25 @@ function NotFound() {
   )
 }
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      Component: Root,
+      children: [
+        { index: true, Component: Home },
+        { path: "services", Component: Services },
+        { path: "services/:slug", Component: ServiceDetail },
+        { path: "work", Component: Work },
+        { path: "pricing", Component: Pricing },
+        { path: "technology", Component: Technology },
+        { path: "about", Component: About },
+        { path: "contact", Component: Contact },
+        { path: "*", Component: NotFound },
+      ],
+    },
+  ],
   {
-    path: "/",
-    Component: Root,
-    children: [
-      { index: true, Component: Home },
-      { path: "services", Component: Services },
-      { path: "services/:slug", Component: ServiceDetail },
-      { path: "work", Component: Work },
-      { path: "pricing", Component: Pricing },
-      { path: "technology", Component: Technology },
-      { path: "about", Component: About },
-      { path: "contact", Component: Contact },
-      { path: "*", Component: NotFound },
-    ],
-  },
-])
+    basename: import.meta.env.BASE_URL,
+  }
+)
