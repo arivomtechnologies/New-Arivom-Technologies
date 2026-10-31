@@ -60,10 +60,7 @@ import { PersonaAdvantagesSection } from "./components/PersonaAdvantagesSection"
 import { BentoGridSection } from "./components/BentoGridSection"
 import { ClientDeliverablesCarousel } from "./components/ClientDeliverablesCarousel"
 import { AiCopilotSection } from "./components/AiCopilotSection"
-import {
-  KafkaSolarOrbitSection,
-  KafkaSolarOrbitCard,
-} from "./components/KafkaSolarOrbitSection"
+import { TechStackSolarOrbit } from "./components/TechStackSolarOrbit"
 import { ProjectScopeEstimator } from "./components/ProjectScopeEstimator"
 
 const photos = {
@@ -1297,6 +1294,17 @@ function Technology() {
         "Debezium CDC",
       ],
     ],
+    [
+      "AI & Intelligent Workflows",
+      Sparkles,
+      [
+        "Gemini 2.0 API",
+        "LangChain",
+        "Vector RAG",
+        "Automated Pipelines",
+        "Python FastAPI",
+      ],
+    ],
   ] as const
 
   return (
@@ -1304,13 +1312,13 @@ function Technology() {
       <PageHero
         eyebrow="Our technology stack"
         title="Modern tools. Sound engineering judgment."
-        text="Decoupled event-driven streaming, high-throughput Spring Boot microservices, and reactive React / React Native platforms engineered without junior handoffs."
+        text="A boutique 5-developer collective engineering high-throughput Spring Boot microservices, fluid React / React Native applications, and automated cloud infrastructure."
       />
 
-      {/* Centerpiece 1: Interactive Kafka & Event Streaming Solar Orbit Architecture Section */}
-      <KafkaSolarOrbitSection />
+      {/* Solar Circle Orbit System for the Complete Tech Stack */}
+      <TechStackSolarOrbit />
 
-      {/* Centerpiece 2: Categorized Tech Stack Grid featuring the standalone Kafka Solar Circle Card */}
+      {/* Categorized Tech Stack Grid */}
       <section className="section-space bg-slate-50/60 border-b border-slate-200/60">
         <div className="container-wide">
           <SectionHeading
@@ -1320,10 +1328,6 @@ function Technology() {
           />
 
           <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {/* 1. Standalone Kafka & Event Streaming Solar Orbit Card */}
-            <KafkaSolarOrbitCard className="md:col-span-2 lg:col-span-1" />
-
-            {/* 2. Categorized Tech Stack Cards */}
             {groups.map(([name, Icon, items]) => (
               <div className="card p-7 flex flex-col justify-between" key={name}>
                 <div>
