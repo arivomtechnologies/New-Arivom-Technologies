@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://arivomtechnologies.com/</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/arivom-share-banner.jpg</image:loc>
+      <image:title>Arivom Technologies — Enterprise Software &amp; Web Development</image:title>
+      <image:caption>Custom web platforms, mobile apps, enterprise cloud systems, and AI automations.</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Services Hub -->
+  <url>
+    <loc>https://arivomtechnologies.com/services</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/arivom-services-dashboard.jpg</image:loc>
+      <image:title>Engineering Services Dashboard</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Service Detail Pages -->
+  <url>
+    <loc>https://arivomtechnologies.com/services/web-development</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/zigzag-web-application.jpg</image:loc>
+      <image:title>Web Development Services</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://arivomtechnologies.com/services/mobile-apps</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/zigzag-mobile-application.jpg</image:loc>
+      <image:title>Mobile App Development (iOS &amp; Android)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://arivomtechnologies.com/services/ai-automation</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/service-ai-saas.jpg</image:loc>
+      <image:title>AI Automation &amp; Intelligent Agents</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://arivomtechnologies.com/services/cloud-devops</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/zigzag-cloud-deployment.jpg</image:loc>
+      <image:title>Cloud &amp; DevOps Engineering</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://arivomtechnologies.com/services/ui-ux-design</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/arivom-services-dashboard.jpg</image:loc>
+      <image:title>UI/UX &amp; Product Design</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://arivomtechnologies.com/services/fintech-solutions</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/service-enterprise-erp.jpg</image:loc>
+      <image:title>FinTech &amp; Enterprise Microservices</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Work Portfolio & Case Studies -->
+  <url>
+    <loc>https://arivomtechnologies.com/work</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/lacastle-showcase.jpg</image:loc>
+      <image:title>Client Engineering Case Studies</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Pricing & Project Scope Estimator -->
+  <url>
+    <loc>https://arivomtechnologies.com/pricing</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Technology Stack & Architecture -->
+  <url>
+    <loc>https://arivomtechnologies.com/technology</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- About Company -->
+  <url>
+    <loc>https://arivomtechnologies.com/about</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://arivomtechnologies.com/images/arivom-team-office.jpg</image:loc>
+      <image:title>Arivom Technologies Senior Collective</image:title>
+    </image:image>
+  </url>
+  
+  <!-- Contact Page -->
+  <url>
+    <loc>https://arivomtechnologies.com/contact</loc>
+    <lastmod>2026-11-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+</urlset>

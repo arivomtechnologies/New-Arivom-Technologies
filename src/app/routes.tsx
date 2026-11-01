@@ -668,13 +668,128 @@ function FooterLinks({ title, links }: { title: string; links: string[][] }) {
   )
 }
 
-function ScrollToTopOnNavigation() {
+const ROUTE_SEO: Record<
+  string,
+  {
+    title: string
+    description: string
+  }
+> = {
+  "/": {
+    title: "Arivom Technologies — Enterprise Software & Web Development",
+    description:
+      "Custom web platforms, mobile apps, enterprise cloud systems, and AI automations. Senior engineering collective delivering robust digital solutions.",
+  },
+  "/services": {
+    title: "Software Engineering & Architecture Services — Arivom Technologies",
+    description:
+      "Full-stack web applications, React Native mobile apps, Gemini AI automations, and cloud infrastructure engineered by senior tech leads.",
+  },
+  "/services/web-development": {
+    title: "High-Performance Web Development — Arivom Technologies",
+    description:
+      "React 19, TypeScript, and high-throughput APIs engineered for conversion, sub-second latency, and horizontal scale.",
+  },
+  "/services/mobile-apps": {
+    title: "Native iOS & Android Mobile App Development — Arivom Technologies",
+    description:
+      "Cross-platform React Native apps with native performance, offline SQLite synchronization, and biometrics.",
+  },
+  "/services/ai-automation": {
+    title: "AI Workflows & Intelligent Agent Automation — Arivom Technologies",
+    description:
+      "Gemini 2.0 API, LangChain pipelines, and practical AI assistants that eliminate manual operational bottlenecks.",
+  },
+  "/services/cloud-devops": {
+    title: "Cloud Infrastructure & Kubernetes DevOps — Arivom Technologies",
+    description:
+      "Docker OCI containers, Kubernetes orchestration, Terraform topologies, and zero-downtime CI/CD delivery pipelines.",
+  },
+  "/services/ui-ux-design": {
+    title: "Enterprise UI/UX & Design Systems — Arivom Technologies",
+    description:
+      "Research-led product design systems, Figma component architectures, and conversion-optimized interfaces.",
+  },
+  "/services/fintech-solutions": {
+    title: "FinTech & Enterprise Microservices Engineering — Arivom Technologies",
+    description:
+      "Java 21, Spring Boot 3, Kafka event streaming, and PCI-DSS compliant financial microservices architectures.",
+  },
+  "/work": {
+    title: "Engineering Case Studies & Deliverables — Arivom Technologies",
+    description:
+      "Production platforms we have architected and deployed: KB Homes, La Castle, Phoenix Print, and Sri Ramana Dental.",
+  },
+  "/pricing": {
+    title: "Sprint Pricing & Project Scope Estimator — Arivom Technologies",
+    description:
+      "Calculate 2-week sprint allocations, team composition, and delivery timelines for your digital product.",
+  },
+  "/estimator": {
+    title: "Project Scope Estimator — Arivom Technologies",
+    description:
+      "Interactive sprint calculator for agile milestone delivery and dedicated senior developer squad capacity.",
+  },
+  "/technology": {
+    title: "Full-Stack Technology Stack & Architecture — Arivom Technologies",
+    description:
+      "Java 21, Spring Boot 3, React 19, PostgreSQL, Docker, Kubernetes, and Cloudflare Edge infrastructure.",
+  },
+  "/about": {
+    title: "About Us — Boutique Senior Engineering Collective — Arivom Technologies",
+    description:
+      "A boutique senior software engineering collective with zero agency bloat. Direct access to the senior engineers writing your code.",
+  },
+  "/contact": {
+    title: "Start a Conversation & Book Discovery Call — Arivom Technologies",
+    description:
+      "Tell us what you want to build. Get a clear scope recommendation and proposal within one business day.",
+  },
+}
+
+function RouteSeoAndScrollManager() {
   const { pathname } = useLocation()
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "instant" })
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
+
+    const currentSeo =
+      ROUTE_SEO[pathname] ||
+      ROUTE_SEO[pathname.replace(/\/$/, "")] ||
+      ROUTE_SEO["/"]
+
+    document.title = currentSeo.title
+
+    const metaDesc = document.querySelector('meta[name="description"]')
+    if (metaDesc) {
+      metaDesc.setAttribute("content", currentSeo.description)
+    }
+
+    const ogTitle = document.querySelector('meta[property="og:title"]')
+    if (ogTitle) {
+      ogTitle.setAttribute("content", currentSeo.title)
+    }
+    const ogDesc = document.querySelector('meta[property="og:description"]')
+    if (ogDesc) {
+      ogDesc.setAttribute("content", currentSeo.description)
+    }
+
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]')
+    if (twitterTitle) {
+      twitterTitle.setAttribute("content", currentSeo.title)
+    }
+    const twitterDesc = document.querySelector('meta[name="twitter:description"]')
+    if (twitterDesc) {
+      twitterDesc.setAttribute("content", currentSeo.description)
+    }
+
+    const canonical = document.querySelector('link[rel="canonical"]')
+    if (canonical) {
+      const cleanPath = pathname === "/" ? "" : pathname
+      canonical.setAttribute("href", `https://arivomtechnologies.com${cleanPath}`)
+    }
   }, [pathname])
 
   return null
@@ -684,7 +799,7 @@ function Root() {
   const location = useLocation()
   return (
     <>
-      <ScrollToTopOnNavigation />
+      <RouteSeoAndScrollManager />
       <Header />
       <main>
         <MotionEnhancer routeKey={location.pathname}>
