@@ -55,7 +55,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "web",
     backend: "spring-monolith",
     database: "postgres",
-    features: ["Virtual 3D Elevation", "Floorplans", "WhatsApp Lead Dispatch", "Cloudflare CDN"],
+    features: [
+      "Virtual 3D Elevation",
+      "Floorplans",
+      "WhatsApp Lead Dispatch",
+      "Cloudflare CDN",
+    ],
     color: "from-amber-500/15 to-orange-500/10",
     borderColor: "hover:border-amber-400",
     badgeBg: "bg-amber-100",
@@ -73,7 +78,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "mobile",
     backend: "spring-microservices",
     database: "polyglot",
-    features: ["Live Match Scoring", "Push Notifications", "Tournament Brackets", "Player Rosters"],
+    features: [
+      "Live Match Scoring",
+      "Push Notifications",
+      "Tournament Brackets",
+      "Player Rosters",
+    ],
     color: "from-emerald-500/15 to-green-500/10",
     borderColor: "hover:border-emerald-400",
     badgeBg: "bg-emerald-100",
@@ -91,7 +101,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "unified",
     backend: "spring-microservices",
     database: "polyglot",
-    features: ["Barcode Scanning", "Job Tracking", "Kafka Events", "Invoice Engine"],
+    features: [
+      "Barcode Scanning",
+      "Job Tracking",
+      "Kafka Events",
+      "Invoice Engine",
+    ],
     color: "from-blue-500/15 to-indigo-500/10",
     borderColor: "hover:border-blue-400",
     badgeBg: "bg-blue-100",
@@ -109,7 +124,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "unified",
     backend: "spring-monolith",
     database: "postgres",
-    features: ["HIPAA Encryption", "Patient Portal", "SMS/WhatsApp Reminders", "X-Ray Vault"],
+    features: [
+      "HIPAA Encryption",
+      "Patient Portal",
+      "SMS/WhatsApp Reminders",
+      "X-Ray Vault",
+    ],
     color: "from-emerald-500/15 to-teal-500/10",
     borderColor: "hover:border-emerald-400",
     badgeBg: "bg-emerald-100",
@@ -127,7 +147,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "unified",
     backend: "spring-monolith",
     database: "postgres",
-    features: ["Razorpay Gateway", "Batch Traceability", "Abandoned Cart Recovery", "WhatsApp Alerts"],
+    features: [
+      "Razorpay Gateway",
+      "Batch Traceability",
+      "Abandoned Cart Recovery",
+      "WhatsApp Alerts",
+    ],
     color: "from-yellow-500/15 to-amber-500/10",
     borderColor: "hover:border-yellow-400",
     badgeBg: "bg-yellow-100",
@@ -145,7 +170,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "web",
     backend: "kafka-streaming",
     database: "polyglot",
-    features: ["Sub-5ms Latency", "Kafka Event Sourcing", "Double-Entry Ledger", "Docker Clusters"],
+    features: [
+      "Sub-5ms Latency",
+      "Kafka Event Sourcing",
+      "Double-Entry Ledger",
+      "Docker Clusters",
+    ],
     color: "from-purple-500/15 to-violet-500/10",
     borderColor: "hover:border-purple-400",
     badgeBg: "bg-purple-100",
@@ -163,7 +193,12 @@ const ARCHETYPES: ArchetypePreset[] = [
     platform: "web",
     backend: "spring-microservices",
     database: "polyglot",
-    features: ["Gemini 2.0 API", "Vector Embeddings", "Multi-Tenant Workspaces", "Stripe Billing"],
+    features: [
+      "Gemini 2.0 API",
+      "Vector Embeddings",
+      "Multi-Tenant Workspaces",
+      "Stripe Billing",
+    ],
     color: "from-rose-500/15 to-pink-500/10",
     borderColor: "hover:border-rose-400",
     badgeBg: "bg-rose-100",
@@ -194,7 +229,7 @@ export function ProjectScopeEstimator() {
 
   const toggleAddon = (id: string) => {
     setSelectedAddons((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     )
   }
 
@@ -215,7 +250,8 @@ export function ProjectScopeEstimator() {
       devProfile = "Cross-Platform Senior Squad (Web, Mobile & Backend)"
     } else if (scale === "enterprise") {
       sprintBase = 6
-      devProfile = "Enterprise Senior Engineering Squad (Backend, Data & DevOps)"
+      devProfile =
+        "Enterprise Senior Engineering Squad (Backend, Data & DevOps)"
     }
 
     // Platform impact
@@ -251,8 +287,8 @@ export function ProjectScopeEstimator() {
           database === "postgres"
             ? "PostgreSQL relational schemas"
             : database === "mongo"
-            ? "MongoDB collections"
-            : "PostgreSQL ACID & Redis caching"
+              ? "MongoDB collections"
+              : "PostgreSQL ACID & Redis caching"
         }, and Git CI/CD repository initialization.`,
       },
       {
@@ -262,8 +298,8 @@ export function ProjectScopeEstimator() {
           backend === "kafka-streaming"
             ? "Kafka event streaming topics & consumer groups"
             : backend === "spring-microservices"
-            ? "Spring Cloud Gateway & service discovery"
-            : "RESTful endpoints & Spring Security JWT"
+              ? "Spring Cloud Gateway & service discovery"
+              : "RESTful endpoints & Spring Security JWT"
         }.`,
       },
       {
@@ -273,8 +309,8 @@ export function ProjectScopeEstimator() {
           platform === "web"
             ? "React 19 / Angular high-speed web application"
             : platform === "mobile"
-            ? "React Native native iOS & Android applications"
-            : "Unified React 19 web portal + React Native mobile apps"
+              ? "React Native native iOS & Android applications"
+              : "Unified React 19 web portal + React Native mobile apps"
         }.`,
       },
       {
@@ -304,7 +340,7 @@ export function ProjectScopeEstimator() {
 - Estimated Scope: ${calculation.sprints} Sprints (${calculation.weeks} Weeks)
 - Team Allocation: ${calculation.devProfile}
 
-I'd like to schedule a 30-minute discovery call with your lead engineers to review our roadmap.`
+I'd like to schedule a 30-minute discovery call with your lead engineers to review our roadmap.`,
     )
     return `https://wa.me/916369012607?text=${text}`
   }, [scale, platform, backend, database, calculation])
@@ -337,7 +373,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
       {/* 2. Archetype Presets from Real Arivom Client Deliverables */}
       <section className="section-space border-b border-slate-200/70 bg-white">
         <div className="container-wide">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 anim-up">
             <div>
               <span className="text-xs font-mono font-bold text-orange-600 uppercase tracking-wider">
                 Proven Reference Blueprints
@@ -356,7 +392,10 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
             </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 anim-stagger-group"
+            data-stagger-direction="scale"
+          >
             {ARCHETYPES.map((preset) => {
               const Icon = preset.icon
               return (
@@ -364,7 +403,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                   type="button"
                   key={preset.id}
                   onClick={() => applyPreset(preset)}
-                  className={`card p-6 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer border ${preset.borderColor} group relative overflow-hidden`}
+                  className={`card p-6 text-left transition-all duration-300 hover:shadow-lg hover:-translate-y-1 cursor-pointer border ${preset.borderColor} group relative overflow-hidden anim-scale`}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span
@@ -401,7 +440,10 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
 
                   <div className="mt-4 flex items-center justify-between text-xs font-bold text-orange-600">
                     <span>Load Architecture Blueprint</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight
+                      size={14}
+                      className="group-hover:translate-x-1 transition-transform"
+                    />
                   </div>
                 </button>
               )
@@ -428,7 +470,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
 
           <div className="grid gap-8 lg:grid-cols-12 items-start">
             {/* Left 7 Columns: Step-by-Step Customization Controls */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-6 anim-left">
               {/* Step 1: Scale */}
               <div className="card p-6 sm:p-7">
                 <label className="block text-xs font-mono uppercase tracking-wider text-slate-800 font-bold mb-3 flex items-center gap-2">
@@ -665,7 +707,10 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {[
-                    { id: "payments", name: "Payment Switch (Stripe/Razorpay)" },
+                    {
+                      id: "payments",
+                      name: "Payment Switch (Stripe/Razorpay)",
+                    },
                     { id: "ai", name: "AI Copilot / RAG (Gemini API)" },
                     { id: "websockets", name: "Real-Time WebSockets" },
                     { id: "auth", name: "Role-Based Auth & 2FA" },
@@ -687,7 +732,9 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                         <CheckCircle2
                           size={15}
                           className={
-                            isChecked ? "text-emerald-600 shrink-0" : "text-slate-300 shrink-0"
+                            isChecked
+                              ? "text-emerald-600 shrink-0"
+                              : "text-slate-300 shrink-0"
                           }
                         />
                         <span>{addon.name}</span>
@@ -699,7 +746,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
             </div>
 
             {/* Right 5 Columns: Sticky Dynamic Blueprint & Roadmap Output */}
-            <div className="lg:col-span-5 sticky top-24 space-y-6">
+            <div className="lg:col-span-5 sticky top-24 space-y-6 anim-right">
               <div className="rounded-3xl border-2 border-orange-500 bg-gradient-to-b from-[#111a2e] to-slate-900 p-7 text-white shadow-2xl relative overflow-hidden">
                 <div className="pointer-events-none absolute -top-16 -right-16 h-44 w-44 rounded-full bg-orange-500/20 blur-[50px]" />
 
@@ -787,7 +834,8 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                 </div>
 
                 <p className="mt-4 text-[11px] text-center text-slate-400 font-mono">
-                  * 100% IP ownership, private GitHub repo commits &amp; 60-day launch warranty.
+                  * 100% IP ownership, private GitHub repo commits &amp; 60-day
+                  launch warranty.
                 </p>
               </div>
 
@@ -811,7 +859,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
       {/* 4. Technical Scoping FAQ */}
       <section className="section-space bg-white border-t border-slate-200/70">
         <div className="container-wide max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+          <div className="text-center mb-12 anim-up">
             <span className="text-xs font-mono font-bold uppercase tracking-wider text-orange-600 bg-orange-50 px-3.5 py-1.5 rounded-full border border-orange-200">
               Scoping Questions
             </span>
@@ -823,7 +871,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4 anim-stagger-group">
             {[
               {
                 q: "How accurate is this sprint estimator?",

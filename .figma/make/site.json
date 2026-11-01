@@ -1,4 +1,7 @@
 {
-  "title": "Arivom Technologies | Senior Engineering Collective & Product Studio",
-  "description": "A boutique software engineering collective designing and building web apps, mobile products, cloud architectures, and AI automations."
+  "title": "Arivom Technologies — Enterprise Software & Web Development",
+  "description": "Custom web platforms, mobile apps, enterprise cloud systems, and AI automations. Senior engineering collective delivering robust digital solutions.",
+  "openGraph": {
+    "image": "https://arivomtechnologies.com/images/arivom-share-square.jpg"
+  }
 }

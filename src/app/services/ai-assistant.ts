@@ -1,9 +1,9 @@
 export interface ChatMessage {
   id: string
-  role: 'user' | 'model'
+  role: "user" | "model"
   text: string
   timestamp: Date
-  status?: 'sent' | 'received' | 'error'
+  status?: "sent" | "received" | "error"
 }
 
 export const ARIVOM_SYSTEM_INSTRUCTION = `
@@ -45,18 +45,21 @@ Tone & Rules:
 - Always offer to connect via WhatsApp (+91 63690 12607) or email (arivomtechnologies@gmail.com).
 `
 
-const DEFAULT_API_KEY = typeof atob === 'function'
-  ? atob('QVEuQWI4Uk42S29INWREbVRjYU85WGFEcm91andmamM4VWxWSERYdVhuSW1FM0ZxQUJtdVE=')
-  : ''
+const DEFAULT_API_KEY =
+  typeof atob === "function"
+    ? atob(
+        "QVEuQWI4Uk42S29INWREbVRjYU85WGFEcm91andmamM4VWxWSERYdVhuSW1FM0ZxQUJtdVE=",
+      )
+    : ""
 
-const GEMINI_MODELS = ['gemini-flash-lite-latest', 'gemini-3.8-flash']
+const GEMINI_MODELS = ["gemini-flash-lite-latest", "gemini-3.8-flash"]
 
 export async function sendAiQuery(
   conversation: ChatMessage[],
-  latestQuery: string
+  latestQuery: string,
 ): Promise<string> {
   const contents = conversation.map((m) => ({
-    role: m.role === 'user' ? 'user' : 'model',
+    role: m.role === "user" ? "user" : "model",
     parts: [{ text: m.text }],
   }))
 
@@ -75,8 +78,8 @@ export async function sendAiQuery(
     try {
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${DEFAULT_API_KEY}`
       const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       })
 
@@ -98,14 +101,14 @@ export function getLocalKnowledgeResponse(query: string): string {
   const q = query.toLowerCase()
 
   if (
-    q.includes('price') ||
-    q.includes('cost') ||
-    q.includes('rate') ||
-    q.includes('budget') ||
-    q.includes('how much') ||
-    q.includes('pricing') ||
-    q.includes('package') ||
-    q.includes('inr')
+    q.includes("price") ||
+    q.includes("cost") ||
+    q.includes("rate") ||
+    q.includes("budget") ||
+    q.includes("how much") ||
+    q.includes("pricing") ||
+    q.includes("package") ||
+    q.includes("inr")
   ) {
     return `As a boutique **senior engineering collective**, we don't offer generic commodity packages. We structure engagements around your exact technical requirements and velocity:
 
@@ -118,10 +121,10 @@ export function getLocalKnowledgeResponse(query: string): string {
   }
 
   if (
-    q.includes('service') ||
-    q.includes('offer') ||
-    q.includes('what do you do') ||
-    q.includes('build')
+    q.includes("service") ||
+    q.includes("offer") ||
+    q.includes("what do you do") ||
+    q.includes("build")
   ) {
     return `At **Arivom Technologies**, our senior engineering squad specializes in end-to-end software engineering:
 
@@ -134,7 +137,12 @@ export function getLocalKnowledgeResponse(query: string): string {
 Which type of project are you planning?`
   }
 
-  if (q.includes('mobile') || q.includes('ios') || q.includes('android') || q.includes('react native')) {
+  if (
+    q.includes("mobile") ||
+    q.includes("ios") ||
+    q.includes("android") ||
+    q.includes("react native")
+  ) {
     return `Yes! We engineer production-grade mobile applications using **React Native**, delivering a unified, maintainable codebase that runs natively on iOS and Android.
 
 • Smooth 60fps native gestures & fluid transitions
@@ -144,11 +152,11 @@ Which type of project are you planning?`
   }
 
   if (
-    q.includes('backend') ||
-    q.includes('spring') ||
-    q.includes('java') ||
-    q.includes('microservice') ||
-    q.includes('cloud')
+    q.includes("backend") ||
+    q.includes("spring") ||
+    q.includes("java") ||
+    q.includes("microservice") ||
+    q.includes("cloud")
   ) {
     return `Backend systems are our core specialty! We design scalable architectures using:
 
@@ -160,14 +168,14 @@ Which type of project are you planning?`
   }
 
   if (
-    q.includes('contact') ||
-    q.includes('hire') ||
-    q.includes('reach') ||
-    q.includes('whatsapp') ||
-    q.includes('email') ||
-    q.includes('phone') ||
-    q.includes('talk') ||
-    q.includes('human')
+    q.includes("contact") ||
+    q.includes("hire") ||
+    q.includes("reach") ||
+    q.includes("whatsapp") ||
+    q.includes("email") ||
+    q.includes("phone") ||
+    q.includes("talk") ||
+    q.includes("human")
   ) {
     return `We'd love to discuss your project! Reach our senior engineering team directly:
 
@@ -178,7 +186,13 @@ Which type of project are you planning?`
 We typically reply within 1–2 hours during business hours!`
   }
 
-  if (q.includes('football') || q.includes('first goal') || q.includes('tournament') || q.includes('academy') || q.includes('sport')) {
+  if (
+    q.includes("football") ||
+    q.includes("first goal") ||
+    q.includes("tournament") ||
+    q.includes("academy") ||
+    q.includes("sport")
+  ) {
     return `We engineered the official **First Goal FC Football Academy & Tournament App**!
 
 • **Cross-Platform Mobile**: React Native iOS & Android app for coaches, players, and parents.
@@ -187,7 +201,11 @@ We typically reply within 1–2 hours during business hours!`
 • **Academy Portal**: Player attendance, performance metrics, and automated parent push notifications.`
   }
 
-  if (q.includes('kb home') || q.includes('builder') || q.includes('architect')) {
+  if (
+    q.includes("kb home") ||
+    q.includes("builder") ||
+    q.includes("architect")
+  ) {
     return `We engineered the digital platform for **KB Homes — Architects & Builders**!
 
 • **High-Impact Showcase**: Immersive architectural project portfolio featuring luxury residential villas and commercial builds.
@@ -195,7 +213,13 @@ We typically reply within 1–2 hours during business hours!`
 • **High Conversion**: Instant WhatsApp inquiry dispatch routing qualified high-ticket consultations directly to architects.`
   }
 
-  if (q.includes('client') || q.includes('project') || q.includes('work') || q.includes('portfolio') || q.includes('case study')) {
+  if (
+    q.includes("client") ||
+    q.includes("project") ||
+    q.includes("work") ||
+    q.includes("portfolio") ||
+    q.includes("case study")
+  ) {
     return `Here are some of our verified live production deliverables:
 
 • **KB Homes**: Architects & Builders digital portfolio with 3D elevations and direct WhatsApp lead routing (+380% qualified consultations).

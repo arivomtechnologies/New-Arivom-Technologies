@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react"
 import {
   Bot,
   GripVertical,
@@ -8,34 +8,34 @@ import {
   Trash2,
   X,
   ArrowRight,
-} from 'lucide-react'
-import { ChatMessage, sendAiQuery } from '../services/ai-assistant'
+} from "lucide-react"
+import { ChatMessage, sendAiQuery } from "../services/ai-assistant"
 
 const QUICK_PROMPTS = [
-  '🤝 Engagement Models',
-  '⚡ Tech Stack & Architecture',
-  '🚀 How Sprints Work',
-  '📱 React Native Mobile Apps',
-  '💼 Client Case Studies',
+  "🤝 Engagement Models",
+  "⚡ Tech Stack & Architecture",
+  "🚀 How Sprints Work",
+  "📱 React Native Mobile Apps",
+  "💼 Client Case Studies",
 ]
 
 export function openAiAssistantWithPrompt(prompt?: string) {
   window.dispatchEvent(
-    new CustomEvent('open-arivom-ai', { detail: { prompt } })
+    new CustomEvent("open-arivom-ai", { detail: { prompt } }),
   )
 }
 
 export function AiAssistantWidget() {
   const [isOpen, setIsOpen] = useState(false)
   const [isTyping, setIsTyping] = useState(false)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState("")
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
-      id: 'welcome',
-      role: 'model',
+      id: "welcome",
+      role: "model",
       text: "Hello! 👋 I am **Arivom AI**, your architecture and engineering co-pilot.\n\nWe are a **senior software engineering collective** specializing in Java 21, Spring Boot 3, React 19 / Angular, and React Native.\n\nAsk me about our **engagement models**, **2-week sprint delivery**, or how our team can build your product!",
       timestamp: new Date(),
-      status: 'received',
+      status: "received",
     },
   ])
 
@@ -43,13 +43,16 @@ export function AiAssistantWidget() {
 
   // 1. Moveable Floating Launcher State & Ref
   const launcherRef = useRef<HTMLDivElement>(null)
-  const [launcherPos, setLauncherPos] = useState<{ x: number; y: number } | null>(() => {
-    if (typeof window !== 'undefined') {
+  const [launcherPos, setLauncherPos] = useState<{
+    x: number
+    y: number
+  } | null>(() => {
+    if (typeof window !== "undefined") {
       try {
-        const saved = localStorage.getItem('arivom_ai_launcher_pos')
+        const saved = localStorage.getItem("arivom_ai_launcher_pos")
         if (saved) {
           const parsed = JSON.parse(saved)
-          if (typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+          if (typeof parsed.x === "number" && typeof parsed.y === "number") {
             return parsed
           }
         }
@@ -119,8 +122,8 @@ export function AiAssistantWidget() {
         }
       }
     }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
   }, [launcherPos, modalPos])
 
   // Launcher Pointer Handlers
@@ -155,7 +158,7 @@ export function AiAssistantWidget() {
     if (launcherDragRef.current.hasMoved) {
       const next = clampLauncher(
         launcherDragRef.current.originX + deltaX,
-        launcherDragRef.current.originY + deltaY
+        launcherDragRef.current.originY + deltaY,
       )
       setLauncherPos(next)
     }
@@ -174,7 +177,10 @@ export function AiAssistantWidget() {
     if (moved) {
       if (launcherPos) {
         try {
-          localStorage.setItem('arivom_ai_launcher_pos', JSON.stringify(launcherPos))
+          localStorage.setItem(
+            "arivom_ai_launcher_pos",
+            JSON.stringify(launcherPos),
+          )
         } catch {}
       }
     } else {
@@ -182,7 +188,9 @@ export function AiAssistantWidget() {
     }
   }
 
-  const handleLauncherPointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleLauncherPointerCancel = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (!launcherDragRef.current) return
     try {
       e.currentTarget.releasePointerCapture(e.pointerId)
@@ -192,9 +200,11 @@ export function AiAssistantWidget() {
   }
 
   // Modal Header Pointer Handlers
-  const handleModalHeaderPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleModalHeaderPointerDown = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (e.button !== 0) return
-    if ((e.target as HTMLElement).closest('button')) return
+    if ((e.target as HTMLElement).closest("button")) return
 
     const rect = modalRef.current?.getBoundingClientRect()
     if (!rect) return
@@ -213,7 +223,9 @@ export function AiAssistantWidget() {
     setIsDraggingModal(true)
   }
 
-  const handleModalHeaderPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleModalHeaderPointerMove = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (!modalDragRef.current) return
     const deltaX = e.clientX - modalDragRef.current.startX
     const deltaY = e.clientY - modalDragRef.current.startY
@@ -225,13 +237,15 @@ export function AiAssistantWidget() {
     if (modalDragRef.current.hasMoved) {
       const next = clampModal(
         modalDragRef.current.originX + deltaX,
-        modalDragRef.current.originY + deltaY
+        modalDragRef.current.originY + deltaY,
       )
       setModalPos(next)
     }
   }
 
-  const handleModalHeaderPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleModalHeaderPointerUp = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (!modalDragRef.current) return
     try {
       e.currentTarget.releasePointerCapture(e.pointerId)
@@ -240,7 +254,9 @@ export function AiAssistantWidget() {
     setIsDraggingModal(false)
   }
 
-  const handleModalHeaderPointerCancel = (e: React.PointerEvent<HTMLDivElement>) => {
+  const handleModalHeaderPointerCancel = (
+    e: React.PointerEvent<HTMLDivElement>,
+  ) => {
     if (!modalDragRef.current) return
     try {
       e.currentTarget.releasePointerCapture(e.pointerId)
@@ -257,13 +273,13 @@ export function AiAssistantWidget() {
         handleSend(customEvent.detail.prompt)
       }
     }
-    window.addEventListener('open-arivom-ai', handleOpen)
-    return () => window.removeEventListener('open-arivom-ai', handleOpen)
+    window.addEventListener("open-arivom-ai", handleOpen)
+    return () => window.removeEventListener("open-arivom-ai", handleOpen)
   }, [])
 
   useEffect(() => {
     if (isOpen) {
-      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }
   }, [messages, isTyping, isOpen])
 
@@ -271,13 +287,13 @@ export function AiAssistantWidget() {
     const query = (textToSend || input).trim()
     if (!query || isTyping) return
 
-    setInput('')
+    setInput("")
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
-      role: 'user',
+      role: "user",
       text: query,
       timestamp: new Date(),
-      status: 'sent',
+      status: "sent",
     }
 
     const nextMessages = [...messages, userMsg]
@@ -288,19 +304,19 @@ export function AiAssistantWidget() {
       const replyText = await sendAiQuery(nextMessages, query)
       const botMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
-        role: 'model',
+        role: "model",
         text: replyText,
         timestamp: new Date(),
-        status: 'received',
+        status: "received",
       }
       setMessages((prev) => [...prev, botMsg])
     } catch {
       const errorMsg: ChatMessage = {
         id: `bot-err-${Date.now()}`,
-        role: 'model',
-        text: 'Sorry, I encountered an issue. Please connect with our team directly on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) or email arivomtechnologies@gmail.com.',
+        role: "model",
+        text: "Sorry, I encountered an issue. Please connect with our team directly on WhatsApp at [+91 63690 12607](https://wa.me/916369012607) or email arivomtechnologies@gmail.com.",
         timestamp: new Date(),
-        status: 'error',
+        status: "error",
       }
       setMessages((prev) => [...prev, errorMsg])
     } finally {
@@ -312,10 +328,10 @@ export function AiAssistantWidget() {
     setMessages([
       {
         id: `welcome-${Date.now()}`,
-        role: 'model',
-        text: 'Chat history cleared. How can our engineering team help your product today?',
+        role: "model",
+        text: "Chat history cleared. How can our engineering team help your product today?",
         timestamp: new Date(),
-        status: 'received',
+        status: "received",
       },
     ])
   }
@@ -331,15 +347,17 @@ export function AiAssistantWidget() {
           onPointerUp={handleLauncherPointerUp}
           onPointerCancel={handleLauncherPointerCancel}
           style={{
-            position: 'fixed',
+            position: "fixed",
             left: launcherPos ? `${launcherPos.x}px` : undefined,
             top: launcherPos ? `${launcherPos.y}px` : undefined,
-            right: launcherPos ? undefined : '1.5rem',
-            bottom: launcherPos ? undefined : '1.5rem',
-            touchAction: 'none',
+            right: launcherPos ? undefined : "1.5rem",
+            bottom: launcherPos ? undefined : "1.5rem",
+            touchAction: "none",
             zIndex: 9999,
           }}
-          className={`select-none ${isDraggingLauncher ? 'cursor-grabbing' : 'cursor-grab'}`}
+          className={`select-none ${
+            isDraggingLauncher ? "cursor-grabbing" : "cursor-grab"
+          }`}
         >
           <div
             role="button"
@@ -347,15 +365,15 @@ export function AiAssistantWidget() {
             aria-label="Open AI Assistant (Drag to reposition)"
             title="Drag to move anywhere • Click to open"
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
+              if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault()
                 setIsOpen(true)
               }
             }}
             className={`group flex items-center gap-2.5 rounded-full bg-gradient-to-r from-orange-600 via-orange-500 to-amber-500 p-3 sm:px-4.5 sm:py-3.5 text-white shadow-xl shadow-orange-500/35 active:scale-95 transition-all select-none touch-none ${
               isDraggingLauncher
-                ? 'scale-105 shadow-2xl shadow-orange-500/50 ring-4 ring-orange-400/40 !transition-none'
-                : 'hover:scale-105 hover:shadow-orange-500/45'
+                ? "scale-105 shadow-2xl shadow-orange-500/50 ring-4 ring-orange-400/40 !transition-none"
+                : "hover:scale-105 hover:shadow-orange-500/45"
             }`}
           >
             {/* Grip Handle Indicator */}
@@ -365,7 +383,10 @@ export function AiAssistantWidget() {
 
             {/* Robot Icon with Online Pulsing Indicator */}
             <span className="relative flex h-5 w-5 items-center justify-center shrink-0">
-              <Bot size={20} className="transition-transform group-hover:rotate-12" />
+              <Bot
+                size={20}
+                className="transition-transform group-hover:rotate-12"
+              />
               <span className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-white animate-pulse" />
             </span>
 
@@ -382,26 +403,25 @@ export function AiAssistantWidget() {
         <div
           ref={modalRef}
           style={{
-            position: 'fixed',
+            position: "fixed",
             left: modalPos
               ? `${modalPos.x}px`
               : launcherPos && launcherPos.x < window.innerWidth / 2
-              ? `${Math.max(16, launcherPos.x)}px`
-              : undefined,
+                ? `${Math.max(16, launcherPos.x)}px`
+                : undefined,
             top: modalPos ? `${modalPos.y}px` : undefined,
             right: modalPos
               ? undefined
               : launcherPos && launcherPos.x < window.innerWidth / 2
-              ? undefined
-              : '1rem',
-            bottom: modalPos ? undefined : '1rem',
+                ? undefined
+                : "1rem",
+            bottom: modalPos ? undefined : "1rem",
             zIndex: 9999,
           }}
           className={`flex h-[580px] w-[calc(100vw-2rem)] max-w-[420px] flex-col overflow-hidden rounded-3xl border border-slate-200/80 bg-white/95 shadow-2xl backdrop-blur-xl animate-in fade-in zoom-in-95 duration-200 ${
-            isDraggingModal ? 'ring-2 ring-orange-400/50 select-none' : ''
+            isDraggingModal ? "ring-2 ring-orange-400/50 select-none" : ""
           }`}
         >
-          
           {/* Header - Drag Handle */}
           <div
             onPointerDown={handleModalHeaderPointerDown}
@@ -461,10 +481,10 @@ export function AiAssistantWidget() {
               <div
                 key={msg.id}
                 className={`flex gap-2.5 ${
-                  msg.role === 'user' ? 'justify-end' : 'justify-start'
+                  msg.role === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                {msg.role === 'model' && (
+                {msg.role === "model" && (
                   <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-orange-50 text-orange-600 border border-orange-200">
                     <Bot size={15} />
                   </span>
@@ -472,9 +492,9 @@ export function AiAssistantWidget() {
 
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs sm:text-[13px] leading-relaxed shadow-xs ${
-                    msg.role === 'user'
-                      ? 'bg-orange-600 text-white rounded-tr-xs font-medium'
-                      : 'bg-white text-slate-800 border border-slate-200/70 rounded-tl-xs whitespace-pre-line'
+                    msg.role === "user"
+                      ? "bg-orange-600 text-white rounded-tr-xs font-medium"
+                      : "bg-white text-slate-800 border border-slate-200/70 rounded-tl-xs whitespace-pre-line"
                   }`}
                 >
                   {msg.text}
@@ -549,7 +569,6 @@ export function AiAssistantWidget() {
               WhatsApp Lead &rarr;
             </a>
           </div>
-
         </div>
       )}
     </>

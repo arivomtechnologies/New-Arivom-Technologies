@@ -11,6 +11,8 @@
     "deploy": "vite build && cp dist/index.html dist/404.html && touch dist/.nojekyll && echo \"arivomtechnologies.com\" > dist/CNAME && cd dist && rm -rf .git && git init && git checkout -b gh-pages && git add . && git commit -m 'deploy: update GitHub Pages build with CNAME' && git remote add origin \"$(git -C .. config --get remote.origin.url)\" && git push -f origin gh-pages"
   },
   "dependencies": {
+    "@emailjs/browser": "^5.0.3",
+    "gsap": "^3.15.0",
     "lucide-react": "^1.66.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

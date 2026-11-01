@@ -14,16 +14,15 @@ import {
   Sparkles,
   Terminal,
   Zap,
-} from 'lucide-react'
-import { Link } from 'react-router'
+} from "lucide-react"
+import { Link } from "react-router"
 
 export function BentoGridSection() {
   return (
     <section className="section-space bg-[#fbfaf7] relative overflow-hidden">
       <div className="container-wide">
-        
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-16 anim-up">
           <div className="eyebrow">
             <span className="h-2 w-2 rounded-full bg-orange-500" />
             Engineering Ecosystem
@@ -32,13 +31,17 @@ export function BentoGridSection() {
             Engineering Capabilities. Simplified.
           </h2>
           <p className="section-copy mt-4">
-            A boutique senior engineering collective delivering enterprise backend microservices, modern web applications, mobile apps, and cloud orchestration.
+            A boutique senior engineering collective delivering enterprise
+            backend microservices, modern web applications, mobile apps, and
+            cloud orchestration.
           </p>
         </div>
 
         {/* 6-Card Bento Grid */}
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          
+        <div
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 anim-stagger-group"
+          data-stagger-direction="scale"
+        >
           {/* Card 1: Full-Stack Enterprise Stack */}
           <div className="card p-7 flex flex-col justify-between bg-white relative overflow-hidden group">
             <div className="dot-grid-bg absolute inset-0 opacity-40 pointer-events-none" />
@@ -55,9 +58,10 @@ export function BentoGridSection() {
                 Java 21 & Spring Boot 3 Core
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Clean architectural boundaries, virtual threads (Project Loom), Spring Security, and sub-50ms API response times.
+                Clean architectural boundaries, virtual threads (Project Loom),
+                Spring Security, and sub-50ms API response times.
               </p>
-              
+
               <div className="mt-5">
                 <span className="highlighter-yellow text-xs">
                   Spring Boot 3 + React 19 / Angular
@@ -94,20 +98,36 @@ export function BentoGridSection() {
                 Global Cloud & High-Availability Topology
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Deployed across multi-region Kubernetes clusters on AWS and GCP with Cloudflare edge caching, ensuring zero downtime and geographic low-latency routing.
+                Deployed across multi-region Kubernetes clusters on AWS and GCP
+                with Cloudflare edge caching, ensuring zero downtime and
+                geographic low-latency routing.
               </p>
             </div>
 
             {/* Map Representation with Interactive Server Ping Nodes */}
             <div className="mt-6 relative h-52 w-full rounded-2xl bg-slate-900 text-white p-5 overflow-hidden flex items-center justify-center">
-              
               {/* World Grid Lines */}
               <div className="absolute inset-0 dot-grid-bg opacity-30" />
-              
+
               {/* Connecting Dashed SVG Routes */}
-              <svg className="absolute inset-0 w-full h-full" viewBox="0 0 600 200">
-                <path d="M 120 100 Q 250 40 340 90 T 520 80" fill="none" stroke="rgba(59, 130, 246, 0.4)" strokeWidth="2" strokeDasharray="4 4" />
-                <path d="M 220 120 Q 320 160 440 110" fill="none" stroke="rgba(249, 115, 22, 0.4)" strokeWidth="2" strokeDasharray="4 4" />
+              <svg
+                className="absolute inset-0 w-full h-full"
+                viewBox="0 0 600 200"
+              >
+                <path
+                  d="M 120 100 Q 250 40 340 90 T 520 80"
+                  fill="none"
+                  stroke="rgba(59, 130, 246, 0.4)"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                />
+                <path
+                  d="M 220 120 Q 320 160 440 110"
+                  fill="none"
+                  stroke="rgba(249, 115, 22, 0.4)"
+                  strokeWidth="2"
+                  strokeDasharray="4 4"
+                />
               </svg>
 
               {/* Node 1: Mumbai */}
@@ -163,7 +183,9 @@ export function BentoGridSection() {
                 Kafka & Event Streaming
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Decoupled microservices architecture with Kafka, RabbitMQ, and Redis pub/sub handling thousands of asynchronous tasks seamlessly.
+                Decoupled microservices architecture with Kafka, RabbitMQ, and
+                Redis pub/sub handling thousands of asynchronous tasks
+                seamlessly.
               </p>
             </div>
 
@@ -205,24 +227,36 @@ export function BentoGridSection() {
                 High-Concurrency Telemetry
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Prometheus & Grafana metrics tracking query latency, memory pooling, and peak transaction processing.
+                Prometheus & Grafana metrics tracking query latency, memory
+                pooling, and peak transaction processing.
               </p>
             </div>
 
             {/* Sparkline & Bar Chart Visual */}
             <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200/80">
               <div className="flex justify-between items-center mb-3">
-                <span className="text-xs font-mono text-slate-500">Live Throughput</span>
-                <span className="text-xs font-mono font-bold text-emerald-600">+12,450 TPS Peak</span>
+                <span className="text-xs font-mono text-slate-500">
+                  Live Throughput
+                </span>
+                <span className="text-xs font-mono font-bold text-emerald-600">
+                  +12,450 TPS Peak
+                </span>
               </div>
 
               {/* Bar Capsules */}
               <div className="flex items-end justify-between h-20 gap-2 pt-2">
                 {[45, 60, 80, 50, 95, 70, 85, 100].map((height, i) => (
-                  <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                  <div
+                    key={i}
+                    className="flex-1 flex flex-col items-center gap-1"
+                  >
                     <div
                       className={`w-full rounded-full transition-all duration-500 ${
-                        i === 7 ? 'bg-orange-500' : i % 2 === 0 ? 'bg-slate-300' : 'bg-slate-800'
+                        i === 7
+                          ? "bg-orange-500"
+                          : i % 2 === 0
+                            ? "bg-slate-300"
+                            : "bg-slate-800"
                       }`}
                       style={{ height: `${height}%` }}
                     />
@@ -247,7 +281,8 @@ export function BentoGridSection() {
                 Hardened Security & Compliance
               </h3>
               <p className="mt-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-                OWASP top-10 mitigation, OAuth2/JWT token signing, cryptographic encryption at rest, and automated static vulnerability audits.
+                OWASP top-10 mitigation, OAuth2/JWT token signing, cryptographic
+                encryption at rest, and automated static vulnerability audits.
               </p>
             </div>
 
@@ -258,9 +293,7 @@ export function BentoGridSection() {
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   )

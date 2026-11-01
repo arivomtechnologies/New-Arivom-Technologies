@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react"
 import {
   Activity,
+  AlertCircle,
   ArrowRight,
   ArrowUp,
   BarChart3,
@@ -62,6 +63,12 @@ import { AiCopilotSection } from "./components/AiCopilotSection"
 import { TechStackSolarOrbit } from "./components/TechStackSolarOrbit"
 import { ProjectScopeEstimator } from "./components/ProjectScopeEstimator"
 import { AboutCompanyView } from "./components/AboutCompanyView"
+import {
+  initScrollAnimations,
+  triggerPageTransition,
+  refreshAnimations,
+} from "./utils/animations"
+import { sendContactEmail } from "./services/email"
 
 const base = import.meta.env.BASE_URL || "/"
 const cleanBase = base.endsWith("/") ? base : `${base}/`
@@ -138,7 +145,8 @@ const projects = [
     category: "Real Estate & Architecture",
     result: "+380% qualified construction consultations",
     url: "#",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
     logo: `${cleanBase}images/kb-homes-logo.png`,
     color: "from-amber-600/20 to-orange-100",
     badge: "Client Platform • Architects & Builders",
@@ -146,77 +154,88 @@ const projects = [
     sprints: "2 Agile Sprints",
     team: "Senior Frontend & Architecture Squad",
     valuation: "Luxury Villa & Commercial Builder",
-    description: "Bespoke digital portal for KB Homes architects and builders featuring high-resolution architectural project portfolio, 3D elevation showcases, interactive floorplan viewer, and direct WhatsApp project inquiry routing.",
+    description:
+      "Bespoke digital portal for KB Homes architects and builders featuring high-resolution architectural project portfolio, 3D elevation showcases, interactive floorplan viewer, and direct WhatsApp project inquiry routing.",
   },
   {
     title: "First Goal FC — Tournament & Academy App",
     category: "SportsTech & Mobile Application",
     result: "12,000+ match events & live tournament scoring",
     url: "#",
-    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1400&q=85",
     color: "from-emerald-600/20 to-green-100",
     badge: "Mobile App • iOS & Android",
     architecture: "React Native + Spring Boot 3 + WebSockets",
     sprints: "4 Agile Sprints",
     team: "Senior Mobile & Real-Time Backend Squad",
     valuation: "Live Tournament Engine",
-    description: "Cross-platform mobile application and tournament manager for First Goal FC football academy. Features live match center, instant push notifications for goals and penalties, automated bracket scheduling, and academy player rosters.",
+    description:
+      "Cross-platform mobile application and tournament manager for First Goal FC football academy. Features live match center, instant push notifications for goals and penalties, automated bracket scheduling, and academy player rosters.",
   },
   {
     title: "La Castle Homes",
     category: "Real Estate & Architecture",
     result: "+420% qualified buyer inquiries",
     url: "https://lacastlehomes.com/",
-    image: "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1400&q=85",
     color: "from-blue-500/20 to-sky-100",
     badge: "Live Website • Verified Client",
     architecture: "React + Node + Cloudflare CDN",
     sprints: "2 Sprints (Fast-Track)",
     team: "Senior Frontend & Cloud Engineers",
     valuation: "$1.8M+ Portfolio",
-    description: "Luxury architectural villas and construction portal showcasing high-end commercial landmarks and residential properties with astonishing speed.",
+    description:
+      "Luxury architectural villas and construction portal showcasing high-end commercial landmarks and residential properties with astonishing speed.",
   },
   {
     title: "Phoenix Print Solution",
     category: "Industrial IoT & Print Automation",
     result: "10,000+ daily orders automated",
     url: "https://phoenixprintsolution.com/",
-    image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1400&q=85",
     color: "from-orange-500/20 to-amber-100",
     badge: "Production System • Active",
     architecture: "Java 21 + Spring Boot 3 + PostgreSQL",
     sprints: "4 Sprints",
     team: "Senior Backend & Architecture Squad",
     valuation: "10k+ Daily Jobs",
-    description: "High-volume prepress and offset printing workflow tracking software eliminating departmental bottlenecks and paper job slips.",
+    description:
+      "High-volume prepress and offset printing workflow tracking software eliminating departmental bottlenecks and paper job slips.",
   },
   {
     title: "Sri Ramana Dental Clinic",
     category: "HealthTech & Patient Management",
     result: "3,200+ digital appointments booked",
     url: "#",
-    image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1400&q=85",
     color: "from-emerald-500/20 to-teal-100",
     badge: "HIPAA-Ready Clinic Portal",
     architecture: "Angular Signals + Spring Cloud",
     sprints: "3 Sprints",
     team: "Senior Full-Stack Engineering Squad",
     valuation: "3,200+ Patients",
-    description: "Comprehensive multi-doctor clinic management platform with automated SMS reminders, medical records, and digital consultation queue.",
+    description:
+      "Comprehensive multi-doctor clinic management platform with automated SMS reminders, medical records, and digital consultation queue.",
   },
   {
     title: "BeeWell Organic Honey",
     category: "Direct-to-Consumer E-Commerce",
     result: "2.8x conversion lift & 0 dropped carts",
     url: "#",
-    image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=1400&q=85",
+    image:
+      "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=1400&q=85",
     color: "from-amber-500/20 to-yellow-100",
     badge: "High-Traffic D2C Store",
     architecture: "React Native + Headless PostgreSQL",
     sprints: "3 Sprints",
     team: "Senior Mobile & Full-Stack Squad",
     valuation: "Zero-Lag Checkout",
-    description: "Artisanal organic honey direct-to-consumer store with Razorpay payment processing, instant WhatsApp tracking, and farm-to-bottle traceability.",
+    description:
+      "Artisanal organic honey direct-to-consumer store with Razorpay payment processing, instant WhatsApp tracking, and farm-to-bottle traceability.",
   },
 ]
 
@@ -267,10 +286,35 @@ function Logo({ inverted = false }: { inverted?: boolean }) {
 
 function Header() {
   const [open, setOpen] = useState(false)
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [mobileServicesOpen, setMobileServicesOpen] = useState(true)
   const [mobileCompanyOpen, setMobileCompanyOpen] = useState(false)
+  const isSuppressedRef = useRef(false)
   const location = useLocation()
-  useEffect(() => setOpen(false), [location.pathname])
+
+  useEffect(() => {
+    isSuppressedRef.current = false
+    setOpen(false)
+    setActiveDropdown(null)
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [location.pathname])
+
+  const handleSubmenuClick = () => {
+    isSuppressedRef.current = true
+    setActiveDropdown(null)
+    setOpen(false)
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur()
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    setTimeout(() => {
+      isSuppressedRef.current = false
+    }, 350)
+  }
 
   const links = [
     { to: "/", label: "Home" },
@@ -305,39 +349,82 @@ function Header() {
       <nav className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between rounded-2xl border border-white/70 bg-white/90 px-5 shadow-[0_12px_35px_rgba(20,27,45,.08)] backdrop-blur-xl lg:px-7">
         <Logo />
         <div className="hidden items-center gap-7 lg:flex">
-          {links.map((item) => (
-            <div className="nav-dropdown" key={item.to}>
-              <NavLink
-                to={item.to}
-                className={({ isActive }) =>
-                  `nav-link ${isActive ? "nav-link-active" : ""}`
-                }
-                end={item.to === "/"}
+          {links.map((item) => {
+            const isDropdownOpen = activeDropdown === item.label
+            return (
+              <div
+                className={`nav-dropdown ${isDropdownOpen ? "nav-dropdown-open" : ""}`}
+                key={item.to}
+                onMouseEnter={() => {
+                  if (isSuppressedRef.current) return
+                  if (item.children) setActiveDropdown(item.label)
+                }}
+                onMouseLeave={() => {
+                  isSuppressedRef.current = false
+                  if (item.children) setActiveDropdown(null)
+                }}
+                onFocus={() => {
+                  if (isSuppressedRef.current) return
+                  if (item.children) setActiveDropdown(item.label)
+                }}
+                onBlur={(e) => {
+                  if (!e.currentTarget.contains(e.relatedTarget)) {
+                    setActiveDropdown(null)
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setActiveDropdown(null)
+                  }
+                }}
               >
-                {item.label}
-                {item.children && (
-                  <ChevronDown className="nav-chevron" size={14} />
-                )}
-              </NavLink>
+                <NavLink
+                  to={item.to}
+                  onClick={() => {
+                    isSuppressedRef.current = true
+                    setActiveDropdown(null)
+                    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+                    document.documentElement.scrollTop = 0
+                    document.body.scrollTop = 0
+                    setTimeout(() => {
+                      isSuppressedRef.current = false
+                    }, 350)
+                  }}
+                  className={({ isActive }) =>
+                    `nav-link ${isActive ? "nav-link-active" : ""}`
+                  }
+                  end={item.to === "/"}
+                >
+                  {item.label}
+                  {item.children && (
+                    <ChevronDown className="nav-chevron" size={14} />
+                  )}
+                </NavLink>
 
-              {item.children && (
-                <div className="dropdown-panel">
-                  <div className="dropdown-inner">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.to}
-                        to={child.to}
-                        className="dropdown-item"
-                      >
-                        <span>{child.label}</span>
-                        <ArrowRight size={14} />
-                      </Link>
-                    ))}
+                {item.children && (
+                  <div
+                    className={`dropdown-panel ${
+                      isDropdownOpen ? "dropdown-panel-open" : ""
+                    }`}
+                  >
+                    <div className="dropdown-inner">
+                      {item.children.map((child) => (
+                        <Link
+                          key={child.to}
+                          to={child.to}
+                          onClick={handleSubmenuClick}
+                          className="dropdown-item"
+                        >
+                          <span>{child.label}</span>
+                          <ArrowRight size={14} />
+                        </Link>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            )
+          })}
         </div>
         <div className="hidden items-center gap-3 sm:flex">
           <Link to="/contact" className="button button-primary !px-5 !py-3">
@@ -367,10 +454,15 @@ function Header() {
                   <NavLink
                     key={item.to}
                     to={item.to}
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false)
+                      window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+                    }}
                     className={({ isActive }) =>
                       `mobile-nav-item flex items-center justify-between ${
-                        isActive ? "text-orange-600 font-bold bg-orange-50/70" : ""
+                        isActive
+                          ? "text-orange-600 font-bold bg-orange-50/70"
+                          : ""
                       }`
                     }
                     end={item.to === "/"}
@@ -396,7 +488,10 @@ function Header() {
                   <div className="flex items-center justify-between">
                     <NavLink
                       to={item.to}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false)
+                        window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+                      }}
                       className={({ isActive }) =>
                         `flex-1 px-3 py-2 text-sm font-semibold rounded-lg transition-colors ${
                           isActive
@@ -429,7 +524,10 @@ function Header() {
                         <NavLink
                           key={child.to}
                           to={child.to}
-                          onClick={() => setOpen(false)}
+                          onClick={() => {
+                            setOpen(false)
+                            window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+                          }}
                           className={({ isActive }) =>
                             `flex items-center justify-between rounded-lg px-3 py-2 text-xs font-semibold transition-colors ${
                               isActive
@@ -467,8 +565,11 @@ function Header() {
 function Footer() {
   return (
     <footer className="bg-[#111a2e] text-white">
-      <div className="container-wide grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-        <div>
+      <div
+        className="container-wide grid gap-10 py-14 md:grid-cols-[1.5fr_1fr_1fr_1fr] anim-stagger-group"
+        data-stagger-direction="up"
+      >
+        <div className="anim-up">
           <Logo inverted />
           <p className="mt-5 max-w-sm text-sm leading-7 text-slate-400">
             A product-minded freelance technology company helping ambitious
@@ -513,7 +614,8 @@ function Footer() {
             Let’s build
           </h3>
           <p className="mt-4 text-sm leading-6 text-slate-400">
-            Direct access to our senior engineering team. We reply in under 12 hours.
+            Direct access to our senior engineering team. We reply in under 12
+            hours.
           </p>
           <Link to="/contact" className="button button-primary mt-5">
             Discuss your idea <ArrowRight size={16} />
@@ -532,8 +634,13 @@ function Footer() {
 
       <div className="border-t border-white/10">
         <div className="container-wide flex flex-col gap-2 py-5 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <span>© 2026 Arivom Technologies. Senior Engineering Collective & Product Studio.</span>
-          <span>Delivering scalable enterprise web, cloud & mobile software.</span>
+          <span>
+            © 2026 Arivom Technologies. Senior Engineering Collective & Product
+            Studio.
+          </span>
+          <span>
+            Delivering scalable enterprise web, cloud & mobile software.
+          </span>
         </div>
       </div>
     </footer>
@@ -561,10 +668,23 @@ function FooterLinks({ title, links }: { title: string; links: string[][] }) {
   )
 }
 
+function ScrollToTopOnNavigation() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname])
+
+  return null
+}
+
 function Root() {
   const location = useLocation()
   return (
     <>
+      <ScrollToTopOnNavigation />
       <Header />
       <main>
         <MotionEnhancer routeKey={location.pathname}>
@@ -591,32 +711,15 @@ function MotionEnhancer({
   const scope = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches
-    if (reduced || !scope.current) return
-
-    const targets = scope.current.querySelectorAll<HTMLElement>(
-      "section:not(:first-child) .container-wide > *, .card, article, .section-title",
-    )
-    targets.forEach((target, index) => {
-      target.classList.add("reveal-item")
-      target.style.setProperty("--reveal-delay", `${(index % 4) * 75}ms`)
-    })
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-revealed")
-            observer.unobserve(entry.target)
-          }
-        })
-      },
-      { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
-    )
-    targets.forEach((target) => observer.observe(target))
-    return () => observer.disconnect()
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+    if (!scope.current) return
+    triggerPageTransition(scope.current)
+    const cleanup = initScrollAnimations(scope.current)
+    return () => {
+      cleanup()
+    }
   }, [routeKey])
 
   return <div ref={scope}>{children}</div>
@@ -672,7 +775,11 @@ function SectionHeading({
   center?: boolean
 }) {
   return (
-    <div className={center ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
+    <div
+      className={
+        center ? "mx-auto max-w-3xl text-center anim-up" : "max-w-3xl anim-left"
+      }
+    >
       <Eyebrow>{eyebrow}</Eyebrow>
       <h2 className="section-title mt-5">{title}</h2>
       {text && <p className="section-copy mt-5">{text}</p>}
@@ -683,14 +790,19 @@ function SectionHeading({
 function ServiceCard({ service }: { service: typeof services[number] }) {
   const Icon = service.icon
   return (
-    <Link to={`/services/${service.slug}`} className="card group p-7">
+    <Link
+      to={`/services/${service.slug}`}
+      className="card group p-7 anim-up hover:-translate-y-2 transition-all duration-300"
+    >
       <div className="flex items-start justify-between">
-        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+        <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600 transition-transform duration-300 group-hover:scale-110">
           <Icon size={23} />
         </span>
-        <ArrowRight className="text-slate-300 transition group-hover:translate-x-1 group-hover:text-orange-500" />
+        <ArrowRight className="text-slate-300 transition duration-300 group-hover:translate-x-1.5 group-hover:text-orange-500" />
       </div>
-      <h3 className="mt-6 text-xl font-bold text-[#111a2e]">{service.title}</h3>
+      <h3 className="mt-6 text-xl font-bold text-[#111a2e] transition-colors group-hover:text-orange-600">
+        {service.title}
+      </h3>
       <p className="mt-3 text-sm leading-6 text-slate-600">{service.summary}</p>
       <div className="mt-5 flex flex-wrap gap-2">
         {service.tags.map((tag) => (
@@ -720,9 +832,14 @@ function FullHeroBannerSlider() {
       headlinePrefix: "3D Architectural Platforms. ",
       headlineHighlight: "Engineered to Convert",
       headlineSuffix: " from Day 1.",
-      description: "Direct access to senior engineers building immersive 3D elevation portals, interactive virtual floorplans, and instant WhatsApp inquiry routing (+380% consultations).",
+      description:
+        "Direct access to senior engineers building immersive 3D elevation portals, interactive virtual floorplans, and instant WhatsApp inquiry routing (+380% consultations).",
       primaryCta: { label: "Explore Architectural Scope", to: "/work" },
-      badges: ["Interactive 3D Virtual Tours", "Instant WhatsApp Lead Hook", "Sub-Second Edge Rendering"],
+      badges: [
+        "Interactive 3D Virtual Tours",
+        "Instant WhatsApp Lead Hook",
+        "Sub-Second Edge Rendering",
+      ],
       badgeTitle: "KB Homes 3D Portal",
       badgeSubtitle: "Live Architectural Walkthrough",
       heroImage: `${cleanBase}images/lacastle-showcase.jpg`,
@@ -739,9 +856,21 @@ function FullHeroBannerSlider() {
         "Mobile-first speed with sub-second image loading",
       ],
       mobileItems: [
-        { title: "Grand Palm Villa (3D)", status: "Active View", metric: "4.8K views" },
-        { title: "Signature Residence", status: "Floorplan Ready", metric: "38 leads" },
-        { title: "WhatsApp Lead Hook", status: "Instant Route", metric: "99.4% sent" },
+        {
+          title: "Grand Palm Villa (3D)",
+          status: "Active View",
+          metric: "4.8K views",
+        },
+        {
+          title: "Signature Residence",
+          status: "Floorplan Ready",
+          metric: "38 leads",
+        },
+        {
+          title: "WhatsApp Lead Hook",
+          status: "Instant Route",
+          metric: "99.4% sent",
+        },
       ],
       floatingMetric: "+380% Inquiries",
       icon: Sparkles,
@@ -757,9 +886,14 @@ function FullHeroBannerSlider() {
       headlinePrefix: "Real-Time Mobile Applications. ",
       headlineHighlight: "Engineered for 60 FPS",
       headlineSuffix: " at Any Scale.",
-      description: "Polished iOS and Android mobile apps engineered with sub-150ms live match scoring, instant push notifications, automated bracket management, and academy player rosters.",
+      description:
+        "Polished iOS and Android mobile apps engineered with sub-150ms live match scoring, instant push notifications, automated bracket management, and academy player rosters.",
       primaryCta: { label: "Explore Mobile App Scope", to: "/work" },
-      badges: ["React Native Cross-Platform", "Sub-150ms Live WebSockets", "Auto-Bracket Scheduling"],
+      badges: [
+        "React Native Cross-Platform",
+        "Sub-150ms Live WebSockets",
+        "Auto-Bracket Scheduling",
+      ],
       badgeTitle: "First Goal FC App",
       badgeSubtitle: "Live Tournament Match Center",
       heroImage: `${cleanBase}images/cs-fitness-app.jpg`,
@@ -776,9 +910,21 @@ function FullHeroBannerSlider() {
         "Academy player profiles, rosters & attendance sync",
       ],
       mobileItems: [
-        { title: "U17 Summer Cup (Live 2-1)", status: "Match Center", metric: "Min 78'" },
-        { title: "Push Notification Hub", status: "Sub-150ms", metric: "12K alerts" },
-        { title: "Academy Roster Manager", status: "Auto-Bracket", metric: "16 teams" },
+        {
+          title: "U17 Summer Cup (Live 2-1)",
+          status: "Match Center",
+          metric: "Min 78'",
+        },
+        {
+          title: "Push Notification Hub",
+          status: "Sub-150ms",
+          metric: "12K alerts",
+        },
+        {
+          title: "Academy Roster Manager",
+          status: "Auto-Bracket",
+          metric: "16 teams",
+        },
       ],
       floatingMetric: "12K Match Events",
       icon: Activity,
@@ -794,9 +940,14 @@ function FullHeroBannerSlider() {
       headlinePrefix: "Custom Enterprise Software. ",
       headlineHighlight: "Engineered to Scale",
       headlineSuffix: " from Day 1.",
-      description: "Direct access to senior full-stack engineers specializing in Java 21 Virtual Threads, Spring Boot 3 reactive microservices, and Kafka event streaming engines with 99.9% uptime.",
+      description:
+        "Direct access to senior full-stack engineers specializing in Java 21 Virtual Threads, Spring Boot 3 reactive microservices, and Kafka event streaming engines with 99.9% uptime.",
       primaryCta: { label: "Start a Sprint Project", to: "/contact" },
-      badges: ["Direct Senior Git Access", "2-Week Agile Sprints", "100% Codebase Handover"],
+      badges: [
+        "Direct Senior Git Access",
+        "2-Week Agile Sprints",
+        "100% Codebase Handover",
+      ],
       badgeTitle: "Arivom Cloud Mesh",
       badgeSubtitle: "1.2M msg/s Streaming Engine",
       heroImage: `${cleanBase}images/hero-enterprise-architecture.jpg`,
@@ -813,9 +964,21 @@ function FullHeroBannerSlider() {
         "Zero-downtime automated blue/green delivery pipeline",
       ],
       mobileItems: [
-        { title: "Kafka Event Cluster", status: "Zero Lag", metric: "1.2M msg/s" },
-        { title: "Payment Routing Engine", status: "PCI-DSS", metric: "18ms lag" },
-        { title: "Kubernetes Auto-Scaler", status: "99.9% SLA", metric: "48 nodes" },
+        {
+          title: "Kafka Event Cluster",
+          status: "Zero Lag",
+          metric: "1.2M msg/s",
+        },
+        {
+          title: "Payment Routing Engine",
+          status: "PCI-DSS",
+          metric: "18ms lag",
+        },
+        {
+          title: "Kubernetes Auto-Scaler",
+          status: "99.9% SLA",
+          metric: "48 nodes",
+        },
       ],
       floatingMetric: "99.9% SLA Uptime",
       icon: Rocket,
@@ -909,13 +1072,16 @@ function FullHeroBannerSlider() {
         {/* 2-Column Hero Grid: Left Copy & Right 3D Visual */}
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1.15fr]">
           {/* Left Column: Copy & Social Proof Stack */}
-          <div className="hero-copy min-w-0 max-w-full">
+          <div className="hero-copy min-w-0 max-w-full anim-left">
             {/* Eyebrow Pill Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-slate-800 shadow-xs backdrop-blur-md">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-white shadow-xs">
                 <Star size={11} className="fill-white" />
               </span>
-              <span key={activeProject.id} className="transition-all duration-300">
+              <span
+                key={activeProject.id}
+                className="transition-all duration-300"
+              >
                 {activeProject.eyebrowBadge}
               </span>
               <span className="text-orange-500 font-bold">›</span>
@@ -959,7 +1125,9 @@ function FullHeroBannerSlider() {
               <div className="text-xs sm:text-sm text-slate-700">
                 <span className="font-bold text-amber-500">★★★★★</span>{" "}
                 <span className="font-extrabold text-slate-900">5.0</span>{" "}
-                <span className="text-slate-500">(40+ Verified Sprints) • </span>
+                <span className="text-slate-500">
+                  (40+ Verified Sprints) •{" "}
+                </span>
                 <Link
                   to="/work"
                   className="underline font-bold text-slate-900 hover:text-orange-600 transition-colors"
@@ -992,7 +1160,10 @@ function FullHeroBannerSlider() {
             <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-slate-600">
               {activeProject.badges.map((badge, idx) => (
                 <span key={idx} className="flex items-center gap-1.5">
-                  <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                  <CheckCircle2
+                    size={15}
+                    className="text-emerald-600 shrink-0"
+                  />
                   <span>{badge}</span>
                 </span>
               ))}
@@ -1001,7 +1172,7 @@ function FullHeroBannerSlider() {
 
           {/* Right Column: 3D Multi-Device & Glass HUD Composition */}
           <div
-            className="hero-visual relative perspective-1200 group w-full select-none"
+            className="hero-visual relative perspective-1200 group w-full select-none anim-right"
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
           >
@@ -1034,15 +1205,23 @@ function FullHeroBannerSlider() {
                     {/* Active Browser Tab with White Background & Logo */}
                     <div className="flex items-center gap-1.5 rounded-md bg-white border border-slate-200/80 px-2.5 py-1 text-[11px] font-semibold text-slate-800 shadow-xs">
                       <div className="h-3.5 w-3.5 rounded-sm bg-white flex items-center justify-center shrink-0">
-                        <img src="/favicon.svg" alt="Arivom Tab Icon" className="h-full w-full object-contain" />
+                        <img
+                          src="/favicon.svg"
+                          alt="Arivom Tab Icon"
+                          className="h-full w-full object-contain"
+                        />
                       </div>
-                      <span className="truncate max-w-[110px] sm:max-w-[150px] text-[10.5px]">{activeProject.tabTitle}</span>
+                      <span className="truncate max-w-[110px] sm:max-w-[150px] text-[10.5px]">
+                        {activeProject.tabTitle}
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2 rounded-md bg-white border border-slate-200/70 px-3 py-0.5 text-[10.5px] font-mono text-slate-500">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="hidden sm:inline">{activeProject.urlPath}</span>
+                    <span className="hidden sm:inline">
+                      {activeProject.urlPath}
+                    </span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-400">
                     <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 hidden sm:inline-block">
@@ -1057,8 +1236,12 @@ function FullHeroBannerSlider() {
                     <span className="text-orange-600 font-bold border-b-2 border-orange-600 pb-1">
                       Live Showcase
                     </span>
-                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Architecture</span>
-                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Sprint Deliverables</span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">
+                      Architecture
+                    </span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">
+                      Sprint Deliverables
+                    </span>
                   </div>
                   <span className="text-[11px] font-bold text-slate-800 bg-slate-100 px-2.5 py-0.5 rounded-md">
                     {activeProject.tabCategory}
@@ -1084,8 +1267,14 @@ function FullHeroBannerSlider() {
 
                       <div className="space-y-1.5 pt-1">
                         {activeProject.features.slice(0, 2).map((feat, i) => (
-                          <div key={i} className="flex items-center gap-1.5 text-[11px] text-slate-700">
-                            <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                          <div
+                            key={i}
+                            className="flex items-center gap-1.5 text-[11px] text-slate-700"
+                          >
+                            <CheckCircle2
+                              size={13}
+                              className="text-emerald-500 shrink-0"
+                            />
                             <span className="truncate">{feat}</span>
                           </div>
                         ))}
@@ -1093,16 +1282,18 @@ function FullHeroBannerSlider() {
                     </div>
 
                     {/* Right Inner Column: Big, Pristine Hero Showcase Image */}
-                    <div className="relative h-[190px] sm:h-[220px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs group/img">
+                    <div className="relative h-[190px] sm:h-[220px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs group/img image-reveal-wrapper">
                       <img
                         key={activeProject.id}
                         src={activeProject.heroImage}
                         alt={activeProject.client}
-                        className="h-full w-full object-cover transition-all duration-700 ease-out group-hover/img:scale-105"
+                        className="h-full w-full object-cover transition-all duration-700 ease-out hover-zoom-img group-hover/img:scale-105"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs">
-                        <span className="font-bold truncate drop-shadow-sm">{activeProject.client}</span>
+                        <span className="font-bold truncate drop-shadow-sm">
+                          {activeProject.client}
+                        </span>
                         <span className="bg-orange-600/90 text-white font-mono text-[10px] px-2 py-0.5 rounded-md shadow-xs shrink-0">
                           {activeProject.tabCategory}
                         </span>
@@ -1137,8 +1328,12 @@ function FullHeroBannerSlider() {
                 <div className="p-2.5 pb-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[9.5px] text-slate-500 block">Welcome back</span>
-                      <span className="text-[11.5px] font-bold text-slate-900">Alex • Client</span>
+                      <span className="text-[9.5px] text-slate-500 block">
+                        Welcome back
+                      </span>
+                      <span className="text-[11.5px] font-bold text-slate-900">
+                        Alex • Client
+                      </span>
                     </div>
                     <span className="h-5 w-5 rounded-full bg-orange-100 text-orange-600 grid place-items-center text-[10px] font-bold">
                       A
@@ -1231,7 +1426,11 @@ function FullHeroBannerSlider() {
                     aria-label={`Switch to ${proj.tabTitle}`}
                   >
                     <span className="h-4 w-4 rounded-full bg-white shadow-xs flex items-center justify-center p-0.5 border border-slate-200/70 shrink-0">
-                      <img src="/favicon.svg" alt="Arivom Logo" className="h-full w-full object-contain" />
+                      <img
+                        src="/favicon.svg"
+                        alt="Arivom Logo"
+                        className="h-full w-full object-contain"
+                      />
                     </span>
                     <span>{proj.tabTitle}</span>
                   </button>
@@ -1253,15 +1452,22 @@ function Home() {
 
       {/* 2. Client Domain Bar */}
       <section className="border-y border-slate-200/70 bg-white py-7">
-        <div className="container-wide flex flex-wrap items-center justify-center gap-x-12 gap-y-5 text-xs font-bold uppercase tracking-[.2em] text-slate-400">
-          <span>Trusted Engineering Collective For</span>
-          {["FinTech & Payments", "HealthTech & Clinics", "Real Estate Portals", "IoT Industrial", "D2C Brands"].map(
-            (item) => (
-              <span key={item} className="text-slate-700">
-                {item}
-              </span>
-            ),
-          )}
+        <div
+          className="container-wide flex flex-wrap items-center justify-center gap-x-12 gap-y-5 text-xs font-bold uppercase tracking-[.2em] text-slate-400 anim-stagger-group"
+          data-stagger-direction="up"
+        >
+          <span className="anim-up">Trusted Engineering Collective For</span>
+          {[
+            "FinTech & Payments",
+            "HealthTech & Clinics",
+            "Real Estate Portals",
+            "IoT Industrial",
+            "D2C Brands",
+          ].map((item) => (
+            <span key={item} className="text-slate-700 anim-up">
+              {item}
+            </span>
+          ))}
         </div>
       </section>
 
@@ -1288,7 +1494,10 @@ function Home() {
             title="Full-Stack Engineering Without Middlemen"
             text="Strategy, system architecture, backend microservices, mobile apps, and cloud deployment from our senior engineers."
           />
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3 anim-stagger-group"
+            data-stagger-direction="up"
+          >
             {services.map((service) => (
               <ServiceCard key={service.slug} service={service} />
             ))}
@@ -1306,13 +1515,13 @@ function ProjectCard({ project }: { project: typeof projects[number] }) {
   return (
     <Link
       to="/work"
-      className="group overflow-hidden rounded-3xl bg-white/5 p-3"
+      className="group overflow-hidden rounded-3xl bg-white/5 p-3 anim-up hover:-translate-y-2 transition-all duration-300"
     >
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden rounded-2xl image-reveal-wrapper">
         <img
           src={project.image}
           alt={`${project.title} case study`}
-          className="h-64 w-full object-cover transition duration-500 group-hover:scale-105"
+          className="h-64 w-full object-cover transition duration-700 hover-zoom-img group-hover:scale-105"
         />
       </div>
       <div className="px-3 pt-5 pb-4">
@@ -1418,7 +1627,7 @@ function Testimonials() {
           eyebrow="Client perspective"
           title="Trusted for the way we work."
         />
-        <div className="testimonial-stage mx-auto mt-12 max-w-3xl text-center">
+        <div className="testimonial-stage mx-auto mt-12 max-w-3xl text-center anim-scale">
           <Quote className="mx-auto text-orange-400" size={36} />
           <div key={active} className="testimonial-slide">
             <blockquote className="mt-6 text-xl leading-9 font-semibold text-[#111a2e] sm:text-2xl">
@@ -1486,9 +1695,15 @@ function Process() {
           title="Clear process. No black boxes."
           text="You always know what’s happening, why it matters, and what comes next."
         />
-        <div className="relative mt-14 grid gap-5 md:grid-cols-4">
+        <div
+          className="relative mt-14 grid gap-5 md:grid-cols-4 anim-stagger-group"
+          data-stagger-direction="up"
+        >
           {steps.map(([number, title, text]) => (
-            <div className="card relative p-6" key={number}>
+            <div
+              className="card relative p-6 anim-up hover:-translate-y-2 transition-all duration-300"
+              key={number}
+            >
               <span className="text-4xl font-black text-orange-100">
                 {number}
               </span>
@@ -1517,14 +1732,16 @@ function PageHero({
     <section className="hero-grid border-b border-slate-200/70 pb-16 pt-28 sm:pb-20 sm:pt-36 lg:pt-44 text-center">
       <div className="container-wide">
         <div className="page-hero-copy mx-auto max-w-4xl px-3 sm:px-4">
-          <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0B1437] mt-5 max-w-3xl mx-auto leading-[1.18] break-words">
+          <div className="anim-down">
+            <Eyebrow>{eyebrow}</Eyebrow>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0B1437] mt-5 max-w-3xl mx-auto leading-[1.18] break-words anim-left">
             {title}
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600">
+          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600 anim-up">
             {text}
           </p>
-          {children}
+          {children && <div className="anim-up">{children}</div>}
         </div>
       </div>
     </section>
@@ -1546,7 +1763,10 @@ function Services() {
         </div>
       </PageHero>
       <section className="section-space">
-        <div className="container-wide grid gap-6 md:grid-cols-2">
+        <div
+          className="container-wide grid gap-6 md:grid-cols-2 anim-stagger-group"
+          data-stagger-direction="up"
+        >
           {services.map((service) => (
             <ServiceCard key={service.slug} service={service} />
           ))}
@@ -1554,13 +1774,13 @@ function Services() {
       </section>
       <section className="section-space bg-white">
         <div className="container-wide grid items-center gap-12 lg:grid-cols-2">
-          <div>
+          <div className="anim-left">
             <SectionHeading
               eyebrow="A complete partner"
               title="Senior expertise at every stage."
               text="We plug into your team where you need us most—or own the full journey from discovery to launch."
             />
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 anim-stagger-group">
               {[
                 "Product strategy",
                 "UX research",
@@ -1580,11 +1800,14 @@ function Services() {
               ))}
             </div>
           </div>
-          <img
-            src={photos.collaboration}
-            alt="Team collaborating on a digital product"
-            className="h-[480px] w-full rounded-[28px] object-cover shadow-xl"
-          />
+          <div className="anim-right anim-image image-reveal-wrapper relative rounded-[28px] overflow-hidden shadow-xl">
+            <img
+              src={photos.collaboration}
+              alt="Team collaborating on a digital product"
+              className="h-[480px] w-full object-cover hover-zoom-img"
+            />
+            <div className="image-curtain" />
+          </div>
         </div>
       </section>
       <CTA />
@@ -1593,9 +1816,17 @@ function Services() {
 }
 
 function ServiceDetail() {
-  const slug = useLocation().pathname.split("/").pop()
+  const { pathname } = useLocation()
+  const slug = pathname.split("/").pop()
   const service = services.find((item) => item.slug === slug) || services[0]
   const Icon = service.icon
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+    document.documentElement.scrollTop = 0
+    document.body.scrollTop = 0
+  }, [pathname, slug])
+
   return (
     <>
       <PageHero
@@ -1614,7 +1845,7 @@ function ServiceDetail() {
       </PageHero>
       <section className="section-space">
         <div className="container-wide grid gap-12 lg:grid-cols-[.8fr_1.2fr]">
-          <div className="card h-fit p-7">
+          <div className="card h-fit p-7 anim-left">
             <span className="grid h-14 w-14 place-items-center rounded-2xl bg-orange-100 text-orange-600">
               <Icon size={26} />
             </span>
@@ -1635,13 +1866,13 @@ function ServiceDetail() {
               ))}
             </div>
           </div>
-          <div>
+          <div className="anim-right">
             <SectionHeading
               eyebrow="Built the right way"
               title={`A focused ${service.title.toLowerCase()} team, shaped around your goal.`}
               text="We avoid one-size-fits-all delivery. Your roadmap, architecture, and engagement model are designed around the outcome you need and the constraints you have."
             />
-            <div className="mt-10 grid gap-5 sm:grid-cols-2">
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 anim-stagger-group">
               {[
                 [
                   "Fast validation",
@@ -1682,7 +1913,10 @@ function ServiceDetail() {
 
 function Work() {
   const [filter, setFilter] = useState("All")
-  const categories = ["All", ...Array.from(new Set(projects.map((project) => project.category)))]
+  const categories = [
+    "All",
+    ...Array.from(new Set(projects.map((project) => project.category))),
+  ]
   const visibleProjects =
     filter === "All"
       ? projects
@@ -1717,15 +1951,18 @@ function Work() {
                 className="card project-row grid overflow-hidden lg:grid-cols-2"
               >
                 <div
-                  className={`overflow-hidden relative ${index % 2 ? "lg:order-2" : ""}`}
+                  className={`overflow-hidden relative ${
+                    index % 2 ? "lg:order-2 anim-right" : "anim-left"
+                  } anim-image image-reveal-wrapper`}
                 >
                   <img
                     src={project.image}
                     alt={`${project.title} project`}
-                    className="h-full min-h-[260px] sm:min-h-[340px] lg:min-h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105"
+                    className="h-full min-h-[260px] sm:min-h-[340px] lg:min-h-[380px] w-full object-cover transition-transform duration-700 hover-zoom-img hover:scale-105"
                   />
+                  <div className="image-curtain" />
                   {"logo" in project && project.logo && (
-                    <div className="absolute top-4 left-4 rounded-xl bg-black/90 backdrop-blur-md px-3.5 py-2 border border-white/20 shadow-xl flex items-center">
+                    <div className="absolute top-4 left-4 rounded-xl bg-black/90 backdrop-blur-md px-3.5 py-2 border border-white/20 shadow-xl flex items-center z-10">
                       <img
                         src={project.logo}
                         alt="Brand Logo"
@@ -1734,7 +1971,11 @@ function Work() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-12">
+                <div
+                  className={`flex flex-col justify-center p-6 sm:p-8 lg:p-12 ${
+                    index % 2 ? "lg:order-1 anim-left" : "anim-right"
+                  }`}
+                >
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs font-bold uppercase tracking-[.18em] text-orange-600">
                       {project.category}
@@ -1766,7 +2007,11 @@ function Work() {
                         {project.result.split(" ")[0]}
                       </p>
                       <p className="mt-0.5 text-xs text-slate-500 font-medium">
-                        Measured Impact ({project.result.substring(project.result.indexOf(" ") + 1)})
+                        Measured Impact (
+                        {project.result.substring(
+                          project.result.indexOf(" ") + 1,
+                        )}
+                        )
                       </p>
                     </div>
                     <div>
@@ -1785,7 +2030,7 @@ function Work() {
                     >
                       Build something like this <ArrowRight size={17} />
                     </Link>
-                    {project.url && project.url !== '#' && (
+                    {project.url && project.url !== "#" && (
                       <a
                         href={project.url}
                         target="_blank"
@@ -1804,14 +2049,17 @@ function Work() {
         </div>
       </section>
       <section className="section-space bg-[#111a2e] text-white">
-        <div className="container-wide grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
+        <div
+          className="container-wide grid grid-cols-2 sm:grid-cols-4 gap-8 text-center anim-stagger-group"
+          data-stagger-direction="scale"
+        >
           {[
             [50, "+", 0, "Projects shipped"],
             [14, "", 0, "Industries served"],
             [96, "%", 0, "On-time delivery"],
             [4.9, "/5", 1, "Average rating"],
           ].map(([number, suffix, decimals, label]) => (
-            <div key={label}>
+            <div key={label} className="anim-scale">
               <p className="text-4xl font-black text-orange-400">
                 <AnimatedCounter
                   value={number as number}
@@ -1978,14 +2226,22 @@ function Technology() {
             text="Every tool in our stack is chosen for predictable low latency, strict type safety, and zero-downtime deployment."
           />
 
-          <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div
+            className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3 anim-stagger-group"
+            data-stagger-direction="up"
+          >
             {groups.map(([name, Icon, items]) => (
-              <div className="card p-7 flex flex-col justify-between" key={name}>
+              <div
+                className="card p-7 flex flex-col justify-between anim-up hover:-translate-y-2 transition-all duration-300"
+                key={name}
+              >
                 <div>
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600 transition-transform duration-300 hover:scale-110">
                     <Icon size={23} />
                   </span>
-                  <h2 className="mt-6 text-xl font-bold text-[#111a2e]">{name}</h2>
+                  <h2 className="mt-6 text-xl font-bold text-[#111a2e]">
+                    {name}
+                  </h2>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {items.map((item) => (
                       <span className="pill !px-3 !py-2" key={item}>
@@ -2002,14 +2258,17 @@ function Technology() {
 
       <section className="section-space bg-[#111a2e] text-white">
         <div className="container-wide grid items-center gap-12 lg:grid-cols-2">
-          <div>
+          <div className="anim-left">
             <SectionHeading
               eyebrow="Engineering principles"
               title="Production-ready means more than working code."
               text="Security, accessibility, performance, observability, and maintainability are part of the build—not optional extras."
             />
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div
+            className="grid gap-4 sm:grid-cols-2 anim-stagger-group anim-right"
+            data-stagger-direction="scale"
+          >
             {[
               [ShieldCheck, "Secure by default"],
               [Zap, "Performance budgets (< 5ms)"],
@@ -2017,7 +2276,7 @@ function Technology() {
               [BarChart3, "100K+ TPS event streaming"],
             ].map(([Icon, label]) => (
               <div
-                className="rounded-2xl border border-white/10 bg-white/5 p-5"
+                className="rounded-2xl border border-white/10 bg-white/5 p-5 anim-scale hover:border-orange-500/40 hover:-translate-y-1 transition-all duration-300"
                 key={label as string}
               >
                 <Icon className="text-orange-400" />
@@ -2039,8 +2298,11 @@ function About() {
 function Contact() {
   const [sent, setSent] = useState(false)
   const [sending, setSending] = useState(false)
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
+    setErrorMessage(null)
     const form = event.currentTarget
     if (!form.checkValidity()) {
       form.classList.add("form-invalid")
@@ -2048,12 +2310,32 @@ function Contact() {
       window.setTimeout(() => form.classList.remove("form-invalid"), 450)
       return
     }
+
+    const formData = new FormData(form)
+    const payload = {
+      name: String(formData.get("name") || "").trim(),
+      email: String(formData.get("email") || "").trim(),
+      company: String(formData.get("company") || "").trim(),
+      engagementModel: String(formData.get("engagementModel") || ""),
+      service: String(formData.get("service") || "Web development"),
+      details: String(formData.get("details") || "").trim(),
+    }
+
     setSending(true)
-    window.setTimeout(() => {
-      setSending(false)
+    const result = await sendContactEmail(payload)
+    setSending(false)
+
+    if (result.success) {
       setSent(true)
-    }, 850)
+      form.reset()
+    } else {
+      setErrorMessage(
+        result.error ||
+          "Could not deliver your brief. Please message us directly via WhatsApp or email."
+      )
+    }
   }
+
   return (
     <>
       <PageHero
@@ -2063,7 +2345,7 @@ function Contact() {
       />
       <section className="section-space">
         <div className="container-wide grid gap-10 lg:grid-cols-[.7fr_1.3fr]">
-          <div>
+          <div className="anim-left">
             <h2 className="text-2xl font-bold text-[#111a2e]">
               Talk directly with the team.
             </h2>
@@ -2071,12 +2353,12 @@ function Contact() {
               No sales desk. Your first conversation is with the people who will
               shape and build your product.
             </p>
-            <div className="mt-8 space-y-4">
+            <div className="mt-8 space-y-4 anim-stagger-group">
               <a
                 href="mailto:arivomtechnologies@gmail.com"
-                className="card flex items-center gap-4 p-5 hover:border-orange-400 transition"
+                className="card flex items-center gap-4 p-5 hover:border-orange-400 hover:-translate-y-1 transition-all duration-300"
               >
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-orange-50 text-orange-600">
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-orange-50 text-orange-600 transition-transform duration-300 group-hover:scale-110">
                   <Mail size={20} />
                 </span>
                 <div>
@@ -2090,24 +2372,28 @@ function Contact() {
                 href="https://wa.me/916369012607?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20engineering%20inquiry."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="card flex items-center gap-4 p-5 hover:border-emerald-400 transition"
+                className="card flex items-center gap-4 p-5 hover:border-emerald-400 hover:-translate-y-1 transition-all duration-300"
               >
-                <span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                <span className="grid h-11 w-11 place-items-center rounded-xl bg-emerald-50 text-emerald-600 transition-transform duration-300 group-hover:scale-110">
                   <Phone size={20} />
                 </span>
                 <div>
-                  <p className="text-xs text-slate-500">WhatsApp / Direct Call</p>
+                  <p className="text-xs text-slate-500">
+                    WhatsApp / Direct Call
+                  </p>
                   <p className="mt-1 text-sm font-bold text-emerald-700">
                     +91 63690 12607
                   </p>
                 </div>
               </a>
-              <div className="card flex items-center gap-4 p-5">
+              <div className="card flex items-center gap-4 p-5 hover:-translate-y-1 transition-all duration-300">
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-orange-50 text-orange-600">
                   <Globe2 size={20} />
                 </span>
                 <div>
-                  <p className="text-xs text-slate-500">Locations & Availability</p>
+                  <p className="text-xs text-slate-500">
+                    Locations & Availability
+                  </p>
                   <p className="mt-1 text-sm font-bold">
                     Chennai &amp; Tirunelveli • Remote Worldwide
                   </p>
@@ -2122,7 +2408,7 @@ function Contact() {
               </p>
             </div>
           </div>
-          <div className="card p-6 sm:p-9">
+          <div className="card p-6 sm:p-9 anim-right">
             {sent ? (
               <div className="flex min-h-[520px] flex-col items-center justify-center text-center">
                 <span className="grid h-16 w-16 place-items-center rounded-full bg-emerald-100 text-emerald-700">
@@ -2132,12 +2418,17 @@ function Contact() {
                   Your brief is on its way.
                 </h2>
                 <p className="mt-3 max-w-md text-slate-600">
-                  Thanks for reaching out. We’ll review the details and reply
+                  Thanks for reaching out! We’ve delivered your brief to our
+                  engineering leads and sent an automated confirmation receipt
+                  to your inbox. We will review your requirements and reply
                   within one business day.
                 </p>
                 <button
                   type="button"
-                  onClick={() => setSent(false)}
+                  onClick={() => {
+                    setSent(false)
+                    setErrorMessage(null)
+                  }}
                   className="button button-secondary mt-7"
                 >
                   Send another message
@@ -2145,24 +2436,61 @@ function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} noValidate>
+                {errorMessage && (
+                  <div className="mb-6 rounded-2xl border border-red-200 bg-red-50 p-4 text-xs text-red-700 flex items-start gap-3">
+                    <AlertCircle
+                      className="shrink-0 text-red-600 mt-0.5"
+                      size={17}
+                    />
+                    <div className="flex-1">
+                      <p className="font-bold">Transmission issue</p>
+                      <p className="mt-1 text-slate-600">{errorMessage}</p>
+                      <p className="mt-2 text-slate-600">
+                        You can reach us directly on WhatsApp:{" "}
+                        <a
+                          href="https://wa.me/916369012607?text=Hi%20Arivom%20Technologies,%20I%20have%20an%20engineering%20inquiry."
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-emerald-700 underline"
+                        >
+                          +91 63690 12607
+                        </a>{" "}
+                        or direct email at{" "}
+                        <a
+                          href="mailto:arivomtechnologies@gmail.com"
+                          className="font-bold text-orange-600 underline"
+                        >
+                          arivomtechnologies@gmail.com
+                        </a>
+                        .
+                      </p>
+                    </div>
+                  </div>
+                )}
                 <div className="grid gap-5 sm:grid-cols-2">
                   <Field
                     label="Your name"
                     name="name"
                     placeholder="Jane Smith"
+                    autoComplete="name"
                     required
+                    disabled={sending}
                   />
                   <Field
                     label="Work email"
                     name="email"
                     placeholder="jane@company.com"
                     type="email"
+                    autoComplete="email"
                     required
+                    disabled={sending}
                   />
                   <Field
                     label="Company"
                     name="company"
                     placeholder="Your company"
+                    autoComplete="organization"
+                    disabled={sending}
                   />
                   <label className="form-label">
                     Engagement model
@@ -2170,14 +2498,19 @@ function Contact() {
                       className="form-input mt-2"
                       name="engagementModel"
                       defaultValue=""
+                      disabled={sending}
                     >
                       <option value="" disabled>
                         Select a model
                       </option>
                       <option>Dedicated Senior Developer Squad</option>
-                      <option>Sprint-Based Milestone Delivery (2-Week Sprints)</option>
+                      <option>
+                        Sprint-Based Milestone Delivery (2-Week Sprints)
+                      </option>
                       <option>Fixed-Scope MVP &amp; Platform Launch</option>
-                      <option>Strategic Architecture Advisory &amp; Modernization</option>
+                      <option>
+                        Strategic Architecture Advisory &amp; Modernization
+                      </option>
                     </select>
                   </label>
                 </div>
@@ -2187,6 +2520,7 @@ function Contact() {
                     className="form-input mt-2"
                     name="service"
                     defaultValue="Web development"
+                    disabled={sending}
                   >
                     {services.map((service) => (
                       <option key={service.slug}>{service.title}</option>
@@ -2199,6 +2533,7 @@ function Contact() {
                     className="form-input mt-2 min-h-36 resize-y"
                     required
                     name="details"
+                    disabled={sending}
                     placeholder="Tell us about the goal, current stage, and ideal timeline..."
                   />
                 </label>
@@ -2237,12 +2572,16 @@ function Field({
   placeholder,
   type = "text",
   required = false,
+  autoComplete,
+  disabled = false,
 }: {
   label: string
   name: string
   placeholder: string
   type?: string
   required?: boolean
+  autoComplete?: string
+  disabled?: boolean
 }) {
   return (
     <label className="form-label">
@@ -2253,6 +2592,8 @@ function Field({
         placeholder={placeholder}
         type={type}
         required={required}
+        autoComplete={autoComplete}
+        disabled={disabled}
       />
     </label>
   )
@@ -2261,7 +2602,7 @@ function Field({
 function CTA() {
   return (
     <section className="px-4 py-12 sm:px-6 sm:py-16">
-      <div className="container-wide overflow-hidden rounded-[28px] sm:rounded-[32px] bg-gradient-to-r from-[#ff6b24] to-[#ff8a1f] px-5 py-10 sm:px-12 sm:py-14 text-center text-white shadow-[0_25px_60px_rgba(255,107,36,.22)]">
+      <div className="container-wide overflow-hidden rounded-[28px] sm:rounded-[32px] bg-gradient-to-r from-[#ff6b24] to-[#ff8a1f] px-5 py-10 sm:px-12 sm:py-14 text-center text-white shadow-[0_25px_60px_rgba(255,107,36,.22)] anim-scale">
         <p className="text-xs font-bold uppercase tracking-[.2em] text-orange-100">
           Have an idea in mind?
         </p>
@@ -2319,5 +2660,5 @@ export const router = createBrowserRouter(
   ],
   {
     basename: import.meta.env.BASE_URL,
-  }
+  },
 )

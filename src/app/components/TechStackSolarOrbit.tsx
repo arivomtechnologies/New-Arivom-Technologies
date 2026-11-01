@@ -296,7 +296,7 @@ export function TechStackSolarOrbit() {
 
       <div className="container-wide relative z-10">
         {/* Section Header */}
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-3xl text-center anim-up">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-xs font-mono font-bold tracking-wider text-orange-400 uppercase">
             <Radio size={14} className="animate-pulse" />
             Solar Circle Architecture
@@ -305,9 +305,9 @@ export function TechStackSolarOrbit() {
             Our Complete Tech Stack in Orbit
           </h2>
           <p className="mt-4 text-base leading-relaxed text-slate-300 sm:text-lg">
-            Every layer in our engineering stack revolves around high throughput,
-            type safety, and zero-downtime reliability. Click any planet in the
-            solar orbits to inspect its production benchmarks.
+            Every layer in our engineering stack revolves around high
+            throughput, type safety, and zero-downtime reliability. Click any
+            planet in the solar orbits to inspect its production benchmarks.
           </p>
 
           {/* Category Filter Pills */}
@@ -340,7 +340,7 @@ export function TechStackSolarOrbit() {
         {/* Main Grid: Solar Circle Orbit System (Left) + Interactive Inspector (Right) */}
         <div className="mt-10 sm:mt-14 grid items-center gap-10 lg:grid-cols-12">
           {/* Left Column: Concentric Solar Orbit System */}
-          <div className="lg:col-span-7 flex flex-col items-center justify-center w-full overflow-hidden py-4 sm:py-0">
+          <div className="lg:col-span-7 flex flex-col items-center justify-center w-full overflow-hidden py-4 sm:py-0 anim-left">
             <div className="relative h-[340px] w-[340px] sm:h-[480px] sm:w-[480px] md:h-[520px] md:w-[520px] scale-[0.82] xs:scale-[0.9] sm:scale-100 origin-center flex items-center justify-center pause-hover">
               {/* Starry Ambient Grid Circle */}
               <div className="absolute inset-0 rounded-full border border-white/5 bg-radial from-slate-800/20 via-transparent to-transparent pointer-events-none" />
@@ -352,7 +352,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "k8s") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "k8s") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`-translate-y-4 rounded-full px-3 py-1 text-xs font-mono font-bold text-white shadow-lg transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -369,7 +370,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "docker") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "docker") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`translate-y-[330px] sm:translate-y-[420px] -translate-x-20 rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -386,7 +388,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "geminiai") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "geminiai") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`translate-y-[160px] sm:translate-y-[210px] translate-x-[165px] sm:translate-x-[215px] rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -403,7 +406,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "cloudinfra") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "cloudinfra") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`translate-y-[160px] sm:translate-y-[210px] -translate-x-[165px] sm:-translate-x-[215px] rounded-full px-2 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -423,7 +427,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "react19") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "react19") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`translate-y-4 rounded-full px-3 py-1 text-xs font-mono font-bold text-white shadow-xl transition-transform hover:scale-125 cursor-pointer flex items-center gap-1.5 ${
@@ -440,7 +445,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "reactnative") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "reactnative") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`-translate-y-[235px] sm:-translate-y-[295px] translate-x-24 rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -457,7 +463,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "postgres") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "postgres") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`-translate-y-[120px] sm:-translate-y-[150px] -translate-x-32 sm:-translate-x-38 rounded-full px-2 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -474,7 +481,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "redis") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "redis") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`-translate-y-[120px] sm:-translate-y-[150px] translate-x-32 sm:translate-x-38 rounded-full px-2 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -494,7 +502,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "java21") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "java21") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`-translate-x-3 rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -511,7 +520,8 @@ export function TechStackSolarOrbit() {
                   type="button"
                   onClick={() =>
                     setActivePlanet(
-                      TECH_PLANETS.find((p) => p.id === "springboot3") || TECH_PLANETS[0]
+                      TECH_PLANETS.find((p) => p.id === "springboot3") ||
+                        TECH_PLANETS[0],
                     )
                   }
                   className={`translate-x-28 sm:translate-x-36 rounded-full px-2.5 py-0.5 text-[10px] font-mono font-bold text-white shadow transition-transform hover:scale-125 cursor-pointer flex items-center gap-1 ${
@@ -536,12 +546,13 @@ export function TechStackSolarOrbit() {
             </div>
 
             <p className="mt-3 text-xs font-mono text-slate-400">
-              * Click any planetary technology to inspect architecture benchmarks.
+              * Click any planetary technology to inspect architecture
+              benchmarks.
             </p>
           </div>
 
           {/* Right Column: Active Technology Inspector HUD */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="lg:col-span-5 space-y-6 anim-right">
             <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-7 backdrop-blur-xl shadow-2xl relative overflow-hidden">
               <div className="flex items-center justify-between">
                 <span className="rounded-full bg-orange-500/10 px-3 py-1 text-xs font-mono font-bold text-orange-400 border border-orange-500/20 uppercase">
@@ -554,7 +565,9 @@ export function TechStackSolarOrbit() {
               </div>
 
               <h3 className="mt-4 text-2xl font-black text-white flex items-center gap-2.5">
-                <span className={`h-3.5 w-3.5 rounded-full ${activePlanet.color}`} />
+                <span
+                  className={`h-3.5 w-3.5 rounded-full ${activePlanet.color}`}
+                />
                 {activePlanet.name}
               </h3>
               <p className="mt-1 text-xs font-mono text-orange-300">
