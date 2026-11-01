@@ -1022,16 +1022,27 @@ function FullHeroBannerSlider() {
                   transform: "translateZ(0px)",
                 }}
               >
-                {/* Browser Titlebar */}
-                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
-                  <div className="flex items-center gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+                {/* Browser Titlebar with Active Browser Tab & Tab Icon */}
+                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-100/80 px-3.5 py-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+                    </div>
+
+                    {/* Active Browser Tab with White Background & Logo */}
+                    <div className="flex items-center gap-1.5 rounded-md bg-white border border-slate-200/80 px-2.5 py-1 text-[11px] font-semibold text-slate-800 shadow-xs">
+                      <div className="h-3.5 w-3.5 rounded-sm bg-white flex items-center justify-center shrink-0">
+                        <img src="/favicon.svg" alt="Arivom Tab Icon" className="h-full w-full object-contain" />
+                      </div>
+                      <span className="truncate max-w-[110px] sm:max-w-[150px] text-[10.5px]">{activeProject.tabTitle}</span>
+                    </div>
                   </div>
+
                   <div className="flex items-center gap-2 rounded-md bg-white border border-slate-200/70 px-3 py-0.5 text-[10.5px] font-mono text-slate-500">
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>{activeProject.urlPath}</span>
+                    <span className="hidden sm:inline">{activeProject.urlPath}</span>
                   </div>
                   <div className="flex items-center gap-2 text-slate-400">
                     <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 hidden sm:inline-block">
@@ -1212,18 +1223,16 @@ function FullHeroBannerSlider() {
                     key={proj.id}
                     type="button"
                     onClick={() => setActiveTab(idx)}
-                    className={`group flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                    className={`group flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 cursor-pointer ${
                       isSelected
                         ? "bg-[#0B1437] text-white shadow-xs ring-1 ring-orange-500/40"
                         : "bg-white/80 text-slate-600 hover:bg-slate-100 border border-slate-200/80"
                     }`}
                     aria-label={`Switch to ${proj.tabTitle}`}
                   >
-                    <span
-                      className={`h-1.5 w-1.5 rounded-full ${
-                        isSelected ? "bg-emerald-400 animate-pulse" : "bg-slate-300"
-                      }`}
-                    />
+                    <span className="h-4 w-4 rounded-full bg-white shadow-xs flex items-center justify-center p-0.5 border border-slate-200/70 shrink-0">
+                      <img src="/favicon.svg" alt="Arivom Logo" className="h-full w-full object-contain" />
+                    </span>
                     <span>{proj.tabTitle}</span>
                   </button>
                 )
