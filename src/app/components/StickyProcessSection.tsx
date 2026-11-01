@@ -86,7 +86,7 @@ export function StickyProcessSection() {
                 <div
                   key={step.num}
                   onClick={() => setActiveStep(idx)}
-                  className={`cursor-pointer rounded-3xl p-7 transition-all duration-300 border ${
+                  className={`cursor-pointer rounded-3xl p-5 sm:p-7 transition-all duration-300 border ${
                     isActive
                       ? 'bg-white border-orange-500/80 shadow-xl shadow-orange-500/10 -translate-y-1'
                       : 'bg-white/60 border-slate-200/80 hover:bg-white hover:border-slate-300'
@@ -125,13 +125,13 @@ export function StickyProcessSection() {
           </div>
 
           {/* Right Column: Dynamic 3D Visual Stage */}
-          <div className="sticky top-28 rounded-3xl border border-slate-200/80 bg-white p-7 shadow-2xl overflow-hidden min-h-[460px] flex flex-col justify-center">
+          <div className="sticky top-28 rounded-3xl border border-slate-200/80 bg-white p-5 sm:p-7 shadow-2xl overflow-hidden min-h-[420px] sm:min-h-[460px] flex flex-col justify-center">
             
             {/* Step 1 Visual: 3D Stacked Cards Fanning Out */}
             {activeStep === 0 && (
               <div className="relative py-8 flex flex-col items-center justify-center animate-in fade-in zoom-in-95 duration-300">
                 {/* Background Fanned Cards */}
-                <div className="relative w-full max-w-[380px] h-[220px]">
+                <div className="relative w-full max-w-[310px] sm:max-w-[380px] h-[220px]">
                   
                   {/* Layer 1 (Left -8deg) */}
                   <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-slate-100 to-slate-200 border border-slate-300/80 p-5 shadow-lg transform -rotate-6 -translate-x-4 -translate-y-2 opacity-70">

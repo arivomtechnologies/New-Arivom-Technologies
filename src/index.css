@@ -67,20 +67,22 @@
 
   .hero-title {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(1.55rem, 5.2vw, 4.85rem);
+    font-size: clamp(1.65rem, 3.2vw, 2.85rem);
     font-weight: 800;
-    letter-spacing: -0.035em;
-    line-height: 1.1;
+    letter-spacing: -0.025em;
+    line-height: 1.16;
     word-break: break-word;
     overflow-wrap: break-word;
   }
 
   .section-title {
     font-family: 'Manrope', sans-serif;
-    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-size: clamp(1.65rem, 4.2vw, 3.25rem);
     font-weight: 800;
     letter-spacing: -0.045em;
-    line-height: 1.1;
+    line-height: 1.15;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
   .section-copy {
@@ -257,9 +259,10 @@
     border: 1px solid #dbe1e9;
     border-radius: 0.9rem;
     background: #fff;
-    padding: 0.85rem 1rem;
+    padding: 0.75rem 1rem;
     color: #111a2e;
-    font-size: 0.9rem;
+    font-size: 16px; /* Prevents auto-zoom on mobile browsers */
+    min-height: 44px; /* WCAG touch target guideline */
     font-weight: 400;
     outline: none;
     transition:
@@ -982,6 +985,23 @@
 
 .dotted-leader-value {
   order: 3;
+}
+
+@media (max-width: 640px) {
+  .dotted-leader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .dotted-leader::before {
+    display: none;
+  }
+
+  .dotted-leader-value {
+    text-align: left;
+    word-break: break-word;
+  }
 }
 
 @keyframes float-slow {

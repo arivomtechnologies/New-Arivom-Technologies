@@ -338,10 +338,10 @@ export function TechStackSolarOrbit() {
         </div>
 
         {/* Main Grid: Solar Circle Orbit System (Left) + Interactive Inspector (Right) */}
-        <div className="mt-14 grid items-center gap-10 lg:grid-cols-12">
+        <div className="mt-10 sm:mt-14 grid items-center gap-10 lg:grid-cols-12">
           {/* Left Column: Concentric Solar Orbit System */}
-          <div className="lg:col-span-7 flex flex-col items-center justify-center">
-            <div className="relative h-[400px] w-[400px] sm:h-[480px] sm:w-[480px] md:h-[520px] md:w-[520px] flex items-center justify-center pause-hover">
+          <div className="lg:col-span-7 flex flex-col items-center justify-center w-full overflow-hidden py-4 sm:py-0">
+            <div className="relative h-[340px] w-[340px] sm:h-[480px] sm:w-[480px] md:h-[520px] md:w-[520px] scale-[0.82] xs:scale-[0.9] sm:scale-100 origin-center flex items-center justify-center pause-hover">
               {/* Starry Ambient Grid Circle */}
               <div className="absolute inset-0 rounded-full border border-white/5 bg-radial from-slate-800/20 via-transparent to-transparent pointer-events-none" />
 

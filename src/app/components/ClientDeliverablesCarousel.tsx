@@ -193,7 +193,7 @@ export function ClientDeliverablesCarousel() {
           </div>
 
           {/* Details & Dotted Leader Metrics */}
-          <div className="p-8 sm:p-10 flex flex-col justify-between">
+          <div className="p-6 sm:p-10 flex flex-col justify-between">
             <div>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-orange-600">
                 {current.category}

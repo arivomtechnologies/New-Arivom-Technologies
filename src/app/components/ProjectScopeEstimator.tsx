@@ -663,7 +663,7 @@ I'd like to schedule a 30-minute discovery call with your lead engineers to revi
                   </span>
                   Specialized Feature Modules
                 </label>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
                   {[
                     { id: "payments", name: "Payment Switch (Stripe/Razorpay)" },
                     { id: "ai", name: "AI Copilot / RAG (Gemini API)" },

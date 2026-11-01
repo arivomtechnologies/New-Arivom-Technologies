@@ -10,8 +10,6 @@ import {
   CheckCircle,
   CheckCircle2,
   ChevronDown,
-  ChevronLeft,
-  ChevronRight,
   CircleDollarSign,
   Cloud,
   Code2,
@@ -718,6 +716,13 @@ function FullHeroBannerSlider() {
       tabCategory: "3D Architecture & Web Portal",
       tabTech: "3D Elevations & Virtual Tours",
       client: "KB Homes — Architects & Builders",
+      eyebrowBadge: "Architecture & Real Estate Tech",
+      headlinePrefix: "3D Architectural Platforms. ",
+      headlineHighlight: "Engineered to Convert",
+      headlineSuffix: " from Day 1.",
+      description: "Direct access to senior engineers building immersive 3D elevation portals, interactive virtual floorplans, and instant WhatsApp inquiry routing (+380% consultations).",
+      primaryCta: { label: "Explore Architectural Scope", to: "/work" },
+      badges: ["Interactive 3D Virtual Tours", "Instant WhatsApp Lead Hook", "Sub-Second Edge Rendering"],
       badgeTitle: "KB Homes 3D Portal",
       badgeSubtitle: "Live Architectural Walkthrough",
       heroImage: `${cleanBase}images/lacastle-showcase.jpg`,
@@ -748,6 +753,13 @@ function FullHeroBannerSlider() {
       tabCategory: "Tournament & Academy App",
       tabTech: "React Native & Real-Time Scoring",
       client: "First Goal FC — Football Academy",
+      eyebrowBadge: "SportsTech & Mobile Engineering",
+      headlinePrefix: "Real-Time Mobile Applications. ",
+      headlineHighlight: "Engineered for 60 FPS",
+      headlineSuffix: " at Any Scale.",
+      description: "Polished iOS and Android mobile apps engineered with sub-150ms live match scoring, instant push notifications, automated bracket management, and academy player rosters.",
+      primaryCta: { label: "Explore Mobile App Scope", to: "/work" },
+      badges: ["React Native Cross-Platform", "Sub-150ms Live WebSockets", "Auto-Bracket Scheduling"],
       badgeTitle: "First Goal FC App",
       badgeSubtitle: "Live Tournament Match Center",
       heroImage: `${cleanBase}images/cs-fitness-app.jpg`,
@@ -778,6 +790,13 @@ function FullHeroBannerSlider() {
       tabCategory: "Java 21 & Event Streaming",
       tabTech: "Spring Boot 3 • Kafka Engine",
       client: "Enterprise FinTech Microservices",
+      eyebrowBadge: "Top 1% Senior Engineering Collective",
+      headlinePrefix: "Custom Enterprise Software. ",
+      headlineHighlight: "Engineered to Scale",
+      headlineSuffix: " from Day 1.",
+      description: "Direct access to senior full-stack engineers specializing in Java 21 Virtual Threads, Spring Boot 3 reactive microservices, and Kafka event streaming engines with 99.9% uptime.",
+      primaryCta: { label: "Start a Sprint Project", to: "/contact" },
+      badges: ["Direct Senior Git Access", "2-Week Agile Sprints", "100% Codebase Handover"],
       badgeTitle: "Arivom Cloud Mesh",
       badgeSubtitle: "1.2M msg/s Streaming Engine",
       heroImage: `${cleanBase}images/hero-enterprise-architecture.jpg`,
@@ -805,14 +824,10 @@ function FullHeroBannerSlider() {
 
   const activeProject = projects[activeTab]
 
-  // Typewriter animation state for headline
+  // Typewriter animation state for headline synced to activeTab
   const [typedTitle, setTypedTitle] = useState("")
   const [typedHighlight, setTypedHighlight] = useState("")
   const [typedSuffix, setTypedSuffix] = useState("")
-
-  const titleText = "Custom Enterprise Software. "
-  const highlightText = "Engineered to Scale"
-  const suffixText = "from Day 1."
 
   useEffect(() => {
     let tIdx = 0
@@ -823,30 +838,39 @@ function FullHeroBannerSlider() {
     setTypedHighlight("")
     setTypedSuffix("")
 
-    const tInterval = setInterval(() => {
+    const cur = projects[activeTab]
+    let tInterval: ReturnType<typeof setInterval>
+    let hInterval: ReturnType<typeof setInterval>
+    let sInterval: ReturnType<typeof setInterval>
+
+    tInterval = setInterval(() => {
       tIdx++
-      setTypedTitle(titleText.slice(0, tIdx))
-      if (tIdx >= titleText.length) {
+      setTypedTitle(cur.headlinePrefix.slice(0, tIdx))
+      if (tIdx >= cur.headlinePrefix.length) {
         clearInterval(tInterval)
-        const hInterval = setInterval(() => {
+        hInterval = setInterval(() => {
           hIdx++
-          setTypedHighlight(highlightText.slice(0, hIdx))
-          if (hIdx >= highlightText.length) {
+          setTypedHighlight(cur.headlineHighlight.slice(0, hIdx))
+          if (hIdx >= cur.headlineHighlight.length) {
             clearInterval(hInterval)
-            const sInterval = setInterval(() => {
+            sInterval = setInterval(() => {
               sIdx++
-              setTypedSuffix(suffixText.slice(0, sIdx))
-              if (sIdx >= suffixText.length) {
+              setTypedSuffix(cur.headlineSuffix.slice(0, sIdx))
+              if (sIdx >= cur.headlineSuffix.length) {
                 clearInterval(sInterval)
               }
-            }, 30)
+            }, 18)
           }
-        }, 30)
+        }, 18)
       }
-    }, 28)
+    }, 16)
 
-    return () => clearInterval(tInterval)
-  }, [])
+    return () => {
+      clearInterval(tInterval)
+      clearInterval(hInterval)
+      clearInterval(sInterval)
+    }
+  }, [activeTab])
 
   // Auto-advance tabs every 8 seconds unless hovered
   useEffect(() => {
@@ -882,130 +906,51 @@ function FullHeroBannerSlider() {
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="container-wide">
-        {/* Top Interactive Showcase Switcher Bar (Direct from Video) */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-2 sm:p-2.5 shadow-sm backdrop-blur-xl">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1">
-            {projects.map((proj, idx) => {
-              const isSelected = idx === activeTab
-              return (
-                <button
-                  key={proj.id}
-                  type="button"
-                  onClick={() => setActiveTab(idx)}
-                  className={`group relative flex flex-col items-start rounded-xl p-2.5 sm:p-3 text-left transition-all duration-300 cursor-pointer overflow-hidden ${
-                    isSelected
-                      ? "bg-[#0B1437] text-white shadow-md ring-1 ring-orange-500/30"
-                      : "bg-slate-50/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span
-                      className={`text-[10.5px] font-mono font-bold tracking-wider uppercase ${
-                        isSelected ? "text-orange-400" : "text-slate-400"
-                      }`}
-                    >
-                      {proj.tabNumber} // {proj.tabCategory}
-                    </span>
-                    {isSelected && (
-                      <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    )}
-                  </div>
-                  <span className="mt-1 text-sm font-bold truncate w-full">
-                    {proj.tabTitle}
-                  </span>
-                  <span
-                    className={`text-[11px] truncate w-full mt-0.5 ${
-                      isSelected ? "text-slate-300" : "text-slate-500"
-                    }`}
-                  >
-                    {proj.tabTech}
-                  </span>
-
-                  {/* Active Slide Timer Line */}
-                  {isSelected && (
-                    <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/10">
-                      <div
-                        key={activeTab}
-                        className={`h-full bg-gradient-to-r from-orange-500 to-amber-400 ${
-                          isPaused ? "w-full" : "animate-progress-fill"
-                        }`}
-                      />
-                    </div>
-                  )}
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Navigation Controls: Prev / Next / Counter */}
-          <div className="hidden md:flex items-center gap-3 px-3 shrink-0">
-            <div className="text-xs font-mono font-bold text-slate-500">
-              <span className="text-orange-600 font-extrabold text-sm">{activeTab + 1}</span> / {projects.length}
-            </div>
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                onClick={() => setActiveTab((prev) => (prev - 1 + projects.length) % projects.length)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
-                aria-label="Previous showcase"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTab((prev) => (prev + 1) % projects.length)}
-                className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
-                aria-label="Next showcase"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-        </div>
-
         {/* 2-Column Hero Grid: Left Copy & Right 3D Visual */}
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1.15fr]">
-          {/* Left Column: Copy & Social Proof Stack (Directly from Dribbble Video) */}
+          {/* Left Column: Copy & Social Proof Stack */}
           <div className="hero-copy min-w-0 max-w-full">
             {/* Eyebrow Pill Badge */}
             <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-slate-800 shadow-xs backdrop-blur-md">
               <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-white shadow-xs">
                 <Star size={11} className="fill-white" />
               </span>
-              <span>Top 1% Senior Engineering Collective</span>
+              <span key={activeProject.id} className="transition-all duration-300">
+                {activeProject.eyebrowBadge}
+              </span>
               <span className="text-orange-500 font-bold">›</span>
             </div>
 
-            {/* Main Headline with Highlight Capsule (Pattern from Video) */}
-            <h1 className="hero-title mt-5 min-h-[140px] sm:min-h-[160px] lg:min-h-[175px] break-words text-[#0B1437]">
+            {/* Main Headline with Highlight Capsule */}
+            <h1 className="hero-title mt-4 min-h-[90px] sm:min-h-[105px] lg:min-h-[115px] break-words text-[#0B1437]">
               <span>{typedTitle}</span>
-              <span className="relative inline-block px-3.5 py-0.5 rounded-2xl bg-[#FFE4A0] text-[#0B1437] font-black shadow-xs ring-1 ring-amber-300/60 leading-tight mx-1">
+              <span className="relative inline-block px-2.5 py-0.5 rounded-xl bg-[#FFE4A0] text-[#0B1437] font-black shadow-xs ring-1 ring-amber-300/60 leading-tight mx-1">
                 {typedHighlight}
               </span>{" "}
               <span>{typedSuffix}</span>
-              <span className="inline-block w-[3.5px] sm:w-[4.5px] h-[0.82em] ml-1.5 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
+              <span className="inline-block w-[3px] sm:w-[3.5px] h-[0.82em] ml-1 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
             </h1>
 
-            {/* Subtitle */}
-            <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600">
-              Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
+            {/* Subtitle / Description synchronized to active project */}
+            <p className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-slate-600 min-h-[48px] transition-opacity duration-300">
+              {activeProject.description}
             </p>
 
-            {/* Social Proof / Reviews Avatar Stack (Exact Pattern from Video) */}
-            <div className="mt-7 flex flex-wrap items-center gap-3.5 pt-2">
+            {/* Social Proof / Reviews Avatar Stack */}
+            <div className="mt-6 flex flex-wrap items-center gap-3.5 pt-1">
               <div className="flex -space-x-2.5 overflow-hidden">
                 <img
-                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
                   alt="Senior Architect"
                 />
                 <img
-                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
                   alt="Lead Engineer"
                 />
                 <img
-                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  className="inline-block h-8 w-8 rounded-full ring-2 ring-white object-cover shadow-xs"
                   src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
                   alt="Mobile Lead"
                 />
@@ -1025,39 +970,36 @@ function FullHeroBannerSlider() {
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link
-                to="/contact"
-                className="button button-primary !rounded-full !px-7 !py-3.5 text-base shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
+                to={activeProject.primaryCta.to}
+                className="button button-primary !rounded-full !px-6 !py-3 text-sm sm:text-base shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
               >
-                Start a Sprint Project <ArrowRight size={17} />
+                {activeProject.primaryCta.label} <ArrowRight size={16} />
               </Link>
 
               <button
                 type="button"
                 onClick={() => openAiAssistantWithPrompt()}
-                className="button button-secondary !rounded-full !px-6 !py-3.5 text-base flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+                className="button button-secondary !rounded-full !px-5 !py-3 text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
               >
-                <Bot size={17} className="text-orange-600" />
+                <Bot size={16} className="text-orange-600" />
                 Chat with Arivom AI
               </button>
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-9 flex flex-wrap gap-x-7 gap-y-2.5 text-xs font-semibold text-slate-600">
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> Direct Senior Git Access
-              </span>
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> 2-Week Agile Sprints
-              </span>
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> 100% Codebase Handover
-              </span>
+            <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-xs font-semibold text-slate-600">
+              {activeProject.badges.map((badge, idx) => (
+                <span key={idx} className="flex items-center gap-1.5">
+                  <CheckCircle2 size={15} className="text-emerald-600 shrink-0" />
+                  <span>{badge}</span>
+                </span>
+              ))}
             </div>
           </div>
 
-          {/* Right Column: 3D Multi-Device & Glass HUD Composition (Directly from Dribbble Video) */}
+          {/* Right Column: 3D Multi-Device & Glass HUD Composition */}
           <div
             className="hero-visual relative perspective-1200 group w-full select-none"
             onMouseMove={handleMouseMove}
@@ -1068,14 +1010,14 @@ function FullHeroBannerSlider() {
 
             {/* 3D Scene Wrapper with Dynamic Mouse Tilt */}
             <div
-              className="relative w-full min-h-[460px] sm:min-h-[520px] lg:min-h-[560px] preserve-3d transition-transform duration-200 ease-out flex items-center justify-end"
+              className="relative w-full min-h-[440px] sm:min-h-[480px] lg:min-h-[510px] preserve-3d transition-transform duration-200 ease-out flex items-center justify-end"
               style={{
                 transform: `rotateX(${desktopRotateX}deg) rotateY(${desktopRotateY}deg)`,
               }}
             >
               {/* --- Layer 1: Desktop Browser Dashboard Window (Tilted 3D) --- */}
               <div
-                className="relative w-[90%] sm:w-[84%] rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] overflow-hidden ring-1 ring-black/5"
+                className="relative w-full sm:w-[92%] ml-auto rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] overflow-hidden ring-1 ring-black/5"
                 style={{
                   transform: "translateZ(0px)",
                 }}
@@ -1102,22 +1044,45 @@ function FullHeroBannerSlider() {
                 <div className="flex items-center justify-between border-b border-slate-100 bg-white px-4 py-2 text-xs">
                   <div className="flex items-center gap-4 text-slate-600 font-medium">
                     <span className="text-orange-600 font-bold border-b-2 border-orange-600 pb-1">
-                      Overview
+                      Live Showcase
                     </span>
                     <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Architecture</span>
-                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Live Code</span>
-                    <span className="hover:text-slate-900 cursor-pointer hidden md:inline">Telemetry</span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Sprint Deliverables</span>
                   </div>
                   <span className="text-[11px] font-bold text-slate-800 bg-slate-100 px-2.5 py-0.5 rounded-md">
                     {activeProject.tabCategory}
                   </span>
                 </div>
 
-                {/* Main Media Gallery Section (Exact Pattern from Video) */}
+                {/* Main Media Gallery Section - Left Metrics, Right Hero Showcase (Zero Image Overlap) */}
                 <div className="p-3 sm:p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr] gap-2.5">
-                    {/* Primary Hero Showcase Image */}
-                    <div className="relative h-[180px] sm:h-[220px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs group/img">
+                  <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.35fr] gap-3">
+                    {/* Left Inner Column: Metrics & Features (pl reserved for mobile device in foreground) */}
+                    <div className="flex flex-col justify-between pl-0 sm:pl-28 py-1 space-y-2.5">
+                      <div className="rounded-xl bg-slate-50 border border-slate-100 p-2.5">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block">
+                          Client Verified Impact
+                        </span>
+                        <span className="text-base sm:text-lg font-black text-slate-900 block mt-0.5">
+                          {activeProject.floatingMetric}
+                        </span>
+                        <span className="text-[10px] text-slate-500 block mt-0.5">
+                          {activeProject.tabTech}
+                        </span>
+                      </div>
+
+                      <div className="space-y-1.5 pt-1">
+                        {activeProject.features.slice(0, 2).map((feat, i) => (
+                          <div key={i} className="flex items-center gap-1.5 text-[11px] text-slate-700">
+                            <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                            <span className="truncate">{feat}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right Inner Column: Big, Pristine Hero Showcase Image */}
+                    <div className="relative h-[190px] sm:h-[220px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs group/img">
                       <img
                         key={activeProject.id}
                         src={activeProject.heroImage}
@@ -1128,52 +1093,24 @@ function FullHeroBannerSlider() {
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs">
                         <span className="font-bold truncate drop-shadow-sm">{activeProject.client}</span>
                         <span className="bg-orange-600/90 text-white font-mono text-[10px] px-2 py-0.5 rounded-md shadow-xs shrink-0">
-                          {activeProject.tabTech}
+                          {activeProject.tabCategory}
                         </span>
                       </div>
                     </div>
-
-                    {/* Secondary Stacked Thumbnails */}
-                    <div className="hidden sm:grid grid-rows-2 gap-2">
-                      <div className="relative h-[105px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs">
-                        <img
-                          src={activeProject.thumb1}
-                          alt="Deliverable thumbnail 1"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                      <div className="relative h-[105px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs">
-                        <img
-                          src={activeProject.thumb2}
-                          alt="Deliverable thumbnail 2"
-                          className="h-full w-full object-cover"
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Bullet Highlights under image */}
-                  <div className="mt-3.5 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {activeProject.features.slice(0, 2).map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-slate-700">
-                        <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
-                        <span className="truncate">{feat}</span>
-                      </div>
-                    ))}
                   </div>
                 </div>
               </div>
 
               {/* --- Layer 2: Foreground Floating Smartphone Mockup (Overlapping & Bobbing) --- */}
               <div
-                className="absolute left-0 bottom-2 sm:bottom-4 z-20 w-[190px] sm:w-[230px] lg:w-[250px] rounded-[34px] sm:rounded-[38px] border-[5px] sm:border-[6px] border-slate-900 bg-white shadow-[0_30px_70px_-15px_rgba(15,23,42,0.35)] overflow-hidden animate-float-slow select-none"
+                className="absolute -left-3 sm:-left-6 -bottom-4 sm:-bottom-6 z-20 w-[170px] sm:w-[190px] lg:w-[200px] rounded-[32px] sm:rounded-[36px] border-[5px] border-slate-900 bg-white shadow-[0_25px_50px_-12px_rgba(15,23,42,0.3)] overflow-hidden animate-float-slow select-none hidden sm:block"
                 style={{
-                  transform: `rotateX(${phoneRotateX}deg) rotateY(${phoneRotateY}deg) translateZ(50px)`,
+                  transform: `rotateX(${phoneRotateX}deg) rotateY(${phoneRotateY}deg) translateZ(45px)`,
                 }}
               >
                 {/* Speaker Notch / Dynamic Island */}
                 <div className="bg-slate-900 pt-1.5 pb-1 flex justify-center">
-                  <div className="h-3 w-16 bg-slate-800 rounded-full" />
+                  <div className="h-2.5 w-14 bg-slate-800 rounded-full" />
                 </div>
 
                 {/* Smartphone Status Bar */}
@@ -1186,50 +1123,50 @@ function FullHeroBannerSlider() {
                 </div>
 
                 {/* Smartphone App Header */}
-                <div className="p-3 pb-2">
+                <div className="p-2.5 pb-2">
                   <div className="flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-slate-500 block">Welcome back</span>
-                      <span className="text-xs font-bold text-slate-900">Alex • Client</span>
+                      <span className="text-[9.5px] text-slate-500 block">Welcome back</span>
+                      <span className="text-[11.5px] font-bold text-slate-900">Alex • Client</span>
                     </div>
-                    <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 grid place-items-center text-xs font-bold">
+                    <span className="h-5 w-5 rounded-full bg-orange-100 text-orange-600 grid place-items-center text-[10px] font-bold">
                       A
                     </span>
                   </div>
 
-                  {/* Gradient Metric Card (Direct from Video) */}
-                  <div className="mt-2.5 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 p-2.5 text-white shadow-md">
-                    <span className="text-[9.5px] uppercase tracking-wider text-blue-200 font-semibold block">
+                  {/* Gradient Metric Card */}
+                  <div className="mt-2 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 p-2 text-white shadow-md">
+                    <span className="text-[9px] uppercase tracking-wider text-blue-200 font-semibold block">
                       {activeProject.mobileStatLabel}
                     </span>
-                    <span className="text-xl font-black tracking-tight text-white block mt-0.5">
+                    <span className="text-lg font-black tracking-tight text-white block mt-0.5">
                       {activeProject.mobileStatValue}
                     </span>
-                    <span className="text-[10px] text-blue-100 font-medium block mt-0.5">
+                    <span className="text-[9.5px] text-blue-100 font-medium block mt-0.5">
                       {activeProject.mobileStatSub}
                     </span>
                   </div>
 
                   {/* Top Deliverables List */}
-                  <div className="mt-2.5">
-                    <span className="text-[10px] font-bold text-slate-800 uppercase tracking-wider block mb-1">
+                  <div className="mt-2">
+                    <span className="text-[9.5px] font-bold text-slate-800 uppercase tracking-wider block mb-1">
                       Active Sprint Features
                     </span>
-                    <div className="space-y-1.5">
+                    <div className="space-y-1">
                       {activeProject.mobileItems.map((item, idx) => (
                         <div
                           key={idx}
-                          className="flex items-center justify-between rounded-lg bg-slate-50 p-1.5 px-2 border border-slate-100 text-[10px]"
+                          className="flex items-center justify-between rounded-md bg-slate-50 p-1.5 border border-slate-100 text-[9.5px]"
                         >
                           <div className="min-w-0 pr-1">
                             <span className="font-semibold text-slate-800 truncate block">
                               {item.title}
                             </span>
-                            <span className="text-slate-500 text-[9px] truncate block">
+                            <span className="text-slate-500 text-[8.5px] truncate block">
                               {item.status}
                             </span>
                           </div>
-                          <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
+                          <span className="text-[8.5px] font-bold text-emerald-600 bg-emerald-50 px-1 py-0.5 rounded shrink-0">
                             {item.metric}
                           </span>
                         </div>
@@ -1239,13 +1176,13 @@ function FullHeroBannerSlider() {
                 </div>
               </div>
 
-              {/* --- Layer 3: Floating 3D Badges (Hovering Around Devices) --- */}
+              {/* --- Layer 3: Floating 3D Badges (Cleanly Positioned HUD) --- */}
               {/* Badge 1: Top-Right Project Status Pill */}
               <div
-                className="absolute -top-3 right-2 sm:right-6 z-30 flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/95 p-2 sm:p-2.5 pr-4 shadow-xl backdrop-blur-md animate-badge-float"
-                style={{ transform: "translateZ(60px)" }}
+                className="absolute -top-4 right-2 sm:right-6 z-30 flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/95 p-2 sm:p-2.5 pr-4 shadow-xl backdrop-blur-md animate-badge-float"
+                style={{ transform: "translateZ(50px)" }}
               >
-                <div className="h-9 w-9 rounded-xl overflow-hidden shadow-xs shrink-0 bg-slate-100">
+                <div className="h-8 w-8 rounded-xl overflow-hidden shadow-xs shrink-0 bg-slate-100">
                   <img
                     src={activeProject.heroImage}
                     alt={activeProject.badgeTitle}
@@ -1264,35 +1201,33 @@ function FullHeroBannerSlider() {
                   </span>
                 </div>
               </div>
+            </div>
 
-              {/* Badge 2: Bottom-Left Agile Guarantee Pill */}
-              <div
-                className="absolute -left-3 sm:-left-6 -bottom-3 z-30 hidden sm:flex items-center gap-2.5 rounded-2xl border border-slate-100 bg-white/95 p-2.5 pr-4 shadow-2xl backdrop-blur-md animate-float-delayed"
-                style={{ transform: "translateZ(70px)" }}
-              >
-                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 grid place-items-center text-white shadow-xs">
-                  <Rocket size={15} />
-                </div>
-                <div>
-                  <span className="text-xs font-bold text-slate-900 block">
-                    Arivom Sprint Engine
-                  </span>
-                  <span className="text-[10.5px] text-slate-500 block">
-                    2-Week Sprints • 100% Code Handover
-                  </span>
-                </div>
-              </div>
-
-              {/* Badge 3: 4-Dot Diamond Geometric Accent (Exact Pattern from Video) */}
-              <div
-                className="absolute -top-6 right-0 z-10 grid grid-cols-2 gap-1.5 rounded-2xl bg-white/90 border border-slate-100 p-2.5 shadow-md hidden sm:grid"
-                style={{ transform: "translateZ(20px)" }}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
-                <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
-                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-              </div>
+            {/* Showcase Slide Pagination Dots */}
+            <div className="mt-5 flex items-center justify-center gap-2">
+              {projects.map((proj, idx) => {
+                const isSelected = idx === activeTab
+                return (
+                  <button
+                    key={proj.id}
+                    type="button"
+                    onClick={() => setActiveTab(idx)}
+                    className={`group flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                      isSelected
+                        ? "bg-[#0B1437] text-white shadow-xs ring-1 ring-orange-500/40"
+                        : "bg-white/80 text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+                    }`}
+                    aria-label={`Switch to ${proj.tabTitle}`}
+                  >
+                    <span
+                      className={`h-1.5 w-1.5 rounded-full ${
+                        isSelected ? "bg-emerald-400 animate-pulse" : "bg-slate-300"
+                      }`}
+                    />
+                    <span>{proj.tabTitle}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
         </div>
@@ -1570,12 +1505,14 @@ function PageHero({
   children?: React.ReactNode
 }) {
   return (
-    <section className="hero-grid border-b border-slate-200/70 pb-20 pt-36 text-center lg:pt-44">
+    <section className="hero-grid border-b border-slate-200/70 pb-16 pt-28 sm:pb-20 sm:pt-36 lg:pt-44 text-center">
       <div className="container-wide">
-        <div className="page-hero-copy mx-auto max-w-4xl">
+        <div className="page-hero-copy mx-auto max-w-4xl px-3 sm:px-4">
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h1 className="hero-title mt-6">{title}</h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#0B1437] mt-5 max-w-3xl mx-auto leading-[1.18] break-words">
+            {title}
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600">
             {text}
           </p>
           {children}
@@ -1776,7 +1713,7 @@ function Work() {
                   <img
                     src={project.image}
                     alt={`${project.title} project`}
-                    className="h-full min-h-[360px] w-full object-cover transition-transform duration-700 hover:scale-105"
+                    className="h-full min-h-[260px] sm:min-h-[340px] lg:min-h-[380px] w-full object-cover transition-transform duration-700 hover:scale-105"
                   />
                   {"logo" in project && project.logo && (
                     <div className="absolute top-4 left-4 rounded-xl bg-black/90 backdrop-blur-md px-3.5 py-2 border border-white/20 shadow-xl flex items-center">
@@ -1788,7 +1725,7 @@ function Work() {
                     </div>
                   )}
                 </div>
-                <div className="flex flex-col justify-center p-8 lg:p-12">
+                <div className="flex flex-col justify-center p-6 sm:p-8 lg:p-12">
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-xs font-bold uppercase tracking-[.18em] text-orange-600">
                       {project.category}
@@ -1858,7 +1795,7 @@ function Work() {
         </div>
       </section>
       <section className="section-space bg-[#111a2e] text-white">
-        <div className="container-wide grid gap-8 text-center sm:grid-cols-4">
+        <div className="container-wide grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
           {[
             [50, "+", 0, "Projects shipped"],
             [14, "", 0, "Industries served"],
@@ -2314,15 +2251,15 @@ function Field({
 
 function CTA() {
   return (
-    <section className="px-4 py-16 sm:px-6">
-      <div className="container-wide overflow-hidden rounded-[32px] bg-gradient-to-r from-[#ff6b24] to-[#ff8a1f] px-6 py-14 text-center text-white shadow-[0_25px_60px_rgba(255,107,36,.22)] sm:px-12">
+    <section className="px-4 py-12 sm:px-6 sm:py-16">
+      <div className="container-wide overflow-hidden rounded-[28px] sm:rounded-[32px] bg-gradient-to-r from-[#ff6b24] to-[#ff8a1f] px-5 py-10 sm:px-12 sm:py-14 text-center text-white shadow-[0_25px_60px_rgba(255,107,36,.22)]">
         <p className="text-xs font-bold uppercase tracking-[.2em] text-orange-100">
           Have an idea in mind?
         </p>
-        <h2 className="mx-auto mt-4 max-w-3xl text-3xl font-extrabold tracking-tight sm:text-4xl">
+        <h2 className="mx-auto mt-4 max-w-3xl text-2xl sm:text-4xl font-extrabold tracking-tight">
           Let’s turn it into your next growth engine.
         </h2>
-        <p className="mx-auto mt-4 max-w-xl text-orange-50">
+        <p className="mx-auto mt-4 max-w-xl text-sm sm:text-base text-orange-50">
           A focused discovery call is all it takes to find the right first step.
         </p>
         <Link to="/contact" className="button button-light mt-7">

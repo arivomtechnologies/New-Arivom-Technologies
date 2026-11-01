@@ -137,7 +137,7 @@ export function PersonaAdvantagesSection() {
           </p>
 
           {/* Persona Tabs Switcher */}
-          <div className="mt-8 inline-flex items-center gap-1.5 p-1.5 rounded-full bg-slate-100 border border-slate-200 shadow-inner">
+          <div className="mt-8 flex flex-wrap sm:inline-flex items-center justify-center gap-1.5 p-1.5 rounded-2xl sm:rounded-full bg-slate-100 border border-slate-200 shadow-inner max-w-full">
             {(Object.keys(personas) as PersonaKey[]).map((key) => {
               const active = activePersona === key
               return (
@@ -145,7 +145,7 @@ export function PersonaAdvantagesSection() {
                   key={key}
                   type="button"
                   onClick={() => setActivePersona(key)}
-                  className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  className={`px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl sm:rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
                     active
                       ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25'
                       : 'text-slate-600 hover:text-slate-900'

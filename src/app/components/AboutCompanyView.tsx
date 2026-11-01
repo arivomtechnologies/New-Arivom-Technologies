@@ -133,13 +133,13 @@ export function AboutCompanyView() {
   return (
     <div className="bg-[#fbfaf7]">
       {/* 1. Page Hero */}
-      <section className="relative overflow-hidden pt-32 pb-20 lg:pt-38 lg:pb-24 border-b border-slate-200/60 bg-gradient-to-b from-orange-50/50 via-white to-[#fbfaf7]">
-        <div className="container-wide text-center">
+      <section className="relative overflow-hidden pt-28 pb-14 sm:pt-32 sm:pb-20 lg:pt-38 lg:pb-24 border-b border-slate-200/60 bg-gradient-to-b from-orange-50/50 via-white to-[#fbfaf7]">
+        <div className="container-wide text-center px-3 sm:px-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/80 px-4 py-1.5 text-xs font-bold text-orange-700 shadow-xs backdrop-blur-sm">
             <span>❖</span> About Arivom Technologies
           </div>
 
-          <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.12]">
+          <h1 className="mt-5 text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15] break-words">
             Building Digital Solutions <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">
               for a Better Tomorrow
