@@ -937,8 +937,62 @@ function FullHeroBannerSlider() {
 
   const projects = [
     {
-      id: "kb-homes",
+      id: "digital-solutions",
       tabNumber: "01",
+      tabTitle: "Digital Solutions",
+      tabCategory: "Web, Mobile & AI Platforms",
+      tabTech: "Next-Gen Web • Mobile Apps • Cloud • AI",
+      client: "Arivom Technologies — Enterprise Digital Studio",
+      eyebrowBadge: "Enterprise Software & Digital Transformation",
+      headlinePrefix: "Building Digital Solutions ",
+      headlineHighlight: "for a Better Tomorrow",
+      headlineSuffix: ".",
+      description:
+        "Architecting high-velocity web platforms, resilient mobile applications, and intelligent cloud systems designed to empower businesses, accelerate growth, and shape a smarter tomorrow.",
+      primaryCta: { label: "Build Your Digital Solution", to: "/contact" },
+      badges: [
+        "Full-Stack Web & Mobile",
+        "Cloud-Native Scalability",
+        "Enterprise AI Automation",
+      ],
+      badgeTitle: "Digital Solutions Hub",
+      badgeSubtitle: "Building for Tomorrow",
+      heroImage: `${cleanBase}images/service-ai-saas.jpg`,
+      thumb1: `${cleanBase}images/arivom-services-dashboard.jpg`,
+      thumb2: `${cleanBase}images/zigzag-cloud-deployment.jpg`,
+      mobileStatLabel: "Digital Velocity",
+      mobileStatValue: "10x Faster",
+      mobileStatSub: "Scalable Cloud & AI Systems",
+      urlPath: "arivomtechnologies.com/solutions",
+      liveStatus: "Active Digital Core",
+      features: [
+        "Modern web platforms & cross-platform mobile apps",
+        "Resilient cloud architecture with sub-second response",
+        "Enterprise AI workflows & intelligent process automation",
+      ],
+      mobileItems: [
+        {
+          title: "Next-Gen Web Platform",
+          status: "Sub-Second Load",
+          metric: "99.9% Uptime",
+        },
+        {
+          title: "Cross-Platform Mobile Suite",
+          status: "iOS & Android",
+          metric: "60 FPS",
+        },
+        {
+          title: "AI & Workflow Automation",
+          status: "Production Ready",
+          metric: "Active",
+        },
+      ],
+      floatingMetric: "Future-Ready Tech",
+      icon: Globe2,
+    },
+    {
+      id: "kb-homes",
+      tabNumber: "02",
       tabTitle: "KB Homes",
       tabCategory: "3D Architecture & Web Portal",
       tabTech: "3D Elevations & Virtual Tours",
@@ -992,7 +1046,7 @@ function FullHeroBannerSlider() {
     },
     {
       id: "first-goal",
-      tabNumber: "02",
+      tabNumber: "03",
       tabTitle: "First Goal FC",
       tabCategory: "Tournament & Academy App",
       tabTech: "React Native & Real-Time Scoring",
@@ -1046,7 +1100,7 @@ function FullHeroBannerSlider() {
     },
     {
       id: "enterprise-cloud",
-      tabNumber: "03",
+      tabNumber: "04",
       tabTitle: "Enterprise Cloud",
       tabCategory: "Java 21 & Event Streaming",
       tabTech: "Spring Boot 3 • Kafka Engine",
@@ -1525,7 +1579,7 @@ function FullHeroBannerSlider() {
             </div>
 
             {/* Showcase Slide Pagination Dots */}
-            <div className="mt-5 flex items-center justify-center gap-2">
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
               {projects.map((proj, idx) => {
                 const isSelected = idx === activeTab
                 return (
