@@ -36,6 +36,7 @@ import {
   ShieldCheck,
   Smartphone,
   Sparkles,
+  Star,
   Target,
   Terminal,
   TrendingUp,
@@ -705,182 +706,174 @@ function ServiceCard({ service }: { service: typeof services[number] }) {
 }
 
 function FullHeroBannerSlider() {
-  const slides = [
+  const [activeTab, setActiveTab] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 })
+
+  const projects = [
     {
-      id: "enterprise",
+      id: "kb-homes",
       tabNumber: "01",
-      tabTitle: "Enterprise Cloud & Kafka",
-      tabTech: "Java 21 • Spring Boot 3",
-      eyebrow: "Senior Engineering Collective • Zero Agency Bloat",
-      prefix: "Custom Enterprise Software.",
-      gradient: "Engineered to Scale",
-      suffix: " from Day 1.",
-      description:
-        "Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.",
-      primaryCta: {
-        label: "Start a Sprint Project",
-        to: "/contact",
-      },
-      secondaryCta: {
-        label: "Chat with Arivom AI",
-        isAiButton: true,
-      },
-      badges: [
-        "Direct Senior Git Access",
-        "2-Week Agile Sprints",
-        "100% Codebase Handover",
+      tabTitle: "KB Homes",
+      tabCategory: "3D Architecture & Web Portal",
+      tabTech: "3D Elevations & Virtual Tours",
+      client: "KB Homes — Architects & Builders",
+      badgeTitle: "KB Homes 3D Portal",
+      badgeSubtitle: "Live Architectural Walkthrough",
+      heroImage: `${cleanBase}images/lacastle-showcase.jpg`,
+      thumb1: `${cleanBase}images/zigzag-business-website.jpg`,
+      thumb2: `${cleanBase}images/arivom-services-dashboard.jpg`,
+      mobileStatLabel: "Inquiry Velocity",
+      mobileStatValue: "+380%",
+      mobileStatSub: "42 3D Elevations Rendered",
+      urlPath: "arivom.live/work/kb-homes",
+      liveStatus: "Live Client Platform",
+      features: [
+        "Interactive 3D elevation showcase & virtual floorplans",
+        "Direct WhatsApp project lead routing (+380% inquiries)",
+        "Mobile-first speed with sub-second image loading",
       ],
-      image: `${cleanBase}images/hero-enterprise-architecture.jpg`,
-      tag: "Production Architecture",
-      title: "Java 21 + Spring Boot 3 + Kafka",
-      subtitle: "High-throughput event streaming & enterprise microservices",
-      hudMetric: "1.2M msg/s Throughput",
-      metricValue: 99.9,
-      metricDecimals: 1,
-      metricSuffix: "%",
-      metricLabel: "Production SLA Uptime",
-      verifiedText: "Verified Production Mesh",
-      icon: Rocket,
+      mobileItems: [
+        { title: "Grand Palm Villa (3D)", status: "Active View", metric: "4.8K views" },
+        { title: "Signature Residence", status: "Floorplan Ready", metric: "38 leads" },
+        { title: "WhatsApp Lead Hook", status: "Instant Route", metric: "99.4% sent" },
+      ],
+      floatingMetric: "+380% Inquiries",
+      icon: Sparkles,
     },
     {
-      id: "fullstack",
+      id: "first-goal",
       tabNumber: "02",
-      tabTitle: "Web & Mobile Ecosystems",
-      tabTech: "React 19 • React Native",
-      eyebrow: "Full-Stack Product Studio • High Performance",
-      prefix: "Next-Gen Web & Mobile Apps.",
-      gradient: "Engineered for Conversion",
-      suffix: " & Native Speed.",
-      description:
-        "Modern server-driven web applications and polished cross-platform iOS & Android experiences that turn complex workflows into effortless digital products.",
-      primaryCta: {
-        label: "Explore Our Deliverables",
-        to: "/work",
-      },
-      secondaryCta: {
-        label: "Estimate Project Scope",
-        to: "/pricing",
-      },
-      badges: [
-        "100/100 Lighthouse Performance",
-        "60 FPS Native Gestures",
-        "Offline-First SQLite Sync",
+      tabTitle: "First Goal FC",
+      tabCategory: "Tournament & Academy App",
+      tabTech: "React Native & Real-Time Scoring",
+      client: "First Goal FC — Football Academy",
+      badgeTitle: "First Goal FC App",
+      badgeSubtitle: "Live Tournament Match Center",
+      heroImage: `${cleanBase}images/cs-fitness-app.jpg`,
+      thumb1: `${cleanBase}images/zigzag-mobile-application.jpg`,
+      thumb2: `${cleanBase}images/mobile-portfolio.jpg`,
+      mobileStatLabel: "Match Events",
+      mobileStatValue: "12,000+",
+      mobileStatSub: "16 Academy Teams Synced",
+      urlPath: "arivom.live/work/first-goal-fc",
+      liveStatus: "Active Mobile App",
+      features: [
+        "Real-time live match scoring & push alerts (<150ms)",
+        "Automated bracket generation & referee match logs",
+        "Academy player profiles, rosters & attendance sync",
       ],
-      image: `${cleanBase}images/hero-developer-workspace.jpg`,
-      tag: "Full-Stack Ecosystem",
-      title: "React 19 + Next.js & React Native",
-      subtitle: "Web applications & cross-platform iOS/Android apps",
-      hudMetric: "60 FPS Fluid Gestures",
-      metricValue: 100,
-      metricDecimals: 0,
-      metricSuffix: "/100",
-      metricLabel: "Lighthouse Performance",
-      verifiedText: "Sub-Second First Paint",
-      icon: Code2,
+      mobileItems: [
+        { title: "U17 Summer Cup (Live 2-1)", status: "Match Center", metric: "Min 78'" },
+        { title: "Push Notification Hub", status: "Sub-150ms", metric: "12K alerts" },
+        { title: "Academy Roster Manager", status: "Auto-Bracket", metric: "16 teams" },
+      ],
+      floatingMetric: "12K Match Events",
+      icon: Activity,
     },
     {
-      id: "ai",
+      id: "enterprise-cloud",
       tabNumber: "03",
-      tabTitle: "Autonomous AI Multi-Agent",
-      tabTech: "Gemini 2.5 • LLM Mesh",
-      eyebrow: "Intelligent Systems • Autonomous Multi-Agent Mesh",
-      prefix: "Autonomous AI Workflows.",
-      gradient: "Embedded into Your Stack",
-      suffix: " for 10x Velocity.",
-      description:
-        "Production-grade AI assistants, Gemini 2.5 multi-agent pipelines, and intelligent workflow automations that give your engineering team hours back every week.",
-      primaryCta: {
-        label: "Deploy AI Agents",
-        to: "/contact",
-      },
-      secondaryCta: {
-        label: "Chat with Arivom AI",
-        isAiButton: true,
-      },
-      badges: [
-        "Gemini 2.5 Multi-Agent Mesh",
-        "Custom Enterprise RAG",
-        "Automated Code Auditing",
+      tabTitle: "Enterprise Cloud",
+      tabCategory: "Java 21 & Event Streaming",
+      tabTech: "Spring Boot 3 • Kafka Engine",
+      client: "Enterprise FinTech Microservices",
+      badgeTitle: "Arivom Cloud Mesh",
+      badgeSubtitle: "1.2M msg/s Streaming Engine",
+      heroImage: `${cleanBase}images/hero-enterprise-architecture.jpg`,
+      thumb1: `${cleanBase}images/cs-fintech-gateway.jpg`,
+      thumb2: `${cleanBase}images/service-cloud-devops.jpg`,
+      mobileStatLabel: "Production SLA",
+      mobileStatValue: "99.9%",
+      mobileStatSub: "1.2M msg/s Throughput",
+      urlPath: "arivom.live/architecture/mesh",
+      liveStatus: "Verified Production Mesh",
+      features: [
+        "Distributed Kafka event pipeline with zero consumer lag",
+        "Java 21 Virtual Threads & Spring Boot 3 reactive core",
+        "Zero-downtime automated blue/green delivery pipeline",
       ],
-      image: `${cleanBase}images/hero-ai-automation-agents.jpg`,
-      tag: "Autonomous Systems",
-      title: "Gemini 2.5 + Multi-Agent Orchestration",
-      subtitle: "Intelligent autonomous agent workflows embedded into production",
-      hudMetric: "Neural Multi-Agent Mesh",
-      metricValue: 10,
-      metricDecimals: 0,
-      metricSuffix: "x",
-      metricLabel: "Engineering Velocity",
-      verifiedText: "Autonomous Task Execution",
-      icon: Bot,
+      mobileItems: [
+        { title: "Kafka Event Cluster", status: "Zero Lag", metric: "1.2M msg/s" },
+        { title: "Payment Routing Engine", status: "PCI-DSS", metric: "18ms lag" },
+        { title: "Kubernetes Auto-Scaler", status: "99.9% SLA", metric: "48 nodes" },
+      ],
+      floatingMetric: "99.9% SLA Uptime",
+      icon: Rocket,
     },
   ]
 
-  const [current, setCurrent] = useState(0)
-  const [isPaused, setIsPaused] = useState(false)
+  const activeProject = projects[activeTab]
 
-  // Typewriter state for active slide headline
-  const [displayedPrefix, setDisplayedPrefix] = useState("")
-  const [displayedGradient, setDisplayedGradient] = useState("")
-  const [displayedSuffix, setDisplayedSuffix] = useState("")
+  // Typewriter animation state for headline
+  const [typedTitle, setTypedTitle] = useState("")
+  const [typedHighlight, setTypedHighlight] = useState("")
+  const [typedSuffix, setTypedSuffix] = useState("")
 
-  const activeSlide = slides[current]
-  const Icon = activeSlide.icon
+  const titleText = "Custom Enterprise Software. "
+  const highlightText = "Engineered to Scale"
+  const suffixText = "from Day 1."
 
-  // Run letter-by-letter typing whenever current slide changes
   useEffect(() => {
-    setDisplayedPrefix("")
-    setDisplayedGradient("")
-    setDisplayedSuffix("")
-
-    const targetPrefix = activeSlide.prefix
-    const targetGradient = activeSlide.gradient
-    const targetSuffix = activeSlide.suffix
-
-    let pIdx = 0
-    let gIdx = 0
+    let tIdx = 0
+    let hIdx = 0
     let sIdx = 0
 
-    // Step 1: Type prefix
-    const prefixInterval = setInterval(() => {
-      pIdx++
-      setDisplayedPrefix(targetPrefix.slice(0, pIdx))
-      if (pIdx >= targetPrefix.length) {
-        clearInterval(prefixInterval)
+    setTypedTitle("")
+    setTypedHighlight("")
+    setTypedSuffix("")
 
-        // Step 2: Type gradient
-        const gradInterval = setInterval(() => {
-          gIdx++
-          setDisplayedGradient(targetGradient.slice(0, gIdx))
-          if (gIdx >= targetGradient.length) {
-            clearInterval(gradInterval)
-
-            // Step 3: Type suffix
-            const suffixInterval = setInterval(() => {
+    const tInterval = setInterval(() => {
+      tIdx++
+      setTypedTitle(titleText.slice(0, tIdx))
+      if (tIdx >= titleText.length) {
+        clearInterval(tInterval)
+        const hInterval = setInterval(() => {
+          hIdx++
+          setTypedHighlight(highlightText.slice(0, hIdx))
+          if (hIdx >= highlightText.length) {
+            clearInterval(hInterval)
+            const sInterval = setInterval(() => {
               sIdx++
-              setDisplayedSuffix(targetSuffix.slice(0, sIdx))
-              if (sIdx >= targetSuffix.length) {
-                clearInterval(suffixInterval)
+              setTypedSuffix(suffixText.slice(0, sIdx))
+              if (sIdx >= suffixText.length) {
+                clearInterval(sInterval)
               }
-            }, 25)
+            }, 30)
           }
-        }, 25)
+        }, 30)
       }
-    }, 25)
+    }, 28)
 
-    return () => {
-      clearInterval(prefixInterval)
-    }
-  }, [current, activeSlide.prefix, activeSlide.gradient, activeSlide.suffix])
+    return () => clearInterval(tInterval)
+  }, [])
 
-  // Auto-advance every 7 seconds unless hovered
+  // Auto-advance tabs every 8 seconds unless hovered
   useEffect(() => {
     if (isPaused) return
     const timer = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % slides.length)
-    }, 7000)
+      setActiveTab((prev) => (prev + 1) % projects.length)
+    }, 8000)
     return () => clearInterval(timer)
-  }, [isPaused, current, slides.length])
+  }, [isPaused, projects.length])
+
+  // Mouse 3D parallax tracking
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    setMouseOffset({ x, y })
+  }
+
+  const handleMouseLeave = () => {
+    setMouseOffset({ x: 0, y: 0 })
+  }
+
+  // Calculate 3D perspective rotation values
+  const desktopRotateX = 4 - mouseOffset.y * 10
+  const desktopRotateY = -8 + mouseOffset.x * 12
+  const phoneRotateX = 2 - mouseOffset.y * 6
+  const phoneRotateY = -3 + mouseOffset.x * 8
 
   return (
     <section
@@ -889,50 +882,50 @@ function FullHeroBannerSlider() {
       onMouseLeave={() => setIsPaused(false)}
     >
       <div className="container-wide">
-        {/* Top Command Bar & Architecture Slide Selector */}
-        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-2xl border border-slate-200/80 bg-white/80 p-2.5 sm:p-3 shadow-sm backdrop-blur-xl">
+        {/* Top Interactive Showcase Switcher Bar (Direct from Video) */}
+        <div className="mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/80 p-2 sm:p-2.5 shadow-sm backdrop-blur-xl">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1">
-            {slides.map((slide, idx) => {
-              const isSelected = idx === current
+            {projects.map((proj, idx) => {
+              const isSelected = idx === activeTab
               return (
                 <button
-                  key={slide.id}
+                  key={proj.id}
                   type="button"
-                  onClick={() => setCurrent(idx)}
-                  className={`group relative flex flex-col items-start rounded-xl p-3 text-left transition-all duration-300 cursor-pointer overflow-hidden ${
+                  onClick={() => setActiveTab(idx)}
+                  className={`group relative flex flex-col items-start rounded-xl p-2.5 sm:p-3 text-left transition-all duration-300 cursor-pointer overflow-hidden ${
                     isSelected
                       ? "bg-[#0B1437] text-white shadow-md ring-1 ring-orange-500/30"
-                      : "bg-slate-50/70 text-slate-700 hover:bg-slate-100 hover:text-slate-900"
+                      : "bg-slate-50/80 text-slate-700 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
                   <div className="flex items-center justify-between w-full">
                     <span
-                      className={`text-[11px] font-mono font-bold tracking-wider uppercase ${
+                      className={`text-[10.5px] font-mono font-bold tracking-wider uppercase ${
                         isSelected ? "text-orange-400" : "text-slate-400"
                       }`}
                     >
-                      {slide.tabNumber} // ARCHITECTURE
+                      {proj.tabNumber} // {proj.tabCategory}
                     </span>
                     {isSelected && (
                       <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                     )}
                   </div>
                   <span className="mt-1 text-sm font-bold truncate w-full">
-                    {slide.tabTitle}
+                    {proj.tabTitle}
                   </span>
                   <span
                     className={`text-[11px] truncate w-full mt-0.5 ${
                       isSelected ? "text-slate-300" : "text-slate-500"
                     }`}
                   >
-                    {slide.tabTech}
+                    {proj.tabTech}
                   </span>
 
                   {/* Active Slide Timer Line */}
                   {isSelected && (
                     <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/10">
                       <div
-                        key={current}
+                        key={activeTab}
                         className={`h-full bg-gradient-to-r from-orange-500 to-amber-400 ${
                           isPaused ? "w-full" : "animate-progress-fill"
                         }`}
@@ -947,22 +940,22 @@ function FullHeroBannerSlider() {
           {/* Navigation Controls: Prev / Next / Counter */}
           <div className="hidden md:flex items-center gap-3 px-3 shrink-0">
             <div className="text-xs font-mono font-bold text-slate-500">
-              <span className="text-orange-600 font-extrabold text-sm">{current + 1}</span> / {slides.length}
+              <span className="text-orange-600 font-extrabold text-sm">{activeTab + 1}</span> / {projects.length}
             </div>
             <div className="flex items-center gap-1.5">
               <button
                 type="button"
-                onClick={() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length)}
+                onClick={() => setActiveTab((prev) => (prev - 1 + projects.length) % projects.length)}
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
-                aria-label="Previous slide"
+                aria-label="Previous showcase"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 type="button"
-                onClick={() => setCurrent((prev) => (prev + 1) % slides.length)}
+                onClick={() => setActiveTab((prev) => (prev + 1) % projects.length)}
                 className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-300 transition-colors shadow-2xs cursor-pointer"
-                aria-label="Next slide"
+                aria-label="Next showcase"
               >
                 <ChevronRight size={16} />
               </button>
@@ -970,146 +963,336 @@ function FullHeroBannerSlider() {
           </div>
         </div>
 
-        {/* Slide Body: 2-Column Integrated Layout */}
-        <div key={activeSlide.id} className="grid items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
-          {/* Left Column: Animated Content */}
+        {/* 2-Column Hero Grid: Left Copy & Right 3D Visual */}
+        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1.15fr]">
+          {/* Left Column: Copy & Social Proof Stack (Directly from Dribbble Video) */}
           <div className="hero-copy min-w-0 max-w-full">
-            <div className="eyebrow inline-flex items-center gap-2 max-w-full">
-              <span className="h-2 w-2 rounded-full bg-orange-500 animate-pulse shrink-0" />
-              <span className="truncate sm:whitespace-normal">{activeSlide.eyebrow}</span>
+            {/* Eyebrow Pill Badge */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-orange-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-slate-800 shadow-xs backdrop-blur-md">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-600 text-white shadow-xs">
+                <Star size={11} className="fill-white" />
+              </span>
+              <span>Top 1% Senior Engineering Collective</span>
+              <span className="text-orange-500 font-bold">›</span>
             </div>
 
-            {/* Letter-by-Letter Animated Headline */}
-            <h1 className="hero-title mt-6 min-h-[130px] sm:min-h-[160px] lg:min-h-[185px] break-words">
-              <span className="text-[#0B1437]">{displayedPrefix}</span>{" "}
-              <span className="text-gradient font-black">{displayedGradient}</span>
-              <span className="text-[#0B1437]">{displayedSuffix}</span>
+            {/* Main Headline with Highlight Capsule (Pattern from Video) */}
+            <h1 className="hero-title mt-5 min-h-[140px] sm:min-h-[160px] lg:min-h-[175px] break-words text-[#0B1437]">
+              <span>{typedTitle}</span>
+              <span className="relative inline-block px-3.5 py-0.5 rounded-2xl bg-[#FFE4A0] text-[#0B1437] font-black shadow-xs ring-1 ring-amber-300/60 leading-tight mx-1">
+                {typedHighlight}
+              </span>{" "}
+              <span>{typedSuffix}</span>
               <span className="inline-block w-[3.5px] sm:w-[4.5px] h-[0.82em] ml-1.5 align-middle bg-[#FF6B00] rounded-sm animate-cursor-blink" />
             </h1>
 
             {/* Subtitle */}
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600 animate-fade-in-up delay-200">
-              {activeSlide.description}
+            <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-600">
+              Direct access to senior full-stack engineers specializing in Java 21, Spring Boot 3, React 19 / Angular Signals, and React Native mobile apps.
             </p>
 
+            {/* Social Proof / Reviews Avatar Stack (Exact Pattern from Video) */}
+            <div className="mt-7 flex flex-wrap items-center gap-3.5 pt-2">
+              <div className="flex -space-x-2.5 overflow-hidden">
+                <img
+                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
+                  alt="Senior Architect"
+                />
+                <img
+                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80"
+                  alt="Lead Engineer"
+                />
+                <img
+                  className="inline-block h-9 w-9 rounded-full ring-2 ring-white object-cover shadow-xs"
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80"
+                  alt="Mobile Lead"
+                />
+              </div>
+
+              <div className="text-xs sm:text-sm text-slate-700">
+                <span className="font-bold text-amber-500">★★★★★</span>{" "}
+                <span className="font-extrabold text-slate-900">5.0</span>{" "}
+                <span className="text-slate-500">(40+ Verified Sprints) • </span>
+                <Link
+                  to="/work"
+                  className="underline font-bold text-slate-900 hover:text-orange-600 transition-colors"
+                >
+                  See Client Reviews
+                </Link>
+              </div>
+            </div>
+
             {/* Action Buttons */}
-            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row animate-fade-in-up delay-400">
-              <Link to={activeSlide.primaryCta.to} className="button button-primary">
-                {activeSlide.primaryCta.label} <ArrowRight size={18} />
+            <div className="mt-8 flex flex-col gap-3.5 sm:flex-row">
+              <Link
+                to="/contact"
+                className="button button-primary !rounded-full !px-7 !py-3.5 text-base shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 hover:scale-[1.02] transition-transform"
+              >
+                Start a Sprint Project <ArrowRight size={17} />
               </Link>
 
-              {activeSlide.secondaryCta.isAiButton ? (
-                <button
-                  type="button"
-                  onClick={() => openAiAssistantWithPrompt()}
-                  className="button button-secondary cursor-pointer flex items-center gap-2"
-                >
-                  <Bot size={18} className="text-orange-600" />
-                  {activeSlide.secondaryCta.label}
-                </button>
-              ) : (
-                <Link
-                  to={activeSlide.secondaryCta.to!}
-                  className="button button-secondary flex items-center gap-2"
-                >
-                  {activeSlide.secondaryCta.label}
-                  <ArrowRight size={16} />
-                </Link>
-              )}
+              <button
+                type="button"
+                onClick={() => openAiAssistantWithPrompt()}
+                className="button button-secondary !rounded-full !px-6 !py-3.5 text-base flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] transition-transform"
+              >
+                <Bot size={17} className="text-orange-600" />
+                Chat with Arivom AI
+              </button>
             </div>
 
             {/* Trust Badges */}
-            <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 text-sm font-medium text-slate-600 animate-fade-in-up delay-600">
-              {activeSlide.badges.map((item) => (
-                <span key={item} className="flex items-center gap-2">
-                  <CheckCircle2 size={17} className="text-emerald-600 shrink-0" /> {item}
-                </span>
-              ))}
+            <div className="mt-9 flex flex-wrap gap-x-7 gap-y-2.5 text-xs font-semibold text-slate-600">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> Direct Senior Git Access
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> 2-Week Agile Sprints
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={16} className="text-emerald-600 shrink-0" /> 100% Codebase Handover
+              </span>
             </div>
           </div>
 
-          {/* Right Column: High-End Command Console with Bespoke 3D Imagery */}
-          <div className="hero-visual relative perspective-1000 group">
-            {/* Ambient Backdrop Glow */}
-            <div className="hero-glow absolute -inset-8 rounded-full bg-gradient-to-tr from-orange-500/25 via-amber-500/15 to-transparent blur-3xl transition-all duration-700 group-hover:from-orange-500/35" />
+          {/* Right Column: 3D Multi-Device & Glass HUD Composition (Directly from Dribbble Video) */}
+          <div
+            className="hero-visual relative perspective-1200 group w-full select-none"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* Ambient Background Radial Glow */}
+            <div className="absolute -inset-10 rounded-full bg-gradient-to-tr from-orange-500/15 via-blue-500/10 to-transparent blur-3xl transition-all duration-700 pointer-events-none" />
 
-            {/* Titanium Glass Command Console Frame */}
-            <div className="relative overflow-hidden rounded-[28px] border border-slate-700/60 bg-[#0B1437]/95 p-3.5 sm:p-4 shadow-[0_30px_90px_rgba(11,20,55,0.45)] ring-1 ring-white/10 backdrop-blur-2xl">
-              {/* Console Titlebar */}
-              <div className="mb-3 flex items-center justify-between border-b border-white/10 pb-3 px-1">
-                <div className="flex items-center gap-2.5">
-                  <span className="h-3 w-3 rounded-full bg-[#FF5F56] shadow-xs" />
-                  <span className="h-3 w-3 rounded-full bg-[#FFBD2E] shadow-xs" />
-                  <span className="h-3 w-3 rounded-full bg-[#27C93F] shadow-xs" />
-                </div>
-                <div className="flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-2.5 py-0.5 text-[10.5px] font-mono text-slate-300">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>cluster.{activeSlide.id}.arivom.live</span>
-                </div>
-              </div>
-
-              {/* Cinema 16:9 Viewport */}
-              <div className="relative h-[330px] w-full overflow-hidden rounded-[20px] bg-slate-950 sm:h-[440px]">
-                <img
-                  src={activeSlide.image}
-                  alt={activeSlide.title}
-                  className="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                  loading="eager"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1437]/95 via-[#0B1437]/30 to-transparent" />
-
-                {/* Top-Left Telemetry Tag */}
-                <div className="absolute top-4 left-4 z-20">
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/50 px-3 py-1 text-[10.5px] font-mono font-semibold text-orange-300 backdrop-blur-md shadow-sm">
-                    <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-ping" />
-                    {activeSlide.hudMetric}
-                  </span>
-                </div>
-
-                {/* Bottom Integrated Architecture HUD Bar */}
-                <div className="absolute right-4 bottom-5 left-4 z-20 sm:left-6 sm:right-6 sm:bottom-7">
-                  <div className="flex max-w-[95%] items-center justify-between rounded-2xl border border-white/20 bg-[#0B1437]/90 p-3.5 sm:p-4 text-white shadow-2xl backdrop-blur-xl">
-                    <div className="min-w-0 pr-3">
-                      <div className="flex items-center gap-2">
-                        <span className="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <p className="text-[10px] uppercase tracking-[.2em] text-orange-300 font-mono font-bold truncate">
-                          {activeSlide.tag}
-                        </p>
-                      </div>
-                      <p className="mt-1 font-bold text-white text-sm sm:text-base tracking-tight truncate">
-                        {activeSlide.title}
-                      </p>
-                      <p className="hidden sm:block text-[11px] text-slate-300 line-clamp-1 mt-0.5">
-                        {activeSlide.subtitle}
-                      </p>
-                    </div>
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-tr from-orange-500 to-amber-500 text-white shadow-md">
-                      <Icon size={18} />
+            {/* 3D Scene Wrapper with Dynamic Mouse Tilt */}
+            <div
+              className="relative w-full min-h-[460px] sm:min-h-[520px] lg:min-h-[560px] preserve-3d transition-transform duration-200 ease-out flex items-center justify-end"
+              style={{
+                transform: `rotateX(${desktopRotateX}deg) rotateY(${desktopRotateY}deg)`,
+              }}
+            >
+              {/* --- Layer 1: Desktop Browser Dashboard Window (Tilted 3D) --- */}
+              <div
+                className="relative w-[90%] sm:w-[84%] rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-[0_25px_60px_-15px_rgba(15,23,42,0.18)] overflow-hidden ring-1 ring-black/5"
+                style={{
+                  transform: "translateZ(0px)",
+                }}
+              >
+                {/* Browser Titlebar */}
+                <div className="flex items-center justify-between border-b border-slate-100 bg-slate-50/80 px-4 py-2.5">
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
+                    <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
+                  </div>
+                  <div className="flex items-center gap-2 rounded-md bg-white border border-slate-200/70 px-3 py-0.5 text-[10.5px] font-mono text-slate-500">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>{activeProject.urlPath}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-slate-400">
+                    <span className="text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100 hidden sm:inline-block">
+                      {activeProject.liveStatus}
                     </span>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Floating SLA & Verified Metric Badge */}
-            <div className="floating-badge absolute -right-2 -bottom-5 z-20 rounded-2xl border border-slate-200/80 bg-white/95 p-3.5 sm:p-4 shadow-2xl sm:-right-8 transition-all duration-500 hover:scale-105 backdrop-blur-xl">
-              <div className="flex items-center gap-2">
-                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 font-mono">
-                  {activeSlide.verifiedText}
-                </span>
+                {/* Sub-navigation bar inside browser */}
+                <div className="flex items-center justify-between border-b border-slate-100 bg-white px-4 py-2 text-xs">
+                  <div className="flex items-center gap-4 text-slate-600 font-medium">
+                    <span className="text-orange-600 font-bold border-b-2 border-orange-600 pb-1">
+                      Overview
+                    </span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Architecture</span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden sm:inline">Live Code</span>
+                    <span className="hover:text-slate-900 cursor-pointer hidden md:inline">Telemetry</span>
+                  </div>
+                  <span className="text-[11px] font-bold text-slate-800 bg-slate-100 px-2.5 py-0.5 rounded-md">
+                    {activeProject.tabCategory}
+                  </span>
+                </div>
+
+                {/* Main Media Gallery Section (Exact Pattern from Video) */}
+                <div className="p-3 sm:p-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-[1.5fr_1fr] gap-2.5">
+                    {/* Primary Hero Showcase Image */}
+                    <div className="relative h-[180px] sm:h-[220px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs group/img">
+                      <img
+                        key={activeProject.id}
+                        src={activeProject.heroImage}
+                        alt={activeProject.client}
+                        className="h-full w-full object-cover transition-all duration-700 ease-out group-hover/img:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white text-xs">
+                        <span className="font-bold truncate drop-shadow-sm">{activeProject.client}</span>
+                        <span className="bg-orange-600/90 text-white font-mono text-[10px] px-2 py-0.5 rounded-md shadow-xs shrink-0">
+                          {activeProject.tabTech}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Secondary Stacked Thumbnails */}
+                    <div className="hidden sm:grid grid-rows-2 gap-2">
+                      <div className="relative h-[105px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs">
+                        <img
+                          src={activeProject.thumb1}
+                          alt="Deliverable thumbnail 1"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                      <div className="relative h-[105px] rounded-xl overflow-hidden bg-slate-100 border border-slate-200/80 shadow-xs">
+                        <img
+                          src={activeProject.thumb2}
+                          alt="Deliverable thumbnail 2"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Bullet Highlights under image */}
+                  <div className="mt-3.5 pt-3 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {activeProject.features.slice(0, 2).map((feat, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs text-slate-700">
+                        <CheckCircle2 size={13} className="text-emerald-500 shrink-0" />
+                        <span className="truncate">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <p className="mt-1 text-2xl sm:text-3xl font-black text-[#0B1437] tracking-tight">
-                <AnimatedCounter
-                  key={activeSlide.id}
-                  value={activeSlide.metricValue}
-                  decimals={activeSlide.metricDecimals}
-                  suffix={activeSlide.metricSuffix}
-                />
-              </p>
-              <p className="mt-0.5 text-xs font-semibold text-slate-500">
-                {activeSlide.metricLabel}
-              </p>
+
+              {/* --- Layer 2: Foreground Floating Smartphone Mockup (Overlapping & Bobbing) --- */}
+              <div
+                className="absolute left-0 bottom-2 sm:bottom-4 z-20 w-[190px] sm:w-[230px] lg:w-[250px] rounded-[34px] sm:rounded-[38px] border-[5px] sm:border-[6px] border-slate-900 bg-white shadow-[0_30px_70px_-15px_rgba(15,23,42,0.35)] overflow-hidden animate-float-slow select-none"
+                style={{
+                  transform: `rotateX(${phoneRotateX}deg) rotateY(${phoneRotateY}deg) translateZ(50px)`,
+                }}
+              >
+                {/* Speaker Notch / Dynamic Island */}
+                <div className="bg-slate-900 pt-1.5 pb-1 flex justify-center">
+                  <div className="h-3 w-16 bg-slate-800 rounded-full" />
+                </div>
+
+                {/* Smartphone Status Bar */}
+                <div className="flex items-center justify-between px-3 pt-1 text-[9px] font-semibold text-slate-600">
+                  <span>9:41</span>
+                  <div className="flex items-center gap-1 text-[9px]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    <span>5G</span>
+                  </div>
+                </div>
+
+                {/* Smartphone App Header */}
+                <div className="p-3 pb-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <span className="text-[10px] text-slate-500 block">Welcome back</span>
+                      <span className="text-xs font-bold text-slate-900">Alex • Client</span>
+                    </div>
+                    <span className="h-6 w-6 rounded-full bg-orange-100 text-orange-600 grid place-items-center text-xs font-bold">
+                      A
+                    </span>
+                  </div>
+
+                  {/* Gradient Metric Card (Direct from Video) */}
+                  <div className="mt-2.5 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-blue-500 p-2.5 text-white shadow-md">
+                    <span className="text-[9.5px] uppercase tracking-wider text-blue-200 font-semibold block">
+                      {activeProject.mobileStatLabel}
+                    </span>
+                    <span className="text-xl font-black tracking-tight text-white block mt-0.5">
+                      {activeProject.mobileStatValue}
+                    </span>
+                    <span className="text-[10px] text-blue-100 font-medium block mt-0.5">
+                      {activeProject.mobileStatSub}
+                    </span>
+                  </div>
+
+                  {/* Top Deliverables List */}
+                  <div className="mt-2.5">
+                    <span className="text-[10px] font-bold text-slate-800 uppercase tracking-wider block mb-1">
+                      Active Sprint Features
+                    </span>
+                    <div className="space-y-1.5">
+                      {activeProject.mobileItems.map((item, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center justify-between rounded-lg bg-slate-50 p-1.5 px-2 border border-slate-100 text-[10px]"
+                        >
+                          <div className="min-w-0 pr-1">
+                            <span className="font-semibold text-slate-800 truncate block">
+                              {item.title}
+                            </span>
+                            <span className="text-slate-500 text-[9px] truncate block">
+                              {item.status}
+                            </span>
+                          </div>
+                          <span className="text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
+                            {item.metric}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* --- Layer 3: Floating 3D Badges (Hovering Around Devices) --- */}
+              {/* Badge 1: Top-Right Project Status Pill */}
+              <div
+                className="absolute -top-3 right-2 sm:right-6 z-30 flex items-center gap-2.5 rounded-2xl border border-white/90 bg-white/95 p-2 sm:p-2.5 pr-4 shadow-xl backdrop-blur-md animate-badge-float"
+                style={{ transform: "translateZ(60px)" }}
+              >
+                <div className="h-9 w-9 rounded-xl overflow-hidden shadow-xs shrink-0 bg-slate-100">
+                  <img
+                    src={activeProject.heroImage}
+                    alt={activeProject.badgeTitle}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping" />
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-slate-800">
+                      {activeProject.badgeTitle}
+                    </span>
+                  </div>
+                  <span className="text-[11px] font-semibold text-orange-600 block">
+                    {activeProject.floatingMetric}
+                  </span>
+                </div>
+              </div>
+
+              {/* Badge 2: Bottom-Left Agile Guarantee Pill */}
+              <div
+                className="absolute -left-3 sm:-left-6 -bottom-3 z-30 hidden sm:flex items-center gap-2.5 rounded-2xl border border-slate-100 bg-white/95 p-2.5 pr-4 shadow-2xl backdrop-blur-md animate-float-delayed"
+                style={{ transform: "translateZ(70px)" }}
+              >
+                <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-orange-600 to-amber-500 grid place-items-center text-white shadow-xs">
+                  <Rocket size={15} />
+                </div>
+                <div>
+                  <span className="text-xs font-bold text-slate-900 block">
+                    Arivom Sprint Engine
+                  </span>
+                  <span className="text-[10.5px] text-slate-500 block">
+                    2-Week Sprints • 100% Code Handover
+                  </span>
+                </div>
+              </div>
+
+              {/* Badge 3: 4-Dot Diamond Geometric Accent (Exact Pattern from Video) */}
+              <div
+                className="absolute -top-6 right-0 z-10 grid grid-cols-2 gap-1.5 rounded-2xl bg-white/90 border border-slate-100 p-2.5 shadow-md hidden sm:grid"
+                style={{ transform: "translateZ(20px)" }}
+              >
+                <span className="h-2.5 w-2.5 rounded-full bg-blue-600" />
+                <span className="h-2.5 w-2.5 rounded-full bg-orange-500" />
+                <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+              </div>
             </div>
           </div>
         </div>
