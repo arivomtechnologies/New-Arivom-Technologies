@@ -1,0 +1,15 @@
+# ========================================================================
+# Robots.txt for Arivom Technologies
+# Website: https://arivomtechnologies.com
+# ========================================================================
+
+User-agent: *
+Allow: /
+
+# Disallow private files
+Disallow: /.git
+Disallow: /.github
+Disallow: /dist/
+
+# XML Sitemap for Google, Bing, and Search Crawlers
+Sitemap: https://arivomtechnologies.com/sitemap.xml
